@@ -1,0 +1,19 @@
+{
+  "name": "qrs-front",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "zlumer",
+  "license": "MIT",
+  "scripts": {
+    "dev": "poi",
+    "build": "poi build"
+  },
+  "dependencies": {
+    "@poi/plugin-typescript": "^10.2.0",
+    "@types/node": "^10.9.4",
+    "poi": "^10.2.10",
+    "ts-node": "^7.0.1",
+    "typescript": "^3.0.3",
+    "vue": "^2.5.17"
+  }
+}
