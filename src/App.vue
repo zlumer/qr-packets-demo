@@ -2,7 +2,7 @@
 <div>
 	<button @click="onclick">click</button>
 	<br/>
-	<Qr :qrcode="data"></Qr>
+	<Qr :qrcode="qrtext"></Qr>
 </div>
 </template>
 
@@ -10,19 +10,43 @@
 
 import Vue from "vue"
 import Qr from "./QrImage.vue"
-
+import { setInterval, clearInterval } from "timers"
 
 let App = Vue.extend({
-	data: function ()
+	data()
 	{
 		return {
-			data: ""
+			qrindex: 0,
+			qrs: [] as string[],
+			timer: 0 as any as NodeJS.Timer,
+		}
+	},
+	computed: {
+		qrtext: function ()
+		{
+			return this.qrs[this.qrindex]
 		}
 	},
 	methods: {
-		onclick: function (data: string)
+		onclick()
 		{
-			this.data += String.fromCharCode(Math.floor(Math.random() * 25) + "a".charCodeAt(0))
+			this.showSeq(["hello", "world", "data", "string"])
+		},
+		showNext()
+		{
+			if (!this.qrs.length)
+				return
+			
+			this.qrindex = (this.qrindex + 1) % this.qrs.length
+		},
+		showSeq(qrs: string[])
+		{
+			this.qrs = qrs
+			this.qrindex = 0
+			if (this.timer)
+				clearInterval(this.timer)
+			
+			this.timer = setInterval(() => this.showNext(), 100)
 		}
 	},
 	components: {
