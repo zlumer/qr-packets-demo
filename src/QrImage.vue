@@ -1,5 +1,5 @@
 <template>
-	<img :src="dataUrl" alt="">
+	<img class="qr-image" :src="dataUrl" alt="">
 </template>
 
 <script lang="ts">
@@ -29,4 +29,9 @@ export default App
 </script>
 
 <style>
+.qr-image {
+	width: 400px;
+	height: 400px;
+	image-rendering: pixelated;
+}
 </style>

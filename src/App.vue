@@ -1,7 +1,8 @@
 <template>
 <div>
-	<Qr :qrcode="data"></Qr>
 	<button @click="onclick">click</button>
+	<br/>
+	<Qr :qrcode="data"></Qr>
 </div>
 </template>
 
