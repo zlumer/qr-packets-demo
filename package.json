@@ -11,7 +11,9 @@
   "dependencies": {
     "@poi/plugin-typescript": "^10.2.0",
     "@types/node": "^10.9.4",
+    "@types/qrcode": "^1.2.0",
     "poi": "^10.2.10",
+    "qrcode": "^1.2.2",
     "ts-node": "^7.0.1",
     "typescript": "^3.0.3",
     "vue": "^2.5.17"
