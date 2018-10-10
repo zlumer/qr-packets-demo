@@ -5,17 +5,17 @@
 	<button @click="readQr">read QR</button>
 	<button @click="startConnect">connect WebRTC</button>
 	<br/>
-	<Qr :qrcode="qrtext"></Qr>
+	<Qr :qrs="qrs"></Qr>
 	<video id="cameraVideo" style="display: none;">Camera not available</video>
 	<canvas id="cameraPicture" style="display: none;"></canvas>
-	<Qr :qrcode="outOffer" />
+	<Qr :qrs="[outOffer]" />
 </div>
 </template>
 
 <script lang="ts">
 
 import Vue from "vue"
-import Qr from "./QrImage.vue"
+import Qr from "./QrGif.vue"
 import jsqr from "jsqr"
 import { RTCHelper } from "./webrtc"
 
@@ -57,32 +57,12 @@ let App = Vue.extend({
 				this._video = document.getElementById("cameraVideo") as HTMLVideoElement
 			
 			return this._video
-		},
-		qrtext: function ()
-		{
-			return this.qrs[this.qrindex]
 		}
 	},
 	methods: {
 		onclick()
 		{
-			this.showSeq(["hello", "world", "data", "string"])
-		},
-		showNext()
-		{
-			if (!this.qrs.length)
-				return
-			
-			this.qrindex = (this.qrindex + 1) % this.qrs.length
-		},
-		showSeq(qrs: string[])
-		{
-			this.qrs = qrs
-			this.qrindex = 0
-			if (this.timer)
-				window.clearInterval(this.timer), this.timer = 0
-			
-			this.timer = window.setInterval(() => this.showNext(), this.showTimeout)
+			this.qrs = ["hello", "world", "data", "string"]
 		},
 		async getCamera()
 		{
