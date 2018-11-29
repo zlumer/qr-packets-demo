@@ -29,11 +29,11 @@ export default (Vue as VueConstructor<Vue & {$refs: TRefs}>).extend({
 	{
 		this.$refs.reader.startCamera()
 	},
-	props:{
+	props: {
 		intro: String,
 		qrs: {
 			type: Array as () => string[],
-			default: []
+			default: [],
 		}
 	},
 	methods: {
