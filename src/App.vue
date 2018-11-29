@@ -1,24 +1,23 @@
 <template>
 <div>
+	<router-view></router-view>
+
 	<button @click="onclick">click</button>
-	<button @click="getCamera">camera</button>
+	<!-- <button @click="getCamera">camera</button> -->
 	<!-- <button @click="readQr">read QR</button> -->
 	<button @click="startConnect">connect WebRTC</button>
-	<br/>
-	<Qr :qrs="qrs"></Qr>
-	<QrReader ref="reader" :width="100" :height="100" v-on:qr="onQr"></QrReader>
-	<Qr :qrs="[outOffer]" />
 </div>
 </template>
 
 <script lang="ts">
 
 import Vue, { VueConstructor } from "vue"
-import Qr from "./QrGif.vue"
-import QrReader from "./QrReader.vue"
+import VueRouter from "vue-router"
 import jsqr from "jsqr"
 import { RTCHelper } from "./webrtc"
 import { QRCode } from "jsqr"
+import Index from "./pages/Index.vue"
+import Login from "./pages/Login.vue"
 
 async function __test__()
 {
@@ -34,16 +33,24 @@ async function __test__()
 	await p2.waitConnection()
 	p1.dataChannel!.send("hello")
 }
+const routes = [
+	{ path: '/', component: Index },
+	{ path: '/login', component: Login },
+]
+
+const router = new VueRouter({
+	routes,
+	mode: 'history'
+})
+Vue.use(VueRouter)
 
 type TRefs = {
-	reader: InstanceType<typeof QrReader>
 }
 
 let App = (Vue as VueConstructor<Vue & {$refs: TRefs}>).extend({
 	data()
 	{
 		return {
-			qrindex: 0,
 			qrs: ["hello", "world", "data", "string"] as string[],
 			timer: 0,
 			outOffer: "",
@@ -51,16 +58,10 @@ let App = (Vue as VueConstructor<Vue & {$refs: TRefs}>).extend({
 			connected: false,
 		}
 	},
-	computed: {
-	},
 	methods: {
 		onclick()
 		{
 			this.qrs = ["hello", "world", "data", "string"]
-		},
-		getCamera()
-		{
-			this.$refs.reader.startCamera()
 		},
 		onQr(qr: QRCode)
 		{
@@ -94,10 +95,7 @@ let App = (Vue as VueConstructor<Vue & {$refs: TRefs}>).extend({
 			this.outOffer = offer.sdp!
 		},
 	},
-	components: {
-		Qr,
-		QrReader,
-	}
+	router
 })
 export default App
 
