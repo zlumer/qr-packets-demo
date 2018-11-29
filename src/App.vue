@@ -18,6 +18,7 @@ import { RTCHelper } from "./webrtc"
 import { QRCode } from "jsqr"
 import Index from "./pages/Index.vue"
 import Login from "./pages/Login.vue"
+import Wallets from "./pages/Wallets.vue"
 
 async function __test__()
 {
@@ -36,6 +37,7 @@ async function __test__()
 const routes = [
 	{ path: '/', component: Index },
 	{ path: '/login', component: Login },
+	{ path: '/wallets', component: Wallets },
 ]
 
 const router = new VueRouter({
