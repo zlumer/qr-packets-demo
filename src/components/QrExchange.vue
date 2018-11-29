@@ -36,14 +36,12 @@ export default (Vue as VueConstructor<Vue & {$refs: TRefs}>).extend({
 			default: []
 		}
 	},
-	computed: {
-	},
 	methods: {
 		onQr(qr: QRCode)
 		{
 			console.log(`QR!!! ${qr.data}`, qr)
 			
-			this.$emit("qr", qr)
+			this.$emit("qr", qr.data)
 		},
 	},
 	components: {
