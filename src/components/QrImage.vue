@@ -17,9 +17,15 @@ let App = Vue.extend({
 	props: {
 		qrcode: String
 	},
+	mounted: async function()
+	{
+		console.log(this.qrcode)
+		this.dataUrl = await qr.toDataURL(this.qrcode)
+	},
 	watch: {
 		qrcode: async function ()
 		{
+			console.log(this.qrcode)
 			this.dataUrl = await qr.toDataURL(this.qrcode)
 		}
 	}
