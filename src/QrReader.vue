@@ -6,11 +6,17 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import Vue, { VueConstructor } from 'vue'
 import jsqr from "jsqr"
 
-export default Vue.extend({
-	data() {
+type TRefs = {
+	video: HTMLVideoElement
+	canvas: HTMLCanvasElement
+}
+
+export default (Vue as VueConstructor<Vue & {$refs: TRefs}>).extend({
+	data()
+	{
 		return {
 			_video: undefined as any as HTMLVideoElement,
 			readTimer: 0,
@@ -22,22 +28,15 @@ export default Vue.extend({
 		height: Number,
 	},
 	computed: {
-		video: function()
-		{
-			if (!this._video)
-				this._video = this.$refs.video as HTMLVideoElement
-			
-			return this._video
-		}
 	},
 	methods: {
 		async startCamera()
 		{
 			const stream = await navigator.mediaDevices.getUserMedia({ audio: false, video: true })
-			this.video.srcObject = stream
-			this.video.play()
-			this.video.addEventListener('canplay', () => this.pollQr())
-			this.video.style.display = "block"
+			this.$refs.video.srcObject = stream
+			this.$refs.video.play()
+			this.$refs.video.addEventListener('canplay', () => this.pollQr())
+			this.$refs.video.style.display = "block"
 		},
 		pollQr()
 		{
@@ -52,17 +51,17 @@ export default Vue.extend({
 		},
 		readQr()
 		{
-			let { width: w, height: h} = this.video
-			let canvas = this.$refs.canvas as HTMLCanvasElement
-			canvas.width = this.video.width = this.video.videoWidth
-			canvas.height = this.video.height = this.video.videoHeight
-			this.video.width = w
-			this.video.height = h
+			let { video, canvas } = this.$refs
+			let { width: w, height: h} = video
+			canvas.width = video.width = video.videoWidth
+			canvas.height = video.height = video.videoHeight
+			video.width = w
+			video.height = h
 			let ctx = canvas.getContext("2d")
 			if (!ctx)
 				return console.error(`canvas context not available!`)
 			
-			ctx.drawImage(this.video, 0, 0, canvas.width, canvas.height)
+			ctx.drawImage(video, 0, 0, canvas.width, canvas.height)
 			let data = ctx.getImageData(0, 0, canvas.width, canvas.height)
 			let qr = jsqr(data.data, data.width, data.height)
 			// console.log(qr)
