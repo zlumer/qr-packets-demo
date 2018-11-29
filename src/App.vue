@@ -2,22 +2,23 @@
 <div>
 	<button @click="onclick">click</button>
 	<button @click="getCamera">camera</button>
-	<button @click="readQr">read QR</button>
+	<!-- <button @click="readQr">read QR</button> -->
 	<button @click="startConnect">connect WebRTC</button>
 	<br/>
 	<Qr :qrs="qrs"></Qr>
-	<video id="cameraVideo" style="display: none;">Camera not available</video>
-	<canvas id="cameraPicture" style="display: none;"></canvas>
+	<QrReader ref="reader" :width="100" :height="100" v-on:qr="onQr"></QrReader>
 	<Qr :qrs="[outOffer]" />
 </div>
 </template>
 
 <script lang="ts">
 
-import Vue from "vue"
+import Vue, { VueConstructor } from "vue"
 import Qr from "./QrGif.vue"
+import QrReader from "./QrReader.vue"
 import jsqr from "jsqr"
 import { RTCHelper } from "./webrtc"
+import { QRCode } from "jsqr"
 
 async function __test__()
 {
@@ -34,72 +35,39 @@ async function __test__()
 	p1.dataChannel!.send("hello")
 }
 
-let App = Vue.extend({
+type TRefs = {
+	reader: InstanceType<typeof QrReader>
+}
+
+let App = (Vue as VueConstructor<Vue & {$refs: TRefs}>).extend({
 	data()
 	{
 		return {
 			qrindex: 0,
 			qrs: ["hello", "world", "data", "string"] as string[],
 			timer: 0,
-			_video: undefined as any as HTMLVideoElement,
-			readTimer: 0,
-			pollTimeout: 200,
-			showTimeout: 275,
 			outOffer: "",
 			rpc: new RTCHelper(),
 			connected: false,
 		}
 	},
 	computed: {
-		video: function()
-		{
-			if (!this._video)
-				this._video = document.getElementById("cameraVideo") as HTMLVideoElement
-			
-			return this._video
-		}
 	},
 	methods: {
 		onclick()
 		{
 			this.qrs = ["hello", "world", "data", "string"]
 		},
-		async getCamera()
+		getCamera()
 		{
-			const stream = await navigator.mediaDevices.getUserMedia({ audio: false, video: true })
-			this.video.srcObject = stream
-			this.video.play()
-			this.video.addEventListener('canplay', () => this.pollQr())
+			this.$refs.reader.startCamera()
 		},
-		pollQr()
+		onQr(qr: QRCode)
 		{
-			this.pollQrStop()
+			console.log(`QR!!! ${qr.data}`, qr)
 
-			this.readTimer = window.setTimeout(() => (this.readQr(), this.pollQr()), this.pollTimeout)
-		},
-		pollQrStop()
-		{
-			if (this.readTimer)
-				clearTimeout(this.readTimer), this.readTimer = 0
-		},
-		readQr()
-		{
-			let canvas = document.getElementById("cameraPicture") as HTMLCanvasElement
-			canvas.width = this.video.width = this.video.videoWidth
-			canvas.height = this.video.height = this.video.videoHeight
-			let ctx = canvas.getContext("2d")
-			if (!ctx)
-				return console.error(`canvas context not available!`)
-			
-			ctx.drawImage(this.video, 0, 0, canvas.width, canvas.height)
-			let data = ctx.getImageData(0, 0, canvas.width, canvas.height)
-			let qr = jsqr(data.data, data.width, data.height)
-			console.log(qr)
-			if (!qr)
-				return
-			
-			if (!this.connected)
-				this.handleConnection(qr!.data)
+			// if (!this.connected)
+			// 	this.handleConnection(qr.data)
 		},
 		async handleConnection(offer: string)
 		{
@@ -127,7 +95,8 @@ let App = Vue.extend({
 		},
 	},
 	components: {
-		Qr
+		Qr,
+		QrReader,
 	}
 })
 export default App
