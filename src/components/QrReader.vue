@@ -27,7 +27,16 @@ export default (Vue as VueConstructor<Vue & {$refs: TRefs}>).extend({
 		width: Number,
 		height: Number,
 	},
-	computed: {
+	beforeDestroy()
+	{
+		this.pollQrStop()
+		let video = this.$refs.video
+		if (video && video.srcObject)
+		{
+			let stream = video.srcObject as MediaStream
+			let tracks = stream.getTracks()
+			tracks.forEach(x => x && x.stop())
+		}
 	},
 	methods: {
 		async startCamera()
