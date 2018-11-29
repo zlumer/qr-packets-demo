@@ -20,6 +20,8 @@ import Index from "./pages/Index.vue"
 import Login from "./pages/Login.vue"
 import Wallets from "./pages/Wallets.vue"
 import Wallet from "./pages/Wallet.vue"
+import NewTransfer from "./pages/NewTransfer.vue"
+import PushTxVue from "./pages/PushTx.vue"
 
 async function __test__()
 {
@@ -39,7 +41,20 @@ const routes = [
 	{ path: '/', component: Index },
 	{ path: '/login', component: Login },
 	{ path: '/wallets', component: Wallets },
-	{ path: '/wallet/:address', name: 'wallet', component: Wallet }
+	{
+		path: '/wallet/:address',
+		name: 'wallet',
+		component: Wallet,
+		children: [
+		]
+	},
+	{ path: '/wallet/:address/create', name: 'newtx', component: NewTransfer },
+	{
+		path: '/pushtx/:tx',
+		name: 'pushtx',
+		component: PushTxVue,
+		props: true
+	}
 ]
 
 const router = new VueRouter({

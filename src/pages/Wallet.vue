@@ -1,6 +1,7 @@
 <template>
 	<div>
 		<h1>{{address}}</h1>
+		<router-link :to="{name:'newtx', params:{ address: address }}">new tx</router-link>
 		<ul>
 			<li :key="tx.hash" v-for="tx in txs">hash: {{ tx.hash.substr(0, 10) + "..." }}, from: {{ tx.from.substr(0, 10) + "..." }}, to: {{ tx.to.substr(0, 10) + "..." }}, amount: {{ (tx.value / 1e18).toFixed(4) }}</li>
 		</ul>
