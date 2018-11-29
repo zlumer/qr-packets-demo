@@ -2,7 +2,7 @@
 	<div>
 		<div v-if="!wallets.length">No wallets found!</div>
 		<ul>
-			<li :key="w.address" v-for="w in wallets">{{ w.address }}</li>
+			<li :key="w.address" v-for="w in wallets"><router-link :to="{ name: 'wallet', params: { address: w.address } }">{{ w.address }}</router-link></li>
 		</ul>
 	</div>
 </template>

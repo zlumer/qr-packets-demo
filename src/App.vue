@@ -19,6 +19,7 @@ import { QRCode } from "jsqr"
 import Index from "./pages/Index.vue"
 import Login from "./pages/Login.vue"
 import Wallets from "./pages/Wallets.vue"
+import Wallet from "./pages/Wallet.vue"
 
 async function __test__()
 {
@@ -38,6 +39,7 @@ const routes = [
 	{ path: '/', component: Index },
 	{ path: '/login', component: Login },
 	{ path: '/wallets', component: Wallets },
+	{ path: '/wallet/:address', name: 'wallet', component: Wallet }
 ]
 
 const router = new VueRouter({
