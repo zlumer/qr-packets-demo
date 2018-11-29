@@ -12,12 +12,14 @@
     "@poi/plugin-typescript": "^10.2.0",
     "@types/node": "^10.9.4",
     "@types/qrcode": "^1.2.0",
+    "@types/web3": "^1.0.12",
     "jsqr": "^1.1.1",
     "poi": "^10.2.10",
     "qrcode": "^1.2.2",
     "ts-node": "^7.0.1",
     "typescript": "^3.2.1",
     "vue": "^2.5.17",
-    "vue-router": "^3.0.2"
+    "vue-router": "^3.0.2",
+    "web3": "^1.0.0-beta.36"
   }
 }
