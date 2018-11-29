@@ -18,7 +18,10 @@ export default Vue.extend({
 		}
 	},
 	props: {
-		qrs: Array as () => string[],
+		qrs: {
+			type: Array as () => string[],
+			default: () => []
+		},
 		showTimeout: {
 			type: Number,
 			default: 275
@@ -27,8 +30,13 @@ export default Vue.extend({
 	computed: {
 		qrcode: function ()
 		{
-			return this.qrs[this.qrindex]
+			return this.qrs[this.qrindex] || ""
 		}
+	},
+	beforeDestroy()
+	{
+		if (this.timer)
+			window.clearInterval(this.timer), this.timer = 0
 	},
 	watch: {
 		qrs()

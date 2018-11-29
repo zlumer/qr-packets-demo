@@ -19,12 +19,18 @@ let App = Vue.extend({
 	},
 	mounted: async function()
 	{
+		if (!this.qrcode)
+			return
+		
 		console.log(this.qrcode)
 		this.dataUrl = await qr.toDataURL(this.qrcode)
 	},
 	watch: {
 		qrcode: async function ()
 		{
+			if (!this.qrcode)
+				return
+
 			console.log(this.qrcode)
 			this.dataUrl = await qr.toDataURL(this.qrcode)
 		}
