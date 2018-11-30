@@ -2,10 +2,10 @@
 <div>
 	<router-view></router-view>
 
-	<button @click="onclick">click</button>
+	<!-- <button @click="onclick">click</button> -->
 	<!-- <button @click="getCamera">camera</button> -->
 	<!-- <button @click="readQr">read QR</button> -->
-	<button @click="startConnect">connect WebRTC</button>
+	<!-- <button @click="startConnect">connect WebRTC</button> -->
 </div>
 </template>
 
@@ -22,6 +22,8 @@ import Wallets from "./pages/Wallets.vue"
 import Wallet from "./pages/Wallet.vue"
 import NewTransfer from "./pages/NewTransfer.vue"
 import PushTxVue from "./pages/PushTx.vue"
+import WebrtcVue from "./pages/Webrtc.vue"
+import { JsonRpc } from "./jsonrpc"
 
 async function __test__()
 {
@@ -40,6 +42,7 @@ async function __test__()
 const routes = [
 	{ path: '/', component: Index },
 	{ path: '/login', component: Login },
+	{ path: '/webrtc', component: WebrtcVue },
 	{ path: '/wallets', component: Wallets },
 	{
 		path: '/wallet/:address',
@@ -70,49 +73,12 @@ let App = (Vue as VueConstructor<Vue & {$refs: TRefs}>).extend({
 	data()
 	{
 		return {
-			qrs: ["hello", "world", "data", "string"] as string[],
-			timer: 0,
-			outOffer: "",
-			rpc: new RTCHelper(),
-			connected: false,
 		}
 	},
+	created()
+	{
+	},
 	methods: {
-		onclick()
-		{
-			this.qrs = ["hello", "world", "data", "string"]
-		},
-		onQr(qr: QRCode)
-		{
-			console.log(`QR!!! ${qr.data}`, qr)
-
-			// if (!this.connected)
-			// 	this.handleConnection(qr.data)
-		},
-		async handleConnection(offer: string)
-		{
-			if (this.connected)
-				return
-			
-			this.connected = true
-			
-			if (!this.outOffer) // we are receiving connection
-			{
-				let answer = await this.rpc.pushOffer({ type: "offer", sdp: offer })
-				this.outOffer = answer.sdp!
-			}
-			else
-			{
-				await this.rpc.pushAnswer({ type: "answer", sdp: offer })
-			}
-		},
-		async startConnect()
-		{
-			let offer = await this.rpc.createOffer()
-			console.log(offer)
-			console.log(offer.sdp)
-			this.outOffer = offer.sdp!
-		},
 	},
 	router
 })
