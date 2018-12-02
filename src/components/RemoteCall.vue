@@ -1,5 +1,6 @@
 <template>
-	<QrExchange v-if="!webrtcAvailable" :qrs="[`${method}|${id}|${params}`]" :intro="intro" v-on:qr="onQr"></QrExchange>
+	<QrExchange v-if="!webrtcConnected && !loadingWebrtc" :qrs="[`${method}|${id}|${params}`]" :intro="intro" v-on:qr="onQr"></QrExchange>
+	<div v-else-if="loadingWebrtc">Trying to connect to WebRTC...</div>
 	<div v-else>Press button on your phone</div>
 </template>
 
@@ -8,12 +9,15 @@ import Vue from 'vue'
 import QrExchange from "../components/QrExchange.vue"
 import { parseHostMessage } from "../hostproto"
 import { isResult } from "../hostprotocmd"
+import { checkConnection, singleton } from '../webrtcsingleton'
 
 export default Vue.extend({
 	data()
 	{
 		return {
-			id: Math.floor(Math.random() * 100000).toString()
+			id: Math.floor(Math.random() * 100000).toString(),
+			webrtcConnected: false,
+			loadingWebrtc: true,
 		}
 	},
 	props: {
@@ -27,13 +31,22 @@ export default Vue.extend({
 			required: true,
 		},
 	},
+	async mounted()
+	{
+		this.webrtcConnected = await checkConnection()
+		this.loadingWebrtc = false
+		this.callWebrtc()
+	},
 	computed: {
-		webrtcAvailable: function()
-		{
-			return false
-		}
 	},
 	methods: {
+		async callWebrtc()
+		{
+			if (!this.webrtcConnected)
+				return
+			let result = await singleton.jrpc.callRaw(this.method, JSON.parse(this.params))
+			this.$emit('result', result)
+		},
 		onQr(qr: string)
 		{
 			let m = parseHostMessage(qr)

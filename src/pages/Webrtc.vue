@@ -105,6 +105,13 @@ export default Vue.extend({
 			await this.rtc.waitConnection()
 			this.status = 'CONNECTED!'
 			singleton.connected = true
+			await this.getWallets()
+		},
+		async getWallets()
+		{
+			let wallets = await singleton.jrpc.call('getWalletList', ["eth"])
+			localStorage.setItem('wallets', JSON.stringify(wallets))
+			this.$router.push({ path: "/wallets" })
 		}
 	},
 	components: {

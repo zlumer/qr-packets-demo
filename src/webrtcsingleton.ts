@@ -14,7 +14,7 @@ function init()
 			cb(undefined, null)
 		}
 	)
-	// rtc.onMessage = (ev) => (console.log(ev), jrpc.onMessage(ev.data.toString()))
+	rtc.onMessage = (ev) => (console.log(ev), jrpc.onMessage(ev.data.toString()))
 	let connected = false
 	
 	return {
