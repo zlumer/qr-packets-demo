@@ -23,7 +23,7 @@ export default Vue.extend({
 		return {
 			status: 'not started',
 			ws: null as any as WebSocket,
-			url: "ws://139.59.184.152:3077",
+			url: "wss://duxi.io/shake",
 			sid: '',
 		}
 	},
@@ -48,7 +48,7 @@ export default Vue.extend({
 			if (!this.sid)
 				return ""
 			
-			return `webrtcLogin|777|${JSON.stringify({ sid: this.sid, url: this.url })}`
+			return `webrtcLogin|3|${JSON.stringify({ sid: this.sid, url: this.url })}`
 		}
 	},
 	methods: {

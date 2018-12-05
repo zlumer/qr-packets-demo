@@ -1,5 +1,5 @@
 <template>
-	<img class="qr-image" :src="dataUrl" alt="">
+	<img class="qr-image" :src="dataUrl" alt="" data-cy="qr-image">
 </template>
 
 <script lang="ts">

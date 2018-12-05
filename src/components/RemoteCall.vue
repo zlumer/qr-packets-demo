@@ -15,13 +15,17 @@ export default Vue.extend({
 	data()
 	{
 		return {
-			id: Math.floor(Math.random() * 100000).toString(),
 			webrtcConnected: false,
 			loadingWebrtc: true,
 		}
 	},
 	props: {
 		intro: String,
+		id: {
+			type: [String, Number],
+			default: Math.floor(Math.random() * 100000).toString(),
+			required: false,
+		},
 		method: {
 			type: String,
 			required: true,
@@ -49,11 +53,12 @@ export default Vue.extend({
 		},
 		onQr(qr: string)
 		{
+			console.log(`RemoteCall.onQr(): ${qr}`)
 			let m = parseHostMessage(qr)
 			if (!m || !isResult(m))
 				return
 			
-			if (("" + m.id) == this.id)
+			if (("" + m.id) == (this.id + ""))
 			{
 				this.$emit('result', m.result)
 			}

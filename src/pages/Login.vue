@@ -1,5 +1,5 @@
 <template>
-	<remote-call intro="Scan QR code to log in" method="getWalletList" :params="bcs" v-on:result="onResult"></remote-call>
+	<remote-call intro="Scan QR code to log in" method="getWalletList" :params="bcs" :id="2" v-on:result="onResult"></remote-call>
 </template>
 
 <script lang="ts">
@@ -12,13 +12,13 @@ export default Vue.extend({
 	data()
 	{
 		return {
-			blockchains: [["eth"]]
+			blockchains: ["eth"]
 		}
 	},
 	computed: {
 		bcs: function()
 		{
-			return JSON.stringify(this.blockchains)
+			return JSON.stringify({ blockchains: this.blockchains })
 		}
 	},
 	methods: {
