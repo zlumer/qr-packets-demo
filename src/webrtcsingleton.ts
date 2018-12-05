@@ -30,6 +30,9 @@ export async function checkConnection(): Promise<boolean>
 	
 	try
 	{
+		if (singleton.rtc.rpc.signalingState == 'stable')
+			return true
+		
 		await timedPromise(singleton.jrpc.ping(), 5000)
 		return true
 	}
