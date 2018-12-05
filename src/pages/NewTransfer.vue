@@ -1,8 +1,11 @@
 <template>
 	<div>
-		To: <input type="text" ref="to" name="to" :disabled="signing">
+		To: <input type="text" v-model="form.to" data-cy="form-to" :disabled="signing">
+		Amount: <input type="number" v-model="form.amount" data-cy="form-amount" :disabled="signing">
+		USD value: <input type="number" v-model="form.usd" data-cy="form-usd" :disabled="signing">
+		Gas price: <input type="number" v-model="form.gas" data-cy="form-gas" :disabled="signing">
 		<br/>
-		<button type="submit" @click="onButton" :disabled="signing">SIGN TX</button>
+		<button type="submit" @click="onButton" :disabled="signing || !canSign">SIGN TX</button>
 		<span v-if="signing && loading">loading...</span>
 		<remote-call v-if="signing && !loading" method="signTransferTx" :params="txJson" @result="onResult"></remote-call>
 		<button type="submit" @click="onCancel" v-if="signing && !loading">Cancel</button>
@@ -10,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import Vue, { VueConstructor } from 'vue'
 import RemoteCall from '../components/RemoteCall.vue'
 import * as eth from "../web3"
 
@@ -21,9 +24,31 @@ export default Vue.extend({
 			signing: false,
 			loading: false,
 			nonce: NaN,
+			form: {
+				to: '',
+				amount: '',
+				usd: '',
+				gas: '',
+			},
 		}
 	},
 	computed: {
+		canSign: function()
+		{
+			return this.validAddress && this.validAmount && this.validGas
+		},
+		validAddress: function()
+		{
+			return eth.isValidEthAddress(this.form.to.toLowerCase())
+		},
+		validAmount: function()
+		{
+			return !isNaN(parseFloat(this.form.amount))
+		},
+		validGas: function()
+		{
+			return !isNaN(parseFloat(this.form.gas))
+		},
 		address: function()
 		{
 			return this.$route.params.address
@@ -42,10 +67,10 @@ export default Vue.extend({
 		{
 			return {
 				from: this.address,
-				to: (this.$refs.to as HTMLInputElement).value,
+				to: this.form.to,
 				nonce: this.nonce,
-				gasPrice: 3 * 1e12,
-				value: 0,
+				gasPrice: eth.utils.toWei(this.form.gas, 'gwei'),
+				value: eth.utils.toWei(this.form.amount),
 			}
 		}
 	},
