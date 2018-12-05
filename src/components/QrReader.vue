@@ -98,7 +98,7 @@ export default (Vue as VueConstructor<Vue & {$refs: TRefs}>).extend({
 			ctx.drawImage(video, 0, 0, canvas.width, canvas.height)
 			let data = ctx.getImageData(0, 0, canvas.width, canvas.height)
 			let qr = jsqr(data.data, data.width, data.height)
-			console.log(`QrReader.readQr(): ${qr}`)
+			// console.log(`QrReader.readQr(): ${qr}`)
 			if (!qr)
 				return
 			
