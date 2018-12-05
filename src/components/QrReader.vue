@@ -33,6 +33,11 @@ export default (Vue as VueConstructor<Vue & {$refs: TRefs}>).extend({
 			type: Number,
 			required: true,
 		},
+		autoplay: {
+			type: Boolean,
+			required: false,
+			default: true,
+		},
 	},
 	computed: {
 		fakeQrCode(): string | null
@@ -55,18 +60,30 @@ export default (Vue as VueConstructor<Vue & {$refs: TRefs}>).extend({
 			tracks.forEach(x => x && x.stop())
 		}
 	},
+	mounted()
+	{
+		if (this.autoplay)
+			this.startCamera()
+	},
 	methods: {
 		async startCamera()
 		{
 			const stream = await navigator.mediaDevices.getUserMedia({ video: true })
-			this.$refs.video.srcObject = stream
-			this.$refs.video.play()
-			this.$refs.video.addEventListener('canplay', () =>
+			let video = this.$refs.video
+			video.srcObject = stream
+			video.play()
+			video.addEventListener('canplay', () =>
 			{
+				console.log('canplay')
 				this.pollQr()
+				let { width: w, height: h} = video
+				this.$refs.canvas.width = video.width = video.videoWidth
+				this.$refs.canvas.height = video.height = video.videoHeight
+				video.width = w
+				video.height = h
 				this.videoReady = true
 			})
-			this.$refs.video.style.display = "block"
+			video.style.display = "block"
 		},
 		pollQr()
 		{
@@ -86,11 +103,6 @@ export default (Vue as VueConstructor<Vue & {$refs: TRefs}>).extend({
 				return this.$emit("qr", { data: fakeQr })
 			
 			let { video, canvas } = this.$refs
-			let { width: w, height: h} = video
-			canvas.width = video.width = video.videoWidth
-			canvas.height = video.height = video.videoHeight
-			video.width = w
-			video.height = h
 			let ctx = canvas.getContext("2d")
 			if (!ctx)
 				return console.error(`canvas context not available!`)

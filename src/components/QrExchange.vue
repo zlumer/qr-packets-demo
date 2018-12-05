@@ -25,10 +25,6 @@ export default (Vue as VueConstructor<Vue & {$refs: TRefs}>).extend({
 			timer: 0,
 		}
 	},
-	mounted()
-	{
-		this.$refs.reader.startCamera()
-	},
 	props: {
 		intro: String,
 		qrs: {
