@@ -1,4 +1,5 @@
 import Web3 = require('web3')
+import { TransactionReceipt } from 'web3/types'
 
 const web3 = new Web3()
 web3.setProvider(new Web3.providers.WebsocketProvider('wss://rinkeby.infura.io/ws'))
@@ -8,8 +9,19 @@ export async function getNonce(address: string): Promise<number>
 	return await web3.eth.getTransactionCount(address)
 }
 
-export async function sendTx(tx: string)
+declare global
 {
+	interface Window
+	{
+		__eth__sendTx: typeof sendTx
+	}
+}
+
+export async function sendTx(tx: string): Promise<TransactionReceipt>
+{
+	if ("__eth__sendTx" in window)
+		return window.__eth__sendTx(tx)
+	
 	return await web3.eth.sendSignedTransaction(tx, (err, transactionHash) =>
 	{
 		console.log('transactionHash: ', transactionHash)
