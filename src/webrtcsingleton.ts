@@ -1,40 +1,52 @@
-import { RTCHelper } from "./webrtc"
-import { JsonRpc } from "./jsonrpc"
-import { timedPromise } from "./promise"
+import { JsonRpc } from './jsonrpc'
+import { timedPromise } from './promise'
 
-function init()
+import SimplePeer from "simple-peer"
+
+let i = 0
+
+export function init(initiator: boolean)
 {
-	let rtc = new RTCHelper()
+	let rtc = new SimplePeer({
+		initiator
+	})
+	let ii = i++
 
 	let jrpc = new JsonRpc(
-		msg => rtc.dataChannel!.send(msg),
-		(json, cb) =>
-		{
+		msg => (console.log(`JSONRPC ${ii}: ${msg}`), rtc.send(msg)),
+		(json, cb) => {
 			console.log(`ignored remote signer request:`, json)
 			cb(undefined, null)
 		}
 	)
-	rtc.onMessage = (ev) => (console.log(ev), jrpc.onMessage(ev.data.toString()))
+	rtc.on('error', err =>
+	{
+		console.log(err)
+	})
+	rtc.on('signal', signal =>
+	{
+		console.log(`SIGNAL$`, signal)
+		// jrpc.callRaw("")
+	})
+
+	rtc.on('data', data => (console.log(`webrtc jrpc incoming:`, data), jrpc.onMessage(data.toString())))
 	let connected = false
-	
+
 	return {
 		rtc,
 		jrpc,
-		connected
+		connected,
 	}
 }
 export async function checkConnection(): Promise<boolean>
 {
 	if (!singleton.connected)
 		return false
-	
+
 	try
 	{
-		if (singleton.rtc.rpc.signalingState == 'stable')
-			return true
-		
 		await timedPromise(singleton.jrpc.ping(), 5000)
-		return true
+			return true
 	}
 	catch (e)
 	{
@@ -42,9 +54,10 @@ export async function checkConnection(): Promise<boolean>
 	}
 }
 
-export let singleton = init()
+let singleton = init(true)
+export let getSingleton = () => singleton
 
-export function reset()
+export function reset(initiator: boolean)
 {
-	singleton = init()
+	singleton = init(initiator)
 }

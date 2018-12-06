@@ -13,9 +13,8 @@ import Vue from 'vue'
 import QrGif from "../components/QrGif.vue"
 import { parseHostMessage, allToObj, IHCSimple, IHostCommand } from "../hostproto"
 import { isResult } from "../hostprotocmd"
-import { RTCHelper } from '../webrtc'
 import { JsonRpc } from '../jsonrpc'
-import { singleton } from "../webrtcsingleton"
+import { getSingleton, reset as webrtcReset } from "../webrtcsingleton"
 
 export default Vue.extend({
 	data()
@@ -37,11 +36,11 @@ export default Vue.extend({
 	computed: {
 		connected: function()
 		{
-			return singleton.connected
+			return getSingleton().connected
 		},
 		rtc: function()
 		{
-			return singleton.rtc
+			return getSingleton().rtc
 		},
 		qr: function()
 		{
@@ -57,7 +56,7 @@ export default Vue.extend({
 			this.status = 'connecting to handshake server...'
 			let ws = this.ws = new WebSocket(this.url)
 			let ice = [] as any[]
-			let hsjrpc = new JsonRpc(msg => (console.log(msg),ws.send(msg)), async (json, cb) =>
+			let hsjrpc = new JsonRpc(msg => (console.log(msg), ws.send(msg)), async (json, cb) =>
 			{
 				console.log('incoming: ', json)
 				//@ts-ignore // temp ignore `unknown` type until vetur supports ts 3.2
@@ -76,7 +75,8 @@ export default Vue.extend({
 					// let cand = json.params.ice || json.params[0]
 					console.log(`ICE (external):`, cand)
 					if (cand)
-						await this.rtc.pushIceCandidate(cand)
+						await this.rtc.signal({ candidate: cand })
+					
 					cb(undefined, null)
 				}
 				if (isAnswer(json))
@@ -84,32 +84,39 @@ export default Vue.extend({
 					let { answer } = allToObj(json, ['answer'])
 					console.log(`got answer: ${answer}`)
 					this.status = 'exchanging data, please wait'
-					this.sid = ''
-					await this.rtc.pushAnswer({ type: "answer", sdp: answer })
-					this.rtc.candidates.map(x => x && hsjrpc.call('ice', x))
-					this.rtc.addListener('ice', x => x && hsjrpc.call('ice', x))
+					this.rtc.signal({ type: "answer", sdp: answer } as any)
+					await Promise.all(ice.map(x => hsjrpc.callRaw('ice', x)))
 					cb(undefined, null)
+
+					this.rtc.addListener('ice', x => x && hsjrpc.call('ice', x))
 				}
 			})
 			this.ws.addEventListener('message', msg => hsjrpc.onMessage(msg.data.toString()))
-			let offerPromise = this.rtc.createOffer()
 			this.ws.addEventListener('open', async () =>
 			{
-				this.status = 'waiting for webrtc offer'
-				let offer = await offerPromise
-				this.status = 'pushing webrtc offer'
-				let { sid } = await hsjrpc.call('offer', offer.sdp)
-				this.sid = sid
-				this.status = 'PLEASE SCAN QR CODE'
+				webrtcReset(true)
+				getSingleton().rtc.on('signal', async signal =>
+				{
+					console.log(`SIGNAL$`, signal)
+					if (signal.type == 'offer')
+					{
+						this.sid = (await hsjrpc.callRaw('offer', { offer: signal.sdp })).sid
+						this.status = 'PLEASE SCAN QR CODE'
+					}
+					if (signal.candidate)
+						hsjrpc.callRaw("ice", { ice: signal.candidate })
+				})
+				getSingleton().rtc.on('connect', () =>
+				{
+					this.status = 'CONNECTED!'
+					getSingleton().connected = true
+					this.getWallets()
+				})
 			})
-			await this.rtc.waitConnection()
-			this.status = 'CONNECTED!'
-			singleton.connected = true
-			await this.getWallets()
 		},
 		async getWallets()
 		{
-			let wallets = await singleton.jrpc.call('getWalletList', ["eth"])
+			let wallets = await getSingleton().jrpc.call('getWalletList', ["eth"])
 			localStorage.setItem('wallets', JSON.stringify(wallets))
 			this.$router.push({ path: "/wallets" })
 		}

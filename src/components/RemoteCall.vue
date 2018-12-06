@@ -9,7 +9,7 @@ import Vue from 'vue'
 import QrExchange from "../components/QrExchange.vue"
 import { parseHostMessage } from "../hostproto"
 import { isResult } from "../hostprotocmd"
-import { checkConnection, singleton } from '../webrtcsingleton'
+import { checkConnection, getSingleton } from '../webrtcsingleton'
 
 export default Vue.extend({
 	data()
@@ -48,7 +48,7 @@ export default Vue.extend({
 		{
 			if (!this.webrtcConnected)
 				return
-			let result = await singleton.jrpc.callRaw(this.method, JSON.parse(this.params))
+			let result = await getSingleton().jrpc.callRaw(this.method, JSON.parse(this.params))
 			this.$emit('result', result)
 		},
 		onQr(qr: string)
