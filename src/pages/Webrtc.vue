@@ -14,14 +14,13 @@ import QrGif from "../components/QrGif.vue"
 import { parseHostMessage, allToObj, IHCSimple, IHostCommand } from "../hostproto"
 import { isResult } from "../hostprotocmd"
 import { JsonRpc } from '../jsonrpc'
-import { getSingleton, reset as webrtcReset } from "../webrtcsingleton"
+import { getSingleton, reset as webrtcReset, SignalData } from "../webrtcsingleton"
 
 export default Vue.extend({
 	data()
 	{
 		return {
 			status: 'not started',
-			ws: null as any as WebSocket,
 			url: "wss://duxi.io/shake",
 			sid: '',
 		}
@@ -53,22 +52,21 @@ export default Vue.extend({
 	methods: {
 		async connect()
 		{
+			const isIce = function(msg: IHostCommand<any, any>): msg is IHCSimple<{ice: {}}>
+			{
+				return msg.method == 'ice'
+			}
+			const isAnswer = function(msg: IHostCommand<any, any>): msg is IHCSimple<{answer: string}>
+			{
+				return msg.method == 'answer'
+			}
+
 			this.status = 'connecting to handshake server...'
-			let ws = this.ws = new WebSocket(this.url)
-			let ice = [] as any[]
-			let hsjrpc = new JsonRpc(msg => (console.log(msg), ws.send(msg)), async (json, cb) =>
+			let ws = new WebSocket(this.url)
+			let snt = getSingleton()
+			let hsjrpc = new JsonRpc(msg => (console.log("HANDSHAKE > ", msg), ws.send(msg)), async (json, cb) =>
 			{
 				console.log('incoming: ', json)
-				//@ts-ignore // temp ignore `unknown` type until vetur supports ts 3.2
-				const isIce = function(msg: IHostCommand<unknown[], unknown>): msg is IHCSimple<{ice: {}}>
-				{
-					return json.method == 'ice'
-				}
-				//@ts-ignore // temp ignore `unknown` type until vetur supports ts 3.2
-				const isAnswer = function(msg: IHostCommand<unknown[], unknown>): msg is IHCSimple<{answer: string}>
-				{
-					return json.method == 'answer'
-				}
 				if (isIce(json))
 				{
 					let cand = allToObj(json, ["ice"]).ice
@@ -85,33 +83,38 @@ export default Vue.extend({
 					console.log(`got answer: ${answer}`)
 					this.status = 'exchanging data, please wait'
 					this.rtc.signal({ type: "answer", sdp: answer } as any)
-					await Promise.all(ice.map(x => hsjrpc.callRaw('ice', x)))
-					cb(undefined, null)
 
-					this.rtc.addListener('ice', x => x && hsjrpc.call('ice', x))
+					this.rtc.on("signal", signal => sendIce)
+					await Promise.all(snt.data.ice.map(x => sendIce))
+					cb(undefined, null)
 				}
 			})
-			this.ws.addEventListener('message', msg => hsjrpc.onMessage(msg.data.toString()))
-			this.ws.addEventListener('open', async () =>
+			function sendIce(signal: SignalData)
 			{
-				webrtcReset(true)
-				getSingleton().rtc.on('signal', async signal =>
+				if (signal.candidate)
+					hsjrpc.callRaw('ice', { ice: signal.candidate })
+			}
+			const sendOffer = async (signal: SignalData) =>
+			{
+				if (signal.type == 'offer')
 				{
-					console.log(`SIGNAL$`, signal)
-					if (signal.type == 'offer')
-					{
-						this.sid = (await hsjrpc.callRaw('offer', { offer: signal.sdp })).sid
-						this.status = 'PLEASE SCAN QR CODE'
-					}
-					if (signal.candidate)
-						hsjrpc.callRaw("ice", { ice: signal.candidate })
-				})
-				getSingleton().rtc.on('connect', () =>
+					let sidResponse = await hsjrpc.callRaw('offer', { offer: signal.sdp })
+					this.sid = sidResponse.sid
+					this.status = 'PLEASE SCAN QR CODE'
+				}
+			}
+			ws.addEventListener('message', msg => hsjrpc.onMessage(msg.data.toString()))
+			ws.addEventListener('open', async () =>
+			{
+				snt.rtc.on('connect', () =>
 				{
 					this.status = 'CONNECTED!'
-					getSingleton().connected = true
 					this.getWallets()
 				})
+				if (snt.data.offer)
+					sendOffer(snt.data.offer)
+				else
+					snt.rtc.on('signal', sendOffer)
 			})
 		},
 		async getWallets()
