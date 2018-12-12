@@ -1,7 +1,6 @@
 import SimplePeer from "simple-peer"
 import { HandshakeConnectionInitiator, IHandshakeHandlerInitiator, IHandshakeHandlerResponder, HandshakeConnectionResponder } from "./jrpchs"
-import { SignalData } from "src/webrtcsingleton"
-import { createPeer } from "./SimplePeer"
+import { createPeer, SignalData } from "./SimplePeer"
 
 export class WebrtcHSInitiator implements IHandshakeHandlerInitiator
 {
@@ -25,8 +24,12 @@ export class WebrtcHSInitiator implements IHandshakeHandlerInitiator
 	}
 	destroy(callback: () => void)
 	{
-		this.rtc.off('signal', this._rtc_onSignal)
-		this.rtc.off('connect', this._rtc_onConnect)
+		console.log(this.rtc)
+		if (this.rtc && this.rtc.off)
+		{
+			this.rtc.off('signal', this._rtc_onSignal)
+			this.rtc.off('connect', this._rtc_onConnect)
+		}
 
 		this.destroyed = true
 
@@ -71,7 +74,8 @@ export class WebrtcHSInitiator implements IHandshakeHandlerInitiator
 			return
 		
 		console.log(`INITIATOR ICE ${ice}`)
-		this.rtc.signal({ candidate: ice })
+		if (ice)
+			this.rtc.signal({ candidate: ice })
 	}
 }
 export class WebrtcHSResponder implements IHandshakeHandlerResponder
@@ -115,6 +119,7 @@ export class WebrtcHSResponder implements IHandshakeHandlerResponder
 		if (this.destroyed)
 			return
 		
-		this.rtc.signal({ candidate: ice })
+		if (ice)
+			this.rtc.signal({ candidate: ice })
 	}
 }

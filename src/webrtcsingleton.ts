@@ -1,11 +1,9 @@
-import { JsonRpc } from './jsonrpc'
-import { timedPromise } from './promise'
+import { JsonRpc } from './network/jsonrpc'
 
 import SimplePeer from "simple-peer"
+import { SignalData } from './network/SimplePeer'
 
 let i = 0
-
-export type SignalData = { type?: string, sdp?: any, candidate?: any }
 
 export function init(initiator: boolean)
 {

@@ -1,4 +1,4 @@
-import { JsonRpc, RequestHandler } from "../jsonrpc"
+import { JsonRpc, RequestHandler } from "./jsonrpc"
 
 export class JsonRpcWebsocket extends JsonRpc
 {

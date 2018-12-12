@@ -22,7 +22,6 @@ import Wallet from "./pages/Wallet.vue"
 import NewTransfer from "./pages/NewTransfer.vue"
 import PushTxVue from "./pages/PushTx.vue"
 import WebrtcVue from "./pages/Webrtc.vue"
-import { JsonRpc } from "./jsonrpc"
 
 const routes = [
 	{ path: '/', component: Index },

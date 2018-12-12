@@ -11,10 +11,10 @@
 <script lang="ts">
 import Vue from 'vue'
 import QrGif from "../components/QrGif.vue"
-import { parseHostMessage, allToObj, IHCSimple, IHostCommand } from "../hostproto"
-import { isResult } from "../hostprotocmd"
-import { JsonRpc } from '../jsonrpc'
-import { getSingleton, reset as webrtcReset, SignalData } from "../webrtcsingleton"
+import { getSingleton, reset as webrtcReset } from "../webrtcsingleton"
+import { JsonRpcWebsocket } from "../network/jrpcws"
+import { WebrtcHSInitiator } from "../network/wrtchs"
+import * as eth from "../web3"
 
 export default Vue.extend({
 	data()

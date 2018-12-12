@@ -1,7 +1,7 @@
-import { IHostCommand, IHCSimple, allToObj } from "../hostproto"
+import { IHostCommand, IHCSimple, allToObj } from "./hostproto"
 import { JsonRpcWebsocket } from "./jrpcws"
-import { RequestHandler } from "../jsonrpc"
-import { SignalData } from "../webrtcsingleton"
+import { RequestHandler } from "./jsonrpc"
+import { SignalData } from "./SimplePeer"
 
 export function isIce(msg: IHostCommand<any, any>): msg is IHCSimple<{ice: IIceCandidate}>
 {

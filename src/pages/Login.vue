@@ -5,8 +5,6 @@
 <script lang="ts">
 import Vue from 'vue'
 import RemoteCall from "../components/RemoteCall.vue"
-import { parseHostMessage } from "../hostproto"
-import { isResult } from "../hostprotocmd"
 
 export default Vue.extend({
 	data()

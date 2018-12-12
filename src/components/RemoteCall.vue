@@ -7,8 +7,8 @@
 <script lang="ts">
 import Vue from 'vue'
 import QrExchange from "../components/QrExchange.vue"
-import { parseHostMessage } from "../hostproto"
-import { isResult } from "../hostprotocmd"
+import { parseHostMessage } from "../network/hostproto"
+import { isResult } from "../network/hostprotocmd"
 import { checkConnection, getSingleton } from '../webrtcsingleton'
 
 export default Vue.extend({
