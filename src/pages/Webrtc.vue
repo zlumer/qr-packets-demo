@@ -52,69 +52,16 @@ export default Vue.extend({
 	methods: {
 		async connect()
 		{
-			const isIce = function(msg: IHostCommand<any, any>): msg is IHCSimple<{ice: {}}>
-			{
-				return msg.method == 'ice'
-			}
-			const isAnswer = function(msg: IHostCommand<any, any>): msg is IHCSimple<{answer: string}>
-			{
-				return msg.method == 'answer'
-			}
-
 			this.status = 'connecting to handshake server...'
-			let ws = new WebSocket(this.url)
-			let snt = getSingleton()
-			let hsjrpc = new JsonRpc(msg => (console.log("HANDSHAKE > ", msg), ws.send(msg)), async (json, cb) =>
+			let wss = new WebrtcHSInitiator(this.url, (sid) =>
 			{
-				console.log('incoming: ', json)
-				if (isIce(json))
-				{
-					let cand = allToObj(json, ["ice"]).ice
-					// let cand = json.params.ice || json.params[0]
-					console.log(`ICE (external):`, cand)
-					if (cand)
-						await this.rtc.signal({ candidate: cand })
-					
-					cb(undefined, null)
-				}
-				if (isAnswer(json))
-				{
-					let { answer } = allToObj(json, ['answer'])
-					console.log(`got answer: ${answer}`)
-					this.status = 'exchanging data, please wait'
-					this.rtc.signal({ type: "answer", sdp: answer } as any)
-
-					this.rtc.on("signal", signal => sendIce)
-					await Promise.all(snt.data.ice.map(x => sendIce))
-					cb(undefined, null)
-				}
-			})
-			function sendIce(signal: SignalData)
-			{
-				if (signal.candidate)
-					hsjrpc.callRaw('ice', { ice: signal.candidate })
-			}
-			const sendOffer = async (signal: SignalData) =>
-			{
-				if (signal.type == 'offer')
-				{
-					let sidResponse = await hsjrpc.callRaw('offer', { offer: signal.sdp })
-					this.sid = sidResponse.sid
+				this.sid = sid
 					this.status = 'PLEASE SCAN QR CODE'
-				}
-			}
-			ws.addEventListener('message', msg => hsjrpc.onMessage(msg.data.toString()))
-			ws.addEventListener('open', async () =>
-			{
-				snt.rtc.on('connect', () =>
+			}, () =>
 				{
 					this.status = 'CONNECTED!'
-					this.getWallets()
-				})
-				if (snt.data.offer)
-					sendOffer(snt.data.offer)
-				else
-					snt.rtc.on('signal', sendOffer)
+				console.log('CONNECTED!!!!!')
+				// this.getWallets()
 			})
 		},
 		async getWallets()
