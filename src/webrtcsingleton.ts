@@ -7,52 +7,29 @@ let i = 0
 
 export function init(initiator: boolean)
 {
-	let rtc = new SimplePeer({
-		initiator
-	})
-	let ii = i++
-	
-	let jrpc = new JsonRpc(
-		msg =>
+	let servers = [
 		{
-			console.log(`JSONRPC ${ii}: ${msg}`)
-			if (!obj.connected)
-				throw `WebRTC singleton: can't send msg when not connected! ${msg}`
-			rtc.send(msg)
+			urls: "stun:stun.l.google.com:19302"
 		},
-		(json, cb) => {
-			console.log(`ignored remote signer request:`, json)
-			cb(undefined, null)
-		}
-	)
-	rtc.on('error', err =>
-	{
-		console.log(err)
-	})
-	let data = { ice: [] as SignalData[], offer: undefined as SignalData | undefined }
-	rtc.on('signal', signal =>
-	{
-		console.log(`SIGNAL$`, signal)
-		if (signal.type == "offer")
-			data.offer = signal
-		if (signal.candidate)
-			data.ice.push(signal)
-	})
+		{
+			urls: "stun:global.stun:3478?transport=udp"
+		},
+		{
+			urls: 'stun:global.stun.twilio.com:3478?transport=udp'
+		},
+	]
 	let obj = {
-		rtc,
-		jrpc,
+		jrpc: null as unknown as JsonRpc,
 		connected: false,
-		data,
 	}
-	rtc.on('connect', () => (console.log('### WEBRTC CONNECTED ###'), obj.connected = true))
-	rtc.on('close', () => (console.log('### WEBRTC DISCONNECTED ###'), obj.connected = false))
-	
-	rtc.on('data', data => (console.log(`webrtc jrpc incoming:`, data.toString()), jrpc.onMessage(data.toString())))
 	return obj
 }
 export async function checkConnection(): Promise<boolean>
 {
 	// console.log(`### WEBRTC STATUS: ${singleton.connected} ###`)
+	if (!singleton.jrpc)
+		return false
+	
 	if (!singleton.connected)
 		return false
 
