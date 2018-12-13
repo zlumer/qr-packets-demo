@@ -41,7 +41,7 @@ export interface IHandshakeHandlerResponder extends IHandshakeHandlerBase
 	onOffer(offer: string): void
 }
 
-class HandshakeConnectionBase
+export class HandshakeConnectionBase
 {
 	status = HandshakeStatus.NotStarted
 	
