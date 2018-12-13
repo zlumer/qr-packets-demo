@@ -50,7 +50,8 @@ export function jrpcs<T extends { id?: string | number | null, method?: string }
 	return JSON.stringify(jrpc(obj))
 }
 
-export type RequestHandler = (json: { id: Id, method: string, params: any[] | any }, callback: (err: any, result: any) => void) => void
+export type RequestJson = { id: Id, method: string, params: any[] | any }
+export type RequestHandler = (json: RequestJson, callback: (err: any, result: any) => void) => void
 
 export class JsonRpc
 {
