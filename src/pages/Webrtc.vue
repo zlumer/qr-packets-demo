@@ -14,6 +14,7 @@ import QrGif from "../components/QrGif.vue"
 import { getSingleton, reset as webrtcReset } from "../webrtcsingleton"
 import { JsonRpcWebsocket } from "../network/jrpcws"
 import { JsonRpcWebRtc } from "../network/jrpcrtc"
+import { JsonRpcFallback } from "../network/jrpcfb"
 import { WebrtcHSInitiator } from "../network/wrtchs"
 import * as eth from "../web3"
 
@@ -60,14 +61,40 @@ export default Vue.extend({
 				console.log('CONNECTED!!!!!')
 				getSingleton().connected = true
 				rtc.on('close', () => getSingleton().connected = false)
+				rtc.on('error', () => getSingleton().connected = false)
 
 				this.getWalletsOld()
 				
 				// this.getWallets()
 			})
-			getSingleton().jrpc = new JsonRpcWebRtc(wss.rtc,
+			let jrpc = getSingleton().jrpc = new JsonRpcWebRtc(wss.rtc,
 				(json,cb) => console.log('Webrtc.vue: incoming: ', json),
 				() => console.log(`Webrtc.vue: connected 2`))
+			
+			let onAnswer = wss.onAnswer
+			wss.onAnswer = (answer: string) =>
+			{
+				onAnswer.call(wss, answer)
+
+				setTimeout(fallback, 5000)
+			}
+
+			function fallback()
+			{
+				console.log('FALLING BACK')
+
+				if (jrpc.connected)
+					return
+				
+				wss.rtc.removeAllListeners()
+				wss.rtc.end()
+				let jrpcFallback = new JsonRpcFallback(wss.ws.wsrpc, (json, cb) =>
+				{
+					console.log('Webrtc.vue: incoming fallback: ', json)
+				})
+				getSingleton().jrpc = jrpcFallback
+				getSingleton().connected = true
+			}
 		},
 		async getWalletsOld()
 		{
