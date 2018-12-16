@@ -44,7 +44,7 @@ export default Vue.extend({
 			if (!this.sid)
 				return ""
 			
-			return `webrtcLogin|3|${JSON.stringify({ sid: this.sid, url: this.url })}`
+			return `webrtcLogin|1|${JSON.stringify({ sid: this.sid, url: this.url })}`
 		}
 	},
 	methods: {
@@ -79,13 +79,17 @@ export default Vue.extend({
 				setTimeout(fallback, 5000)
 			}
 
+			let ready = () => this.getWalletsOld()
+
 			function fallback()
 			{
-				console.log('FALLING BACK')
+				console.log('falling back?')
 
 				if (jrpc.connected)
 					return
 				
+				console.log('FALLING BACK!')
+
 				wss.rtc.removeAllListeners()
 				wss.rtc.end()
 				let jrpcFallback = new JsonRpcFallback(wss.ws.wsrpc, (json, cb) =>
@@ -94,6 +98,8 @@ export default Vue.extend({
 				})
 				getSingleton().jrpc = jrpcFallback
 				getSingleton().connected = true
+
+				ready()
 			}
 		},
 		async getWalletsOld()
