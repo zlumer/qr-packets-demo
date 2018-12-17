@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<h1 v-if="connected">CONNECTED</h1>
-		<div v-else>
+		<div v-else data-cy="webrtc-force" ref="wrapper">
 			<span v-if="status">{{ status }}</span>
 			<qr-gif :qrs="[qr]" v-if="sid"></qr-gif>
 		</div>
@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import Vue, { VueConstructor } from 'vue'
 import QrGif from "../components/QrGif.vue"
 import { getSingleton, reset as webrtcReset } from "../webrtcsingleton"
 import { JsonRpcWebsocket } from "../network/jrpcws"
@@ -18,7 +18,11 @@ import { JsonRpcFallback } from "../network/jrpcfb"
 import { WebrtcHSInitiator } from "../network/wrtchs"
 import * as eth from "../web3"
 
-export default Vue.extend({
+type TRefs = {
+	wrapper: HTMLDivElement
+}
+
+export default (Vue as VueConstructor<Vue & {$refs: TRefs}>).extend({
 	data()
 	{
 		return {
@@ -35,6 +39,14 @@ export default Vue.extend({
 			await this.connect()
 	},
 	computed: {
+		forceFallback(): boolean
+		{
+			let wrapper = this.$refs.wrapper
+			if (wrapper && wrapper.hasAttribute('data-force-fallback'))
+				return !!wrapper.getAttribute('data-force-fallback')
+			
+			return false
+		},
 		connected: function()
 		{
 			return getSingleton().connected
@@ -76,7 +88,8 @@ export default Vue.extend({
 			{
 				onAnswer.call(wss, answer)
 
-				setTimeout(fallback, 5000)
+				let timeout = this.forceFallback ? 1 : 5000
+				setTimeout(fallback, timeout)
 			}
 
 			let ready = () => this.getWalletsOld()
