@@ -1,9 +1,9 @@
 <template>
 	<div>
-		To: <input type="text" v-model="form.to" data-cy="form-to" :disabled="signing">
-		Amount: <input type="number" v-model="form.amount" data-cy="form-amount" :disabled="signing">
-		USD value: <input type="number" v-model="form.usd" data-cy="form-usd" :disabled="signing">
-		Gas price: <input type="number" v-model="form.gas" data-cy="form-gas" :disabled="signing">
+		<span v-for="name in inputs" :key="name">
+			{{ form[name].label }}
+			<form-input v-model="form[name].value" :cy="form[name].cy" :enabled="!signing" />
+		</span>
 		<br/>
 		<button type="submit" @click="onButton" :disabled="signing || !canSign">SIGN TX</button>
 		<span v-if="signing && loading">loading...</span>
@@ -15,7 +15,20 @@
 <script lang="ts">
 import Vue, { VueConstructor } from 'vue'
 import RemoteCall from '../components/RemoteCall.vue'
+import FormInput from '../components/FormInput.vue'
 import * as eth from "../web3"
+
+function validateAddress(addr: string)
+{
+	if (!addr)
+		return false
+	
+	return eth.isValidEthAddress(addr.toLowerCase())
+}
+function validateNumber(num: number)
+{
+	return !isNaN(parseFloat(num.toString()))
+}
 
 export default Vue.extend({
 	data()
@@ -25,29 +38,25 @@ export default Vue.extend({
 			loading: false,
 			nonce: NaN,
 			form: {
-				to: '',
-				amount: '',
-				usd: '',
-				gas: '',
+				to: { label: "To:", cy: "form-to", value: '', validate: validateAddress },
+				amount: { label: "Amount:", cy: "form-amount", type: 'number', value: '', validate: validateNumber },
+				usd: { label: "USD value:", cy: "form-usd", type: 'number', value: '' },
+				gas: { label: "Gas price:", cy: "form-gas", type: 'number', value: '', validate: validateNumber },
 			},
+			inputs: ['to', 'amount', 'usd', 'gas']
 		}
 	},
 	computed: {
+		inputsValid()
+		{
+			return !this.inputs
+				.map(n => this.form[n as "to"])
+				.map(x => x.validate ? x.validate(x.value) : true)
+				.some(x => !x)
+		},
 		canSign: function()
 		{
-			return this.validAddress && this.validAmount && this.validGas
-		},
-		validAddress: function()
-		{
-			return eth.isValidEthAddress(this.form.to.toLowerCase())
-		},
-		validAmount: function()
-		{
-			return !isNaN(parseFloat(this.form.amount))
-		},
-		validGas: function()
-		{
-			return !isNaN(parseFloat(this.form.gas))
+			return this.inputsValid
 		},
 		address: function()
 		{
@@ -67,10 +76,10 @@ export default Vue.extend({
 		{
 			return {
 				from: this.address,
-				to: this.form.to,
+				to: this.form.to.value,
 				nonce: this.nonce,
-				gasPrice: eth.utils.toWei(this.form.gas, 'gwei'),
-				value: eth.utils.toWei(this.form.amount),
+				gasPrice: eth.utils.toWei(this.form.gas.value, 'gwei'),
+				value: eth.utils.toWei(this.form.amount.value),
 			}
 		}
 	},
@@ -94,7 +103,8 @@ export default Vue.extend({
 		}
 	},
 	components: {
-		RemoteCall
+		RemoteCall,
+		FormInput,
 	}
 })
 </script>
