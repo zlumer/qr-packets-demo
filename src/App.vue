@@ -19,7 +19,7 @@ import Index from "./pages/Index.vue"
 import Login from "./pages/Login.vue"
 import Wallets from "./pages/Wallets.vue"
 import Wallet from "./pages/Wallet.vue"
-import NewTransfer from "./pages/NewTransfer.vue"
+import EthTransfer from "./pages/EthTransfer.vue"
 import PushTxVue from "./pages/PushTx.vue"
 import WebrtcVue from "./pages/Webrtc.vue"
 
@@ -35,7 +35,7 @@ const routes = [
 		children: [
 		]
 	},
-	{ path: '/wallet/:address/create', name: 'newtx', component: NewTransfer },
+	{ path: '/wallet/:address/create', name: 'newtx', component: EthTransfer },
 	{
 		path: '/pushtx/:tx',
 		name: 'pushtx',
