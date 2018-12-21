@@ -2,19 +2,25 @@
 	<div>
 		<div v-if="!wallets.length">No wallets found!</div>
 		<ul>
-			<li :key="w.address" v-for="w in wallets"><router-link :to="{ name: 'wallet', params: { address: w.address } }">{{ w.address }}</router-link></li>
+			<li :key="w.address" v-for="w in wallets">
+				<router-link
+					:to="{ name: 'wallet', params: {
+						address: w.address,
+						blockchain: w.blockchain,
+					}, query: { chainId: w.chainId } }"
+				>{{ w.address }}</router-link>
+				</li>
 		</ul>
 	</div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import Vue from 'src/vue-ts'
 export default Vue.extend({
 	computed: {
 		wallets: function()
 		{
-			let wallets = JSON.parse(localStorage.getItem('wallets') || "[]") as { address: string }[]
-			return wallets
+			return this.$store.state.wallets
 		}
 	}
 })

@@ -11,8 +11,9 @@
 
 <script lang="ts">
 
-import Vue, { VueConstructor } from "vue"
-import VueRouter from "vue-router"
+import Vue, { VueWithProps } from "./vue-ts"
+import Vuex from "vuex"
+import VueRouter, { RouteConfig, NavigationGuard } from "vue-router"
 import jsqr from "jsqr"
 import { QRCode } from "jsqr"
 import Index from "./pages/Index.vue"
@@ -22,6 +23,17 @@ import Wallet from "./pages/Wallet.vue"
 import EthTransfer from "./pages/EthTransfer.vue"
 import PushTxVue from "./pages/PushTx.vue"
 import WebrtcVue from "./pages/Webrtc.vue"
+import { createStore, Store } from "./store"
+
+const updateWallet: NavigationGuard = (to, from, next) =>
+{
+	console.log('updating wallet!', to, from, next)
+	let blockchain = to.params.blockchain as 'eth'
+	let address: string = to.params.address
+	let chainId: string = to.query.chainId.toString()
+	store.commit('setCurrentWallet', { wallet: { blockchain, address, chainId } })
+	next()
+}
 
 const routes = [
 	{ path: '/', component: Index },
@@ -29,31 +41,40 @@ const routes = [
 	{ path: '/webrtc', component: WebrtcVue },
 	{ path: '/wallets', component: Wallets },
 	{
-		path: '/wallet/:address',
+		path: '/wallet/:blockchain/:address',
 		name: 'wallet',
 		component: Wallet,
 		children: [
-		]
+			{
+				path: 'create',
+				name: 'newtx',
+				component: EthTransfer,
+			},
+		],
+		beforeEnter: updateWallet
 	},
-	{ path: '/wallet/:address/create', name: 'newtx', component: EthTransfer },
 	{
 		path: '/pushtx/:tx',
 		name: 'pushtx',
 		component: PushTxVue,
 		props: true
 	}
-]
+] as RouteConfig[]
 
 const router = new VueRouter({
 	routes,
 	mode: 'history'
 })
+
 Vue.use(VueRouter)
+Vue.use(Vuex)
 
 type TRefs = {
 }
 
-let App = (Vue as VueConstructor<Vue & {$refs: TRefs}>).extend({
+let store = createStore()
+
+let App = (Vue as VueWithProps<{$refs: TRefs}>).extend({
 	data()
 	{
 		return {
@@ -64,7 +85,8 @@ let App = (Vue as VueConstructor<Vue & {$refs: TRefs}>).extend({
 	},
 	methods: {
 	},
-	router
+	router,
+	store,
 })
 export default App
 

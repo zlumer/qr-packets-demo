@@ -1,28 +1,39 @@
 <template>
-	<remote-call intro="Scan QR code to log in" method="getWalletList" :params="bcs" :id="2" v-on:result="onResult"></remote-call>
+	<remote-call
+		intro="Scan QR code to log in"
+		method="getWalletList"
+		:params="bcs"
+		:id="2"
+		v-on:result="onResult"
+	></remote-call>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import RemoteCall from "../components/RemoteCall.vue"
+import Vue from 'src/vue-ts'
+import RemoteCall from "src/components/RemoteCall.vue"
+import config from "src/config"
+import { IWallet } from 'src/store/interop'
 
 export default Vue.extend({
 	data()
 	{
 		return {
-			blockchains: ["eth"]
 		}
 	},
 	computed: {
+		msgId()
+		{
+			return this.$store.state.webrtc.outgoingId
+		},
 		bcs: function()
 		{
-			return JSON.stringify({ blockchains: this.blockchains })
+			return JSON.stringify({ blockchains: config.blockchains })
 		}
 	},
 	methods: {
-		onResult(wallets: {address: string}[])
+		onResult(wallets: IWallet[])
 		{
-			localStorage.setItem('wallets', JSON.stringify(wallets))
+			this.$store.commit('setWalletList', { wallets })
 			this.$router.push({ path: "/wallets" })
 		}
 	},

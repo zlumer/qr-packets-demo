@@ -1,5 +1,6 @@
 <template>
 	<div>
+		<router-view></router-view>
 		<h1>{{address}}</h1>
 		<router-link :to="{name:'newtx', params:{ address: address }}">new tx</router-link>
 		<ul v-if="!error">
@@ -10,7 +11,7 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import Vue from 'src/vue-ts'
 
 interface ITransaction
 {
@@ -31,7 +32,7 @@ export default Vue.extend({
 	computed: {
 		address: function()
 		{
-			return this.$router.currentRoute.params.address
+			return this.$store.state.currentWallet!.address
 		}
 	},
 	mounted: async function ()

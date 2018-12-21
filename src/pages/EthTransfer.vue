@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-import Vue, { VueConstructor } from 'vue'
+import Vue, { VueWithProps } from '../vue-ts'
 import NewTransfer from './NewTransfer.vue'
 import * as eth from "../web3"
 
@@ -59,12 +59,11 @@ export default Vue.extend({
 	computed: {
 		address: function()
 		{
-			return this.$route.params.address
+			return this.wallet.address
 		},
 		wallet: function()
 		{
-			let wallets = JSON.parse(localStorage.getItem('wallets') || '[]') as {address:string}[]
-			return wallets.find(x => x.address == this.address)
+			return this.$store.state.currentWallet!
 		},
 		txJson: function()
 		{

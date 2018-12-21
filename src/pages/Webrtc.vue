@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts">
-import Vue, { VueConstructor } from 'vue'
+import Vue, { VueWithProps } from 'src/vue-ts'
 import QrGif from "../components/QrGif.vue"
 import { getSingleton, reset as webrtcReset } from "../webrtcsingleton"
 import { JsonRpcWebsocket } from "../network/jrpcws"
@@ -22,7 +22,7 @@ type TRefs = {
 	wrapper: HTMLDivElement
 }
 
-export default (Vue as VueConstructor<Vue & {$refs: TRefs}>).extend({
+export default (Vue as VueWithProps<{$refs: TRefs}>).extend({
 	data()
 	{
 		return {
@@ -49,7 +49,7 @@ export default (Vue as VueConstructor<Vue & {$refs: TRefs}>).extend({
 		},
 		connected: function()
 		{
-			return getSingleton().connected
+			return this.$store.state.webrtc.connected
 		},
 		qr: function()
 		{
@@ -57,6 +57,12 @@ export default (Vue as VueConstructor<Vue & {$refs: TRefs}>).extend({
 				return ""
 			
 			return `webrtcLogin|1|${JSON.stringify({ sid: this.sid, url: this.url })}`
+		}
+	},
+	watch: {
+		connected: function()
+		{
+			
 		}
 	},
 	methods: {
@@ -71,9 +77,9 @@ export default (Vue as VueConstructor<Vue & {$refs: TRefs}>).extend({
 			{
 				this.status = 'CONNECTED!'
 				console.log('CONNECTED!!!!!')
-				getSingleton().connected = true
-				rtc.on('close', () => getSingleton().connected = false)
-				rtc.on('error', () => getSingleton().connected = false)
+				this.$store.dispatch('webrtcConnected', undefined)
+				rtc.on('close', () => this.$store.dispatch('webrtcDisconnected', undefined))
+				rtc.on('error', () => this.$store.dispatch('webrtcDisconnected', undefined))
 
 				this.getWalletsOld()
 				
@@ -92,7 +98,11 @@ export default (Vue as VueConstructor<Vue & {$refs: TRefs}>).extend({
 				setTimeout(fallback, timeout)
 			}
 
-			let ready = () => this.getWalletsOld()
+			let ready = () =>
+			{
+				this.$store.dispatch('webrtcConnected', undefined)
+				this.getWalletsOld()
+			}
 
 			function fallback()
 			{
@@ -110,7 +120,6 @@ export default (Vue as VueConstructor<Vue & {$refs: TRefs}>).extend({
 					console.log('Webrtc.vue: incoming fallback: ', json)
 				})
 				getSingleton().jrpc = jrpcFallback
-				getSingleton().connected = true
 
 				ready()
 			}
@@ -119,14 +128,15 @@ export default (Vue as VueConstructor<Vue & {$refs: TRefs}>).extend({
 		{
 			let wallets = await getSingleton().jrpc.callRaw(`getWalletList`, {blockchains:["eth"]})
 			
-			localStorage.setItem('wallets', JSON.stringify(wallets))
+			this.$store.commit('setWalletList', { wallets })
 			this.$router.push({ path: "/wallets" })
 		},
 		async getWallets()
 		{
 			// let wallets = await getSingleton().jrpc.send(`getWalletList|1|{blockchains:["eth","eos"]}`)
 			let wallets = await getSingleton().jrpc.callRaw(`getWalletList`, {blockchains:["eth","eos"]}, true, 1)
-			console.log(wallets[0])
+			this.$store.commit('setWalletList', { wallets })
+			/* console.log(wallets[0])
 			let address = wallets[0].address
 			let tx = {
 				to: '0x5DcD6E2D92bC4F96F9072A25CC8d4a3A4Ad07ba0',
@@ -135,7 +145,7 @@ export default (Vue as VueConstructor<Vue & {$refs: TRefs}>).extend({
 				gasPrice: eth.utils.toWei("3", 'gwei'),
 				value: eth.utils.toWei("0.12354"),
 			}
-			let stx = await getSingleton().jrpc.callRaw(`getWalletList`, {blockchains:["eth","eos"]}, true, 1)
+			let stx = await getSingleton().jrpc.callRaw(`getWalletList`, {blockchains:["eth","eos"]}, true, 1) */
 			// let tx = await getSingleton().jrpc.callRaw(`signTransferTx`, {wallet: wallets[0], tx:{}}, true, 2)
 			return
 			/* let wallets = await getSingleton().jrpc.call('getWalletList', ["eth"])
