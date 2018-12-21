@@ -16,7 +16,6 @@ import { JsonRpcWebsocket } from "../network/jrpcws"
 import { JsonRpcWebRtc } from "../network/jrpcrtc"
 import { JsonRpcFallback } from "../network/jrpcfb"
 import { WebrtcHSInitiator } from "../network/wrtchs"
-import * as eth from "../web3"
 
 type TRefs = {
 	wrapper: HTMLDivElement
@@ -130,27 +129,6 @@ export default (Vue as VueWithProps<{$refs: TRefs}>).extend({
 			
 			this.$store.commit('setWalletList', { wallets })
 			this.$router.push({ path: "/wallets" })
-		},
-		async getWallets()
-		{
-			// let wallets = await getSingleton().jrpc.send(`getWalletList|1|{blockchains:["eth","eos"]}`)
-			let wallets = await getSingleton().jrpc.callRaw(`getWalletList`, {blockchains:["eth","eos"]}, true, 1)
-			this.$store.commit('setWalletList', { wallets })
-			/* console.log(wallets[0])
-			let address = wallets[0].address
-			let tx = {
-				to: '0x5DcD6E2D92bC4F96F9072A25CC8d4a3A4Ad07ba0',
-				nonce: await eth.getNonce(address),
-				from: address,
-				gasPrice: eth.utils.toWei("3", 'gwei'),
-				value: eth.utils.toWei("0.12354"),
-			}
-			let stx = await getSingleton().jrpc.callRaw(`getWalletList`, {blockchains:["eth","eos"]}, true, 1) */
-			// let tx = await getSingleton().jrpc.callRaw(`signTransferTx`, {wallet: wallets[0], tx:{}}, true, 2)
-			return
-			/* let wallets = await getSingleton().jrpc.call('getWalletList', ["eth"])
-			localStorage.setItem('wallets', JSON.stringify(wallets))
-			this.$router.push({ path: "/wallets" }) */
 		}
 	},
 	components: {
