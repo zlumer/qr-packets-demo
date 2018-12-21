@@ -16,7 +16,7 @@
 <script lang="ts">
 import Vue, { VueWithProps } from '../vue-ts'
 import NewTransfer from './NewTransfer.vue'
-import * as eth from "../web3"
+import * as eth from "src/blockchains/eth"
 
 function validateAddress(addr: string)
 {

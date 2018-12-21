@@ -9,8 +9,8 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import * as eth from "../web3"
+import Vue from 'src/vue-ts'
+import * as eth from "src/blockchains/eth"
 import { TransactionReceipt } from 'web3/types'
 
 export default Vue.extend({

@@ -2,7 +2,7 @@ import Web3 = require('web3')
 import { TransactionReceipt } from 'web3/types'
 
 const web3 = new Web3()
-web3.setProvider(new Web3.providers.WebsocketProvider('wss://rinkeby.infura.io/ws'))
+web3.setProvider(new Web3.providers.WebsocketProvider('wss://rinkeby.infura.io/_ws'))
 
 export async function getNonce(address: string): Promise<number>
 {
