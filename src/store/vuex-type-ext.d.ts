@@ -8,9 +8,11 @@
 export type Mutator<TMutationPayloadMap> = {
 	commit: <T extends keyof TMutationPayloadMap>(
 		mutationType: T,
-		payload: TMutationPayloadMap[T]
-	) => void;
-};
+		...payload: OptionalArg<T, TMutationPayloadMap[T]>
+	) => void
+}
+
+type OptionalArg<T, P> = P extends undefined ? [] : [P]
 
 /**
  * Type defining the dispatch method portion of our store.
@@ -18,7 +20,7 @@ export type Mutator<TMutationPayloadMap> = {
 export type Dispatcher<TActionPayloadMap> = {
 	dispatch: <T extends keyof TActionPayloadMap>(
 		actionType: T,
-		payload: TActionPayloadMap[T]
+		...payload: OptionalArg<T, TActionPayloadMap[T]>
 	) => Promise<any>;
 };
 
@@ -28,7 +30,7 @@ export type Dispatcher<TActionPayloadMap> = {
 export type ActionDictionary<TActionPayloadMap, TMutationPayloadMap> = {
 	[P in keyof TActionPayloadMap]: (
 		store: Mutator<TMutationPayloadMap>,
-		payload: TActionPayloadMap[P]
+		...payload: OptionalArg<P, TActionPayloadMap[P]>
 	) => void;
 };
 
@@ -36,7 +38,7 @@ export type ActionDictionary<TActionPayloadMap, TMutationPayloadMap> = {
  * Type for mapping mutation type strings to mutation payloads.
  */
 export type MutationDictionary<TState, TMutationPayloadMap> = {
-	[P in keyof TMutationPayloadMap]: (state: TState, payload: TMutationPayloadMap[P]) => void;
+	[P in keyof TMutationPayloadMap]: (state: TState, ...payload: OptionalArg<P, TMutationPayloadMap[P]>) => void;
 };
 
 /**
