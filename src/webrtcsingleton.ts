@@ -20,7 +20,6 @@ export function init(initiator: boolean)
 	]
 	let obj = {
 		jrpc: null as unknown as JsonRpc,
-		connected: false,
 	}
 	return obj
 }
@@ -28,9 +27,6 @@ export async function checkConnection(): Promise<boolean>
 {
 	// console.log(`### WEBRTC STATUS: ${singleton.connected} ###`)
 	if (!singleton.jrpc)
-		return false
-	
-	if (!singleton.connected)
 		return false
 
 	try
