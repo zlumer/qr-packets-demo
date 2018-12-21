@@ -29,12 +29,12 @@ export function createStore()
 		actions: {
 			webrtcConnected(store)
 			{
-				store.commit('webrtcConnected', undefined)
+				store.commit('webrtcConnected')
 			},
 			webrtcDisconnected(store)
 			{
-				store.commit('webrtcDisconnected', undefined)
-				store.commit('webrtcResetId', undefined)
+				store.commit('webrtcDisconnected')
+				store.commit('webrtcResetId')
 			}
 		}
 	} as StoreOptions<IState, MutationPayloadMap, ActionPayloadMap>)

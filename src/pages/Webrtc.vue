@@ -76,9 +76,9 @@ export default (Vue as VueWithProps<{$refs: TRefs}>).extend({
 			{
 				this.status = 'CONNECTED!'
 				console.log('CONNECTED!!!!!')
-				this.$store.dispatch('webrtcConnected', undefined)
-				rtc.on('close', () => this.$store.dispatch('webrtcDisconnected', undefined))
-				rtc.on('error', () => this.$store.dispatch('webrtcDisconnected', undefined))
+				this.$store.dispatch('webrtcConnected')
+				rtc.on('close', () => this.$store.dispatch('webrtcDisconnected'))
+				rtc.on('error', () => this.$store.dispatch('webrtcDisconnected'))
 
 				this.getWalletsOld()
 				
@@ -99,7 +99,7 @@ export default (Vue as VueWithProps<{$refs: TRefs}>).extend({
 
 			let ready = () =>
 			{
-				this.$store.dispatch('webrtcConnected', undefined)
+				this.$store.dispatch('webrtcConnected')
 				this.getWalletsOld()
 			}
 
