@@ -4,7 +4,7 @@
 
 <script lang="ts">
 
-import Vue from "vue"
+import Vue from "src/vue-ts"
 import qr from "qrcode"
 
 let App = Vue.extend({

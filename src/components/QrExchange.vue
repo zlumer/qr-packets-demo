@@ -8,7 +8,7 @@
 
 <script lang="ts">
 
-import Vue, { VueConstructor } from "vue"
+import Vue, { VueWithProps } from "src/vue-ts"
 import Qr from "./QrGif.vue"
 import QrReader from "./QrReader.vue"
 import { QRCode } from "jsqr"
@@ -17,7 +17,7 @@ type TRefs = {
 	reader: InstanceType<typeof QrReader>
 }
 
-export default (Vue as VueConstructor<Vue & {$refs: TRefs}>).extend({
+export default (Vue as VueWithProps<{$refs: TRefs}>).extend({
 	data()
 	{
 		return {

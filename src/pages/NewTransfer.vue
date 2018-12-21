@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import Vue, { VueConstructor } from 'vue'
+import Vue from 'src/vue-ts'
 import RemoteCall from '../components/RemoteCall.vue'
 import FormInput from '../components/FormInput.vue'
 

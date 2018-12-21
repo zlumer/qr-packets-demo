@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts">
-import Vue, { VueConstructor } from 'vue'
+import Vue, { VueWithProps } from 'src/vue-ts'
 import jsqr from "jsqr"
 
 type TRefs = {
@@ -15,7 +15,7 @@ type TRefs = {
 	canvas: HTMLCanvasElement
 }
 
-export default (Vue as VueConstructor<Vue & {$refs: TRefs}>).extend({
+export default (Vue as VueWithProps<{$refs: TRefs}>).extend({
 	data()
 	{
 		return {

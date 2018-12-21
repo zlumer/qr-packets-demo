@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts">
-import Vue, { VueConstructor } from 'vue'
+import Vue from 'src/vue-ts'
 
 export default Vue.extend({
 	data()

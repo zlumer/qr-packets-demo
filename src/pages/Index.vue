@@ -6,7 +6,7 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import Vue from 'src/vue-ts'
 
 export default Vue.extend({
 	

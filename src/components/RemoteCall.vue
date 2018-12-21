@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import Vue from 'src/vue-ts'
 import QrExchange from "../components/QrExchange.vue"
 import { parseHostMessage } from "../network/hostproto"
 import { isResult } from "../network/hostprotocmd"
