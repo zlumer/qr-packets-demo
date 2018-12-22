@@ -1,5 +1,8 @@
 /**
  * Types for helping make commit and dispatch methods in vuex stores type safe.
+ * sources:
+ * https://gist.github.com/bmingles/8dc0ddcb87aeb092beb5a12447b10a36
+ * https://gist.github.com/wonderful-panda/46c072497f8731a2bde28da40e9ea2d7
  */
 
 /**
@@ -27,12 +30,22 @@ export type Dispatcher<TActionPayloadMap> = {
 /**
  * Type for mapping action type strings to action payloads.
  */
-export type ActionDictionary<TActionPayloadMap, TMutationPayloadMap> = {
+export type ActionDictionary<TActionPayloadMap, TActionContext> = {
 	[P in keyof TActionPayloadMap]: (
-		store: Mutator<TMutationPayloadMap>,
-		...payload: OptionalArg<P, TActionPayloadMap[P]>
+		store: TActionContext,
+		payload: TActionPayloadMap[P],
 	) => void;
 };
+
+export type ActionContext<
+	TState,
+	TDispatcher extends Dispatcher<any>,
+	TMutator extends Mutator<any>,
+	TGetters
+	> =
+		TDispatcher &
+		TMutator &
+		{ state: TState, rootGetters?: TGetters, rootState?: TState }
 
 /**
  * Type for mapping mutation type strings to mutation payloads.
@@ -41,11 +54,23 @@ export type MutationDictionary<TState, TMutationPayloadMap> = {
 	[P in keyof TMutationPayloadMap]: (state: TState, ...payload: OptionalArg<P, TMutationPayloadMap[P]>) => void;
 };
 
+export type GettersDictionary<TState, TGettersReturnMap> = {
+	[P in keyof TGettersReturnMap]: (
+		state: TState,
+		getters: GettersDictionary<TState, TGettersReturnMap>
+	) => TGettersReturnMap[P]
+}
+
 /**
  * Type for options passed to new Vuex.Store()
  */
-export type StoreOptions<TState, TMutationPayloadMap, TActionPayloadMap> = {
+export type StoreOptions<TState, TMutationPayloadMap, TActionPayloadMap, TGettersReturnMap> = {
 	state: TState,
 	mutations: MutationDictionary<TState, TMutationPayloadMap>,
-	actions: ActionDictionary<TActionPayloadMap, TMutationPayloadMap>
+	getters: GettersDictionary<TState, TGettersReturnMap>,
+	actions: ActionDictionary<TActionPayloadMap, ActionContext<
+		TState,
+		Dispatcher<TActionPayloadMap>,
+		Mutator<TMutationPayloadMap>,
+		TGettersReturnMap>>
 };

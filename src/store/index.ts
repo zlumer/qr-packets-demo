@@ -14,6 +14,8 @@ export function createStore()
 				connected: false
 			}
 		},
+		getters: {
+		},
 		mutations: {
 			setWalletList: (state, payload) =>
 			{
@@ -37,12 +39,12 @@ export function createStore()
 				store.commit('webrtcResetId')
 			}
 		}
-	} as StoreOptions<IState, MutationPayloadMap, ActionPayloadMap>)
+	} as StoreOptions<IState, MutationPayloadMap, ActionPayloadMap, GettersReturnMap>)
 }
 
 export type Store = Dispatcher<ActionPayloadMap> & Mutator<MutationPayloadMap> & {
 	readonly state: IState
-	readonly getters: any
+	readonly getters: GettersReturnMap
 }
 
 export interface IState
@@ -67,10 +69,7 @@ type MutationPayloadMap = {
 type ActionPayloadMap = {
 	webrtcConnected: undefined
 	webrtcDisconnected: undefined
-	/* 'loadFoo': {
-		id: string
-	},
-	'loadBar': {
-		id: number;
-	} */
+}
+
+type GettersReturnMap = {
 }
