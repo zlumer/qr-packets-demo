@@ -57,7 +57,7 @@ export type MutationDictionary<TState, TMutationPayloadMap> = {
 export type GettersDictionary<TState, TGettersReturnMap> = {
 	[P in keyof TGettersReturnMap]: (
 		state: TState,
-		getters: GettersDictionary<TState, TGettersReturnMap>
+		getters: TGettersReturnMap
 	) => TGettersReturnMap[P]
 }
 
