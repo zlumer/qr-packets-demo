@@ -1,5 +1,4 @@
 import { IBlockchain } from "./IBlockchain"
-import { TransactionReceipt } from "web3/types"
 import { getRawTxHash, getNetwork } from "./eth"
 import * as coinmarketcap from "./coinmarketcap"
 import * as etherscan from "./etherscan"
