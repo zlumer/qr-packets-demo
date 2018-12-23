@@ -15,6 +15,7 @@
     "@types/qrcode": "^1.2.0",
     "@types/simple-peer": "^6.1.5",
     "@types/web3": "^1.0.12",
+    "eosjs": "16.0.9",
     "jest": "^23.6.0",
     "jsqr": "^1.1.1",
     "poi": "^10.2.10",
