@@ -3,6 +3,7 @@ import Vuex, { Store } from "vuex"
 import { IWallet, IBlockchainSymbol } from "./interop"
 import { StoreOptions, Dispatcher, Mutator } from "./vuex-type-ext"
 import { TypedBlockchains, typedBlockchains } from "src/blockchains"
+import { IBlockchain } from "src/blockchains/IBlockchain"
 
 export function createStore()
 {
@@ -29,7 +30,8 @@ export function createStore()
 				
 				return getters.txHash(tx.tx, tx.wallet.blockchain)
 			},
-			blockchains: (state, getters) => typedBlockchains
+			blockchains: (state, getters) => typedBlockchains,
+			currentBlockchain: (state, getters) => getters.blockchains[state.currentWallet!.blockchain](state.currentWallet!.chainId)
 		},
 		mutations: {
 			setWalletList: (state, payload) =>
@@ -103,5 +105,6 @@ type ActionPayloadMap = {
 type GettersReturnMap = {
 	txHash: (tx: string, blockchain: IBlockchainSymbol) => string
 	txToPushHash: string
-	blockchains: TypedBlockchains
+	blockchains: TypedBlockchains,
+	currentBlockchain: IBlockchain<unknown, unknown, unknown>
 }

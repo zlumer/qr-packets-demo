@@ -13,6 +13,7 @@
 
 <script lang="ts">
 import Vue from 'src/vue-ts'
+import { IBlockchain } from 'src/blockchains/IBlockchain'
 
 interface ITransaction
 {
@@ -34,24 +35,30 @@ export default Vue.extend({
 	computed: {
 		address: function()
 		{
-			return this.$store.state.currentWallet!.address
-		}
+			return this.wallet.address
+		},
+		wallet: function()
+		{
+			return this.$store.state.currentWallet!
+		},
+		blockchain: function()
+		{
+			return this.$store.getters.currentBlockchain as IBlockchain<ITransaction, unknown, unknown>
+		},
 	},
 	mounted: async function ()
 	{
-		let url = `https://api-rinkeby.etherscan.io/api?module=account&action=txlist&address=${this.address}&startblock=0&endblock=99999999&sort=asc&apikey=YourApiKeyToken`
-		let data = await fetch(url)
-		let json = await data.json()
-		console.log(json)
-		if (json.status != '1')
+		try
 		{
-			this.error = json.result
-			return
+			let txList = await this.blockchain.loadTxList(this.wallet)
+			let unique = {} as {[hash:string]: boolean}
+			this.txs = txList.filter(x => unique[x.hash] ? false: (unique[x.hash] = true))
+			this.loading = false
 		}
-		let unique = {} as {[hash:string]: boolean}
-		let items = [].concat(json.result) as ITransaction[]
-		this.txs = items.filter(x => unique[x.hash] ? false : (unique[x.hash] = true))
-		this.loading = false
+		catch (e)
+		{
+			this.error = (e instanceof Error) ? e.message : e
+		}
 	},
 })
 </script>
