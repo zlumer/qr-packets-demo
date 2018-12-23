@@ -4,7 +4,7 @@ import Index from "./pages/Index.vue"
 import Login from "./pages/Login.vue"
 import Wallets from "./pages/Wallets.vue"
 import Wallet from "./pages/Wallet.vue"
-import EthTransfer from "./pages/EthTransfer.vue"
+import EthTransfer from "./pages/blockchain/EthTransfer.vue"
 import PushTxVue from "./pages/PushTx.vue"
 import WebrtcVue from "./pages/Webrtc.vue"
 

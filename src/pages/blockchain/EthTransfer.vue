@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-import Vue, { VueWithProps } from '../vue-ts'
+import Vue, { VueWithProps } from 'src/vue-ts'
 import NewTransfer from './NewTransfer.vue'
 import * as eth from "src/blockchains/eth"
 
