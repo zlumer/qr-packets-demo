@@ -4,7 +4,7 @@ import * as cryptolions from "./cryptolions"
 
 import Eos, { EosInstance } from "eosjs"
 
-interface IEosTxHistoryItem<T extends {}>
+export interface IEosTxHistoryItem<T extends {}>
 {
 	trx_id: string
 	act: {
@@ -13,7 +13,7 @@ interface IEosTxHistoryItem<T extends {}>
 		data: T
 	}
 }
-interface IEosTransferActionData
+export interface IEosTransferActionData
 {
 	from: string
 	to: string
