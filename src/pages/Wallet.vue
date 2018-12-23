@@ -3,10 +3,11 @@
 		<router-view></router-view>
 		<h1>{{address}}</h1>
 		<router-link :to="{name:'newtx', params:{ address: address }}">new tx</router-link>
-		<ul v-if="!error">
+		<span v-if="error" data-cy="error">ERROR LOADING TRANSACTIONS: {{ error }}</span>
+		<span v-else-if="loading" data-cy="loading">Loading tx list...</span>
+		<ul v-else data-cy="tx-list">
 			<li :key="tx.hash" v-for="tx in txs">hash: {{ tx.hash.substr(0, 10) + "..." }}, from: {{ tx.from.substr(0, 10) + "..." }}, to: {{ tx.to.substr(0, 10) + "..." }}, amount: {{ (tx.value / 1e18).toFixed(4) }}</li>
 		</ul>
-		<span v-if="error">ERROR LOADING TRANSACTIONS: {{ error }}</span>
 	</div>
 </template>
 
@@ -27,6 +28,7 @@ export default Vue.extend({
 		return {
 			txs: [] as ITransaction[],
 			error: '',
+			loading: true,
 		}
 	},
 	computed: {
@@ -49,6 +51,7 @@ export default Vue.extend({
 		let unique = {} as {[hash:string]: boolean}
 		let items = [].concat(json.result) as ITransaction[]
 		this.txs = items.filter(x => unique[x.hash] ? false : (unique[x.hash] = true))
+		this.loading = false
 	},
 })
 </script>
