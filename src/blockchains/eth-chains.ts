@@ -11,7 +11,7 @@ const SETTINGS = {
 	1: {
 		testnet: false,
 		name: "Mainnet",
-		url: 'wss://mainnet.infura.io/ws',
+		url: 'https://mainnet.infura.io/',
 		loadTxList: etherscan.mainnet.loadTxList
 	},
 	3: {
@@ -23,7 +23,7 @@ const SETTINGS = {
 	4: {
 		testnet: true,
 		name: "Rinkeby",
-		url: 'wss://rinkeby.infura.io/_ws',
+		url: 'https://rinkeby.infura.io/',
 		loadTxList: etherscan.rinkeby.loadTxList
 	},
 	42: {
@@ -62,7 +62,7 @@ export function getNetworkByChainId(chainId: number | string): EthereumBlockchai
 		getTxHash: getRawTxHash,
 		pushTx: tx => web3.sendTx(tx),
 		getUsdValue: testnet ? () => Promise.resolve(NaN) : getUsdRate,
-		loadTxList: null as any,
+		loadTxList: wallet => settings.loadTxList(wallet.address),
 		web3
 	}
 }
