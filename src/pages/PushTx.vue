@@ -4,14 +4,12 @@
 		<span>{{ tx }}</span>
 		<span v-if="loading">Pushing...</span>
 		<span v-if="error">Error! {{ error.name }} {{ error.message }}</span>
-		<span v-if="result">Success! pushed tx with hash: {{ result.transactionHash }}</span>
+		<span v-if="result">Success! pushed tx with hash: {{ resultHash }}</span>
 	</div>
 </template>
 
 <script lang="ts">
 import Vue from 'src/vue-ts'
-import * as eth from "src/blockchains/eth"
-import { TransactionReceipt } from 'web3/types'
 import { IBlockchainSymbol } from 'src/store/interop'
 
 export default Vue.extend({
@@ -20,7 +18,7 @@ export default Vue.extend({
 		return {
 			loading: true,
 			error: undefined as any as Error,
-			result: undefined as any as TransactionReceipt,
+			resultHash: undefined as any as string,
 		}
 	},
 	props: {
@@ -51,8 +49,8 @@ export default Vue.extend({
 		try
 		{
 			let bc = this.$store.getters.blockchains[this.blockchain](tx.wallet.chainId)
-			let result = await bc.pushTx(tx.tx)
-			this.result = result
+			let hash = await bc.pushTx(tx.tx)
+			this.resultHash = hash
 		}
 		catch (e)
 		{

@@ -4,10 +4,10 @@ import { getRawTxHash, getNetwork } from "./eth"
 import * as coinmarketcap from "./coinmarketcap"
 import * as etherscan from "./etherscan"
 
-export type IChainId = keyof typeof SETTINGS
-export type IChainSettings = typeof SETTINGS[IChainId]
+export type IChainId = keyof typeof CHAINS
+export type IChainSettings = typeof CHAINS[IChainId]
 
-const SETTINGS = {
+const CHAINS = {
 	1: {
 		testnet: false,
 		name: "Mainnet",
@@ -43,14 +43,14 @@ interface IEthTxHistoryItem
 	value: string
 }
 
-export type EthereumBlockchain = IBlockchain<IEthTxHistoryItem, string, TransactionReceipt> & { web3: ReturnType<typeof getNetwork> }
+export type EthereumBlockchain = IBlockchain<IEthTxHistoryItem, string> & { web3: ReturnType<typeof getNetwork> }
 
 const getUsdRate = () => coinmarketcap.loadPrice('1027')
 
 export function getNetworkByChainId(chainId: number | string): EthereumBlockchain
 {
 	chainId = parseInt(chainId + "")
-	let { testnet, ...settings } = SETTINGS[chainId as IChainId]
+	let { testnet, ...settings } = CHAINS[chainId as IChainId]
 	if (!settings)
 		throw new Error(`ETH: network with chain id "${chainId}" is not supported!`)
 	
@@ -60,8 +60,12 @@ export function getNetworkByChainId(chainId: number | string): EthereumBlockchai
 		testnet,
 		networkName: settings.name,
 		getTxHash: getRawTxHash,
-		pushTx: tx => web3.sendTx(tx),
-		getUsdValue: testnet ? () => Promise.resolve(NaN) : getUsdRate,
+		pushTx: async tx =>
+		{
+			let receipt = await web3.sendTx(tx)
+			return receipt.transactionHash
+		},
+		getUsdValue: testnet ? () => Promise.resolve(0) : getUsdRate,
 		loadTxList: wallet => settings.loadTxList(wallet.address),
 		web3
 	}

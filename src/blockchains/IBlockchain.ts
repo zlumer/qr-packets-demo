@@ -1,23 +1,23 @@
 import { IWallet } from "src/store/interop"
 
-export interface IBlockchain<TTxHistoryItem, TOutgoingTx, TTxPushResult>
+export interface IBlockchain<TTxHistoryItem, TOutgoingTx>
 {
 	testnet: boolean
 	networkName: string
 	getUsdValue(): Promise<number>
 	loadTxList(wallet: IWallet): Promise<TTxHistoryItem[]>
-	pushTx(tx: TOutgoingTx): Promise<TTxPushResult>
+	pushTx(tx: TOutgoingTx): Promise<string>
 	getTxHash(tx: TOutgoingTx): string
 }
 
-export function blockchainFactory<TTxHistoryItem, TOutgoingTx, TTxPushResult>(
+export function blockchainFactory<TTxHistoryItem, TOutgoingTx>(
 	testnet: boolean,
 	networkName: string,
 	getUsdValue: () => Promise<number>,
 	loadTxList: (wallet: IWallet) => Promise<TTxHistoryItem[]>,
-	pushTx: (tx: TOutgoingTx) => Promise<TTxPushResult>,
+	pushTx: (tx: TOutgoingTx) => Promise<string>,
 	getTxHash: (tx: TOutgoingTx) => string
-): IBlockchain<TTxHistoryItem, TOutgoingTx, TTxPushResult>
+): IBlockchain<TTxHistoryItem, TOutgoingTx>
 {
 	return {
 		testnet,

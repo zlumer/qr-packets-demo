@@ -43,7 +43,7 @@ export default Vue.extend({
 		},
 		blockchain: function()
 		{
-			return this.$store.getters.currentBlockchain as IBlockchain<ITransaction, unknown, unknown>
+			return this.$store.getters.currentBlockchain as IBlockchain<ITransaction, unknown>
 		},
 	},
 	mounted: async function ()

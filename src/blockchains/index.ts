@@ -4,7 +4,7 @@ import { IBlockchain } from "./IBlockchain";
 
 export type GetBlockchain<
 	TSym extends IBlockchainSymbol,
-	TRet extends IBlockchain<unknown, unknown, unknown>
+	TRet extends IBlockchain<unknown, unknown>
 > = { [key in TSym]: (chainId: string | number) => TRet }
 
 export type TypedBlockchains =

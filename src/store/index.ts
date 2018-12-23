@@ -106,5 +106,5 @@ type GettersReturnMap = {
 	txHash: (tx: string, blockchain: IBlockchainSymbol) => string
 	txToPushHash: string
 	blockchains: TypedBlockchains,
-	currentBlockchain: IBlockchain<unknown, unknown, unknown>
+	currentBlockchain: IBlockchain<unknown, unknown>
 }
