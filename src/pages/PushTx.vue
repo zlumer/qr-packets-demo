@@ -4,7 +4,7 @@
 		<span>{{ tx }}</span>
 		<span v-if="loading">Pushing...</span>
 		<span v-if="error">Error! {{ error.name }} {{ error.message }}</span>
-		<span v-if="result">Success! pushed tx with hash: {{ resultHash }}</span>
+		<span v-if="resultHash">Success! pushed tx with hash: {{ resultHash }}</span>
 	</div>
 </template>
 
