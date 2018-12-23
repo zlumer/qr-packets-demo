@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<new-transfer
+		<transfer-form
 			ref="txform"
 			:form="form"
 			:inputs="inputs"
@@ -15,7 +15,7 @@
 
 <script lang="ts">
 import Vue, { VueWithProps } from 'src/vue-ts'
-import NewTransfer from './NewTransfer.vue'
+import TransferForm from 'src/components/TransferForm.vue'
 import * as eth from "src/blockchains/eth"
 
 function validateAddress(addr: string)
@@ -99,7 +99,7 @@ export default Vue.extend({
 		},
 	},
 	components: {
-		NewTransfer,
+		TransferForm,
 	}
 })
 </script>
