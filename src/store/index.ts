@@ -1,7 +1,8 @@
 import Vuex, { Store } from "vuex"
 
-import { IWallet } from "./interop"
+import { IWallet, IBlockchainSymbol } from "./interop"
 import { StoreOptions, Dispatcher, Mutator } from "./vuex-type-ext"
+import { TypedBlockchains, typedBlockchains } from "src/blockchains"
 
 export function createStore()
 {
@@ -9,12 +10,26 @@ export function createStore()
 		state: {
 			wallets: [],
 			currentWallet: null,
+			txToPush: null,
 			webrtc: {
 				outgoingId: 1,
 				connected: false
 			}
 		},
 		getters: {
+			txHash: (state, getters) => (tx, bc) =>
+			{
+				return getters.blockchains[bc](state.currentWallet!.chainId).getTxHash(tx)
+			},
+			txToPushHash: (state, getters) =>
+			{
+				let tx = state.txToPush
+				if (!tx)
+					return undefined
+				
+				return getters.txHash(tx.tx, tx.wallet.blockchain)
+			},
+			blockchains: (state, getters) => typedBlockchains
 		},
 		mutations: {
 			setWalletList: (state, payload) =>
@@ -23,9 +38,15 @@ export function createStore()
 				state.wallets = payload.wallets
 			},
 			setCurrentWallet: (state, payload) => state.currentWallet = payload.wallet,
+			setTxToPush: (state, payload) => state.txToPush = payload,
+			resetTxToPush: state => state.txToPush = null,
 			webrtcIncId: state => state.webrtc.outgoingId++,
 			webrtcResetId: state => state.webrtc.outgoingId = 1,
-			webrtcConnected: state => state.webrtc.connected = true,
+			webrtcConnected: state =>
+			{
+				console.log('MUTATION: webrtcConnected')
+				state.webrtc.connected = true
+			},
 			webrtcDisconnected: state => state.webrtc.connected = false,
 		},
 		actions: {
@@ -51,6 +72,10 @@ export interface IState
 {
 	wallets: IWallet[]
 	currentWallet: IWallet | null
+	txToPush: {
+		tx: string
+		wallet: IWallet
+	} | null
 	webrtc: {
 		outgoingId: number
 		connected: boolean
@@ -60,6 +85,10 @@ export interface IState
 type MutationPayloadMap = {
 	setWalletList: { wallets: IWallet[] }
 	setCurrentWallet: { wallet: IWallet }
+
+	setTxToPush: { tx: string, wallet: IWallet }
+	resetTxToPush: undefined
+
 	webrtcIncId: undefined
 	webrtcResetId: undefined
 	webrtcConnected: undefined
@@ -72,4 +101,7 @@ type ActionPayloadMap = {
 }
 
 type GettersReturnMap = {
+	txHash: (tx: string, blockchain: IBlockchainSymbol) => string
+	txToPushHash: string
+	blockchains: TypedBlockchains
 }

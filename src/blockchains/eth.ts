@@ -1,43 +1,55 @@
 import Web3 = require('web3')
 import { TransactionReceipt } from 'web3/types'
 
-const web3 = new Web3()
-web3.setProvider(new Web3.providers.WebsocketProvider('wss://rinkeby.infura.io/_ws'))
+export const utils = Web3.utils
 
-export async function getNonce(address: string): Promise<number>
+export function getNetwork(providerUrl: string)
 {
-	return await web3.eth.getTransactionCount(address)
+	const web3 = new Web3()
+	let provider = providerUrl.match(/^wss?\:\/\//) ? new Web3.providers.WebsocketProvider(providerUrl) : new Web3.providers.HttpProvider(providerUrl)
+	web3.setProvider(provider)
+	
+	return {
+		async getNonce(address: string): Promise<number>
+		{
+			return await web3.eth.getTransactionCount(address)
+		},
+		async sendTx(tx: string): Promise<TransactionReceipt>
+		{
+			if ("__eth__sendTx" in window)
+				return console.log('FAKING ETH CALL!!!'), window.__eth__sendTx(tx)
+			
+			return await web3.eth.sendSignedTransaction(tx, (err, transactionHash) =>
+			{
+				console.log('transactionHash: ', transactionHash)
+
+				if (err)
+					throw err
+
+				return transactionHash
+			})
+		}
+	}
 }
 
 declare global
 {
 	interface Window
 	{
-		__eth__sendTx: typeof sendTx
+		__eth__sendTx: (tx: string) => Promise<TransactionReceipt>
 	}
 }
 
-export async function sendTx(tx: string): Promise<TransactionReceipt>
+export function getRawTxHash(tx: string): string
 {
-	if ("__eth__sendTx" in window)
-		return window.__eth__sendTx(tx)
-	
-	return await web3.eth.sendSignedTransaction(tx, (err, transactionHash) =>
-	{
-		console.log('transactionHash: ', transactionHash)
-
-		if (err)
-			throw err
-
-		return transactionHash
-	})
+	// TODO: cover with tests
+	return utils.sha3(tx)
 }
 
 export function isValidEthAddress(address: string)
 {
 	return isAddress(address)
 }
-export const utils = Web3.utils
 
 
 /**
@@ -72,7 +84,7 @@ const isAddress = function (address: string) {
 */
 const isChecksumAddress = function (address: string) {
 	// Check each case
-	var addressHash = web3.utils.sha3(address.toLowerCase());
+	var addressHash = utils.sha3(address.toLowerCase());
 	addressHash = addressHash.replace('0x', '')
 	address = address.replace('0x','')
 	// console.log(addressHash)

@@ -12,6 +12,7 @@
 import Vue from 'src/vue-ts'
 import * as eth from "src/blockchains/eth"
 import { TransactionReceipt } from 'web3/types'
+import { IBlockchainSymbol } from 'src/store/interop'
 
 export default Vue.extend({
 	data()
@@ -23,16 +24,34 @@ export default Vue.extend({
 		}
 	},
 	props: {
-		tx: {
+		blockchain: {
+			type: String as () => IBlockchainSymbol,
+			required: true,
+		},
+		txhash: {
 			type: String,
 			required: true,
 		}
 	},
+	computed: {
+		tx: function()
+		{
+			return this.$store.state.txToPush
+		},
+	},
 	mounted: async function ()
 	{
+		let tx = this.tx
+		if (!tx)
+		{
+			this.error = new Error("no transaction to push")
+			return
+		}
+		
 		try
 		{
-			let result = await eth.sendTx(this.tx)
+			let bc = this.$store.getters.blockchains[this.blockchain](tx.wallet.chainId)
+			let result = await bc.pushTx(tx.tx)
 			this.result = result
 		}
 		catch (e)

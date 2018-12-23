@@ -17,7 +17,7 @@ export function createRouter(store: Store)
 		console.log('updating wallet!', to, from, next)
 		let blockchain = to.params.blockchain as 'eth'
 		let address: string = to.params.address
-		let chainId: string = to.query.chainId.toString()
+		let chainId: string = (to.query.chainId || "").toString()
 		store.commit('setCurrentWallet', { wallet: { blockchain, address, chainId } })
 		next()
 	}
@@ -43,7 +43,7 @@ export function createRouter(store: Store)
 				beforeEnter: updateWallet
 			},
 			{
-				path: '/pushtx/:tx',
+				path: '/pushtx/:blockchain/:txhash',
 				name: 'pushtx',
 				component: PushTxVue,
 				props: true

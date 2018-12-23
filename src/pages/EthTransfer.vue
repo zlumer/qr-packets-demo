@@ -69,6 +69,10 @@ export default Vue.extend({
 		{
 			console.log(this.tx)
 			return JSON.stringify({ tx: this.tx, wallet: this.wallet })
+		},
+		web3: function()
+		{
+			return this.$store.getters.blockchains.eth(this.wallet.chainId).web3
 		}
 	},
 	methods: {
@@ -79,7 +83,7 @@ export default Vue.extend({
 		async sign(form: { to: string, gas: string, amount: string })
 		{
 			this.loading = true
-			this.nonce = await eth.getNonce(this.address)
+			this.nonce = await this.web3.getNonce(this.address)
 			this.tx = {
 				from: this.address,
 				to: form.to,

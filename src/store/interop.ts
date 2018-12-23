@@ -1,7 +1,7 @@
-export type IBlockchain = 'eth' | 'btc' | 'neo' | 'eos' | 'pha'
+export type IBlockchainSymbol = 'eth' | 'btc' | 'neo' | 'eos' | 'pha'
 
 export type IWallet = {
-	blockchain: IBlockchain
+	blockchain: IBlockchainSymbol
 	address: string
 	chainId: string | number
 }

@@ -67,6 +67,14 @@ export default Vue.extend({
 		{
 			return this.inputsValid && (this.validate ? this.validate() : true)
 		},
+		wallet: function()
+		{
+			return this.$store.state.currentWallet!
+		},
+		blockchain: function()
+		{
+			return this.wallet.blockchain
+		},
 	},
 	methods: {
 		async onButton()
@@ -82,7 +90,9 @@ export default Vue.extend({
 		onResult(signedTx: string)
 		{
 			console.log(`signed tx: ${signedTx}`)
-			this.$router.push({ name: "pushtx", params: { tx: signedTx } })
+			this.$store.commit('setTxToPush', { tx: signedTx, wallet: this.wallet })
+			let bc = this.$store.getters.blockchains[this.blockchain](this.wallet.chainId)
+			this.$router.push({ name: "pushtx", params: { blockchain: this.blockchain, txhash: bc.getTxHash(signedTx) } })
 		}
 	},
 	components: {
