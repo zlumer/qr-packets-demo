@@ -23,7 +23,7 @@ export interface IEosTransferActionData
 
 export type EosBlockchain = IBlockchain<IEosTxHistoryItem<IEosTransferActionData>, string> & { eos: EosInstance } // TODO: add "getNetworkInfo" for mobile calls
 
-const getUsdRate = () => coinmarketcap.loadPrice('1765')
+const getUsdRate = () => coinmarketcap.loadPrice(coinmarketcap.tickerIds.eos)
 
 
 declare global

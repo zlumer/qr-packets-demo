@@ -28,6 +28,10 @@ export interface CMCTicker
 	}
 	last_updated: number
 }
+export const tickerIds = {
+	eth: '1027',
+	eos: '1765',
+}
 export async function loadTicker(id: string): Promise<CMCResponse<CMCTicker>>
 {
 	let url = `https://api.coinmarketcap.com/v2/ticker/${id}/`

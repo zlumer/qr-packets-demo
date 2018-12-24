@@ -44,7 +44,7 @@ interface IEthTxHistoryItem
 
 export type EthereumBlockchain = IBlockchain<IEthTxHistoryItem, string> & { web3: ReturnType<typeof getNetwork> }
 
-const getUsdRate = () => coinmarketcap.loadPrice('1027')
+const getUsdRate = () => coinmarketcap.loadPrice(coinmarketcap.tickerIds.eth)
 
 export function getNetworkByChainId(chainId: number | string): EthereumBlockchain
 {
