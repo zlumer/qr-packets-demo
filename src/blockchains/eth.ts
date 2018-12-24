@@ -17,7 +17,12 @@ export function getNetwork(providerUrl: string)
 		async sendTx(tx: string): Promise<TransactionReceipt>
 		{
 			if ("__eth__sendTx" in window)
-				return console.log('FAKING ETH CALL!!!', tx), Promise.resolve(window.__eth__sendTx(tx))
+			{
+				console.log('FAKING ETH CALL!!!', tx)
+				let txHash = window.__eth__sendTx(tx)
+				console.log('tx hash: ', txHash)
+				return Promise.resolve(txHash)
+			}
 			
 			console.log(`[ETH] SENDING TX: ${tx}`)
 			return await web3.eth.sendSignedTransaction(tx, (err, transactionHash) =>
