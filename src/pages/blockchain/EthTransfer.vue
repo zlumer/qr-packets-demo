@@ -85,7 +85,12 @@ export default (Vue as VueWithProps<{ $refs: TRefs }>).extend({
 	},
 	mounted: function()
 	{
-		this.$store.dispatch('updateTokenPrice', { blockchain: 'eth' })
+		this.$store.dispatch('updateTokenPrice', { blockchain: 'eth' }).then(() =>
+		{
+			let amount = parseFloat(this.$refs.txform.values['amount'] + "")
+			if (!isNaN(amount))
+				this.$refs.txform.setValue('usd', amount * this.$store.getters.ethPrice)
+		})
 	},
 	methods: {
 		async sign(form: { to: string, gas: string, amount: string })
