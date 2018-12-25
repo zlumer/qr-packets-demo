@@ -1,3 +1,5 @@
+import { IBlockchainSymbol } from "src/store/interop"
+
 export interface CMCResponse<TData>
 {
 	data: TData
@@ -28,10 +30,14 @@ export interface CMCTicker
 	}
 	last_updated: number
 }
-export const tickerIds = {
+export const tickerIds: { [key in IBlockchainSymbol]: string } = {
 	eth: '1027',
 	eos: '1765',
+	pha: '3513',
+	btc: '1',
+	neo: '1376',
 }
+
 export async function loadTicker(id: string): Promise<CMCResponse<CMCTicker>>
 {
 	let url = `https://api.coinmarketcap.com/v2/ticker/${id}/`
