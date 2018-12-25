@@ -2,7 +2,7 @@
 	<div>
 		<span v-for="name in inputs" :key="name">
 			{{ form[name].label }}
-			<form-input v-model="values[name]" :cy="form[name].cy" :enabled="!signing" />
+			<form-input v-model="values[name]" @input="onInput(name)" :cy="form[name].cy" :enabled="!signing" />
 		</span>
 		<br/>
 		<button type="submit" @click="onButton" :disabled="signing || !canSign">SIGN TX</button>
@@ -14,8 +14,8 @@
 
 <script lang="ts">
 import Vue from 'src/vue-ts'
-import RemoteCall from '../components/RemoteCall.vue'
-import FormInput from '../components/FormInput.vue'
+import RemoteCall from './RemoteCall.vue'
+import FormInput from './FormInput.vue'
 
 export interface IFormInputField<T>
 {
@@ -23,18 +23,19 @@ export interface IFormInputField<T>
 	type?: 'text' | 'number'
 	validate?: (value: T) => boolean
 }
+type IFormInputs = { [key: string]: IFormInputField<any> }
 
 export default Vue.extend({
 	data()
 	{
 		return {
 			signing: false,
-			values: { } as { [key: string]: any }
+			values: { } as { [key: string]: unknown }
 		}
 	},
 	props: {
 		form: {
-			type: Object as () => { [key: string]: IFormInputField<any> },
+			type: Object as () => IFormInputs,
 			required: true
 		},
 		inputs: {
@@ -43,7 +44,8 @@ export default Vue.extend({
 		},
 		validate: {
 			type: Function as any as () => () => boolean,
-			required: false
+			required: false,
+			default: () => true
 		},
 		loading: {
 			type: Boolean,
@@ -65,7 +67,7 @@ export default Vue.extend({
 		},
 		canSign: function()
 		{
-			return this.inputsValid && (this.validate ? this.validate() : true)
+			return this.inputsValid && this.validate()
 		},
 		wallet: function()
 		{
@@ -85,6 +87,14 @@ export default Vue.extend({
 		{
 			this.signing = true
 			this.$emit('sign', this.values)
+		},
+		onInput(field: string)
+		{
+			this.$emit('change', { field, value: this.values[field] })
+		},
+		setValue(field: string, value: unknown)
+		{
+			this.values[field] = value
 		},
 		onCancel()
 		{

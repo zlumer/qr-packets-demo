@@ -5,17 +5,17 @@
 			:form="form"
 			:inputs="inputs"
 			:loading="loading"
-			:validate="validate"
 			:tx-json="txJson"
 			@sign="sign"
 			@cancel="cancel"
+			@change="onFormChange"
 		/>
 	</div>
 </template>
 
 <script lang="ts">
 import Vue, { VueWithProps } from 'src/vue-ts'
-import TransferForm from 'src/components/TransferForm.vue'
+import TransferForm, { IFormInputField } from 'src/components/TransferForm.vue'
 import * as eth from "src/blockchains/eth"
 
 function validateAddress(addr: string)
@@ -34,7 +34,11 @@ function validateNumber(num: number)
 	return !isNaN(parseFloat(num.toString()))
 }
 
-export default Vue.extend({
+type TRefs = {
+	txform: InstanceType<typeof TransferForm>
+}
+
+export default (Vue as VueWithProps<{ $refs: TRefs }>).extend({
 	data()
 	{
 		return {
@@ -73,13 +77,17 @@ export default Vue.extend({
 		web3: function()
 		{
 			return this.$store.getters.blockchains.eth(this.wallet.chainId).web3
-		}
+		},
+		ethPrice: function()
+		{
+			return this.$store.getters.ethPrice
+		},
+	},
+	mounted: function()
+	{
+		this.$store.dispatch('updateTokenPrice', { blockchain: 'eth' })
 	},
 	methods: {
-		validate()
-		{
-			return true
-		},
 		async sign(form: { to: string, gas: string, amount: string })
 		{
 			this.loading = true
@@ -92,6 +100,26 @@ export default Vue.extend({
 				value: eth.utils.toWei(form.amount),
 			}
 			this.loading = false
+		},
+		onFormChange({ field, value }: { field: string, value: unknown })
+		{
+			// console.log(`form change! ${field} ${value}`, field, value)
+
+			if (!this.ethPrice)
+				return // we can't update when the price is not ready for any reason
+			
+			if (field == 'amount')
+			{
+				let val = parseFloat(value + "")
+				if (!isNaN(val))
+					this.$refs.txform.setValue('usd', val * this.ethPrice)
+			}
+			if (field == 'usd')
+			{
+				let val = parseFloat(value + "")
+				if (!isNaN(val))
+					this.$refs.txform.setValue('amount', val / this.ethPrice)
+			}
 		},
 		cancel()
 		{
