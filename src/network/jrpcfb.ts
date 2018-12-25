@@ -10,7 +10,7 @@ export class JsonRpcFallback extends JsonRpc
 {
 	constructor(public jrpc: JsonRpc, onRequest: RequestHandler)
 	{
-		super(msg => jrpc.callRaw("fallback", { msg }), onRequest)
+		super(msg => (console.log(`FALLBACK OUT> ${msg}`), jrpc.callRaw("fallback", { msg })), onRequest)
 		jrpc.onRequest = (json, cb) => this.onIncoming(json, cb)
 	}
 	onIncoming: RequestHandler = (json, cb) =>
