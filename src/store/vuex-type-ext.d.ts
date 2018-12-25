@@ -61,16 +61,39 @@ export type GettersDictionary<TState, TGettersReturnMap> = {
 	) => TGettersReturnMap[P]
 }
 
+type Omit<T, K> = Pick<T, Exclude<keyof T, K>>
+
+type CommonProps<T1 extends {}, T2 extends {}> = {
+	[P in (keyof T1 & keyof T2)]: T1[P] & T2[P]
+}
+type PropsFrom1<T1 extends {}, T2 extends {}> = {
+	[P in Exclude<keyof T1, keyof T2>]: T1[P]
+}
+type PropsFrom2<T1 extends {}, T2 extends {}> = {
+	[P in Exclude<keyof T2, keyof T1>]: T2[P]
+}
+type Merge<T1 extends {}, T2 extends {}> = CommonProps<T1, T2> & PropsFrom1<T1, T2> & PropsFrom2<T1, T2>
+
+type Merge3<T1, T2, T3> = Merge<T3, Merge<T1, T2>>
+type MergeMultiple<T1, T2 = unknown, T3 = unknown, T4 = unknown, T5 = unknown> = Merge3<T1, T2, Merge3<T3, T4, T5>>
+
+export type Store<TState, TMutationPayloadMap, TActionPayloadMap, TGettersReturnMap> =
+	Dispatcher<TActionPayloadMap> & Mutator<TMutationPayloadMap> & {
+		readonly state: TState
+		readonly getters: TGettersReturnMap
+	}
 /**
  * Type for options passed to new Vuex.Store()
  */
-export type StoreOptions<TState, TMutationPayloadMap, TActionPayloadMap, TGettersReturnMap> = {
-	state: TState,
-	mutations: MutationDictionary<TState, TMutationPayloadMap>,
-	getters: GettersDictionary<TState, TGettersReturnMap>,
-	actions: ActionDictionary<TActionPayloadMap, ActionContext<
+export type StoreOptions<TState, TMutationPayloadMap, TActionPayloadMap, TGettersReturnMap> =
+	& OptionalField<keyof TGettersReturnMap, { getters: GettersDictionary<TState, TGettersReturnMap> }, {}>
+	& OptionalField<keyof TState, { state: TState }, {}>
+	& OptionalField<keyof TMutationPayloadMap, { mutations: MutationDictionary<TState, TMutationPayloadMap> }, {}>
+	& OptionalField<keyof TState, { actions: ActionDictionary<TActionPayloadMap, ActionContext<
 		TState,
 		Dispatcher<TActionPayloadMap>,
 		Mutator<TMutationPayloadMap>,
 		TGettersReturnMap>>
-};
+	}, {}>
+
+type OptionalField<TKeyType, TFieldObjectType, TNever> = [TKeyType] extends [never] ? TNever : TFieldObjectType
