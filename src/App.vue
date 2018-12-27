@@ -39,5 +39,13 @@ export default App
 
 </script>
 
-<style>
+<style lang="scss">
+html {
+	font-family: GothamPro, Lato, Arial, sans-serif;
+	display: block;
+	line-height: 1.15;
+}
+body {
+	margin: 0;
+}
 </style>
