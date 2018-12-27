@@ -71,7 +71,7 @@ export interface IEosBlockInfo
 }
 
 export type EosBlockchain = IBlockchain<IEosTxHistoryItem<IEosTransferActionData>, string> & {
-	
+	getTxHeaders(): Promise<IEosTxHeaders>
 } // TODO: add "getNetworkInfo" for mobile calls
 
 const getUsdRate = () => coinmarketcap.loadPrice(coinmarketcap.tickerIds.eos)
@@ -108,25 +108,25 @@ function getNetwork(httpEndpoint: string, chainId: string) {
 		},
 		async getTxHeaders(): Promise<IEosTxHeaders>
 		{
-		  const info = await eos.getInfo({}) as IEosChainInfo
-		  console.log(info)
+			const info = await eos.getInfo({}) as IEosChainInfo
+			// console.log(info)
 		
-		  const expireInSeconds = 60 * 60 // 1 hour
+			const expireInSeconds = 60 * 60 // 1 hour
 		
-		  const chainDate = new Date(info.head_block_time + 'Z')
-		  const expiration = new Date(chainDate.getTime() + expireInSeconds * 1000).toISOString().split('.')[0]
+			const chainDate = new Date(info.head_block_time + 'Z')
+			const expiration = new Date(chainDate.getTime() + expireInSeconds * 1000).toISOString().split('.')[0]
 		
-		  const block = await eos.getBlock(info.last_irreversible_block_num)
-		  console.log(block)
+			const block = await eos.getBlock(info.last_irreversible_block_num)
+			// console.log(block)
 		
-		  const transactionHeaders = {
-			expiration,
-			ref_block_num: info.last_irreversible_block_num & 0xFFFF,
-			ref_block_prefix: block.ref_block_prefix
-		  }
-		  console.log(transactionHeaders)
+			const transactionHeaders = {
+				expiration,
+				ref_block_num: info.last_irreversible_block_num & 0xFFFF,
+				ref_block_prefix: block.ref_block_prefix
+			}
+			// console.log(transactionHeaders)
 		
-		  return transactionHeaders
+			return transactionHeaders
 		}
 	}
 }
@@ -144,6 +144,7 @@ function getNetworkByChainId(chainId: IChainId): EosBlockchain
 		getUsdValue: () => getUsdRate(),
 		loadTxList: wallet => chain.loadTxList(wallet.address),
 		pushTx: eos.pushTx,
+		getTxHeaders: eos.getTxHeaders
 	}
 }
 const CACHE = { } as { [chainId in IChainId]: EosBlockchain }
