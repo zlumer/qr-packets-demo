@@ -4,7 +4,7 @@ import Index from "./pages/Index.vue"
 import Login from "./pages/Login.vue"
 import Wallets from "./pages/Wallets.vue"
 import Wallet from "./pages/Wallet.vue"
-import EthTransfer from "./pages/blockchain/EthTransfer.vue"
+import TransferHoc from "./pages/blockchain/TransferHoc.vue"
 import PushTxVue from "./pages/PushTx.vue"
 import WebrtcVue from "./pages/Webrtc.vue"
 
@@ -37,7 +37,7 @@ export function createRouter(store: Store)
 					{
 						path: 'create',
 						name: 'newtx',
-						component: EthTransfer,
+						component: TransferHoc
 					},
 				],
 				beforeEnter: updateWallet
