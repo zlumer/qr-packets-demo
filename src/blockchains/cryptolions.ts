@@ -1,3 +1,5 @@
+import { IEosTxHistoryItem, IEosTransferActionData } from "./eos"
+
 interface IAction
 {
 	_id: string
@@ -46,10 +48,10 @@ export const jungle = {
 	loadTxList: (address: string) => loadTxList('https://junglehistory.cryptolions.io:4433', address)
 }
 export const mainnet = {
-	loadTxList: (address: string) => { throw new Error("eos mainnet transaction list is not supported yet!") }
+	loadTxList: (address: string) => { throw new Error("eos mainnet transaction list is not supported on cryptolions!") }
 }
 
-export async function loadTxList(host: string, address: string): Promise<IAction[]>
+export async function loadTxList(host: string, address: string): Promise<IEosTxHistoryItem<IEosTransferActionData>[]>
 {
 	let res = await load(host, `/v1/history/get_actions/${address}?limit=100&skip=0`) as IActionResponse
 	return res.actions
