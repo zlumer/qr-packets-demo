@@ -33,14 +33,14 @@ export function generate(chains: {[key in IBlockchainSymbol]?: VueConstructor<Vu
 		props: {
 			wallet: {
 				type: Object as () => IWallet,
-				required: true,
+				required: false,
 			}
 		},
 		render: function(h)
 		{
 			return h(bb, {
 				props: {
-					wallet: this.wallet,
+					wallet: this.wallet || this.$store.state.currentWallet,
 					...chains
 				}
 			})
