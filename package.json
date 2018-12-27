@@ -9,30 +9,30 @@
     "build": "poi build"
   },
   "dependencies": {
+    "eosjs": "16.0.9",
+    "jsqr": "^1.1.1",
+    "qrcode": "^1.2.2",
+    "simple-peer": "^9.1.2",
+    "vue": "^2.5.17",
+    "vue-router": "^3.0.2",
+    "vuex": "^3.0.1",
+    "web3": "^1.0.0-beta.36",
+    "wrtc": "^0.3.2"
+  },
+  "devDependencies": {
     "@poi/plugin-typescript": "^10.2.0",
     "@types/jest": "^23.3.10",
     "@types/node": "^10.9.4",
     "@types/qrcode": "^1.2.0",
     "@types/simple-peer": "^6.1.5",
     "@types/web3": "^1.0.12",
-    "eosjs": "16.0.9",
     "jest": "^23.6.0",
-    "jsqr": "^1.1.1",
+    "node-sass": "^4.11.0",
     "poi": "^10.2.10",
-    "qrcode": "^1.2.2",
-    "simple-peer": "^9.1.2",
+    "sass-loader": "^7.1.0",
     "ts-jest": "^23.10.5",
     "ts-node": "^7.0.1",
     "typescript": "^3.2.1",
-    "vue": "^2.5.17",
-    "vue-router": "^3.0.2",
-    "vuex": "^3.0.1",
-    "web3": "^1.0.0-beta.36",
-    "wrtc": "^0.3.2",
     "ws": "^6.1.2"
-  },
-  "devDependencies": {
-    "node-sass": "^4.11.0",
-    "sass-loader": "^7.1.0"
   }
 }
