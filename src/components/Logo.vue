@@ -1,22 +1,24 @@
 <template>
 	<!--<a class="css-1fdxz4i" href="/cold/">-->
-		<h1>
-			Cold Crypto
-            <sup>beta mode</sup>
-		</h1>
+		<router-link to="/" class="logo-link">
+            <h1>Cold Crypto<sup>beta mode</sup></h1>
+		</router-link>
 	<!--</a>-->
 </template>
 
-
 <style lang="scss" scoped>
+.logo-link {
+    display: block;
+    text-decoration: none;
+}
 h1 {
-	text-transform: uppercase;
-    color: rgb(255, 255, 255);
+    color: #fff;
     font-size: 1.3rem;
+    margin: 0;
+    text-transform: uppercase;
+    padding: 2rem 1.6rem;
     line-height: 1.3rem;
     width: inherit;
-    margin: 0px;
-    padding: 2rem 1.6rem;
 }
 sup {
 	color: rgb(242, 73, 77);

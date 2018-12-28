@@ -1,7 +1,9 @@
 <template>
-<div>
-	<router-view></router-view>
-</div>
+	<div>
+		<component :is="layout">
+			<router-view/>
+		</component>
+	</div>
 </template>
 
 <script lang="ts">
@@ -9,8 +11,6 @@
 import Vue, { VueWithProps } from "./vue-ts"
 import Vuex from "vuex"
 import VueRouter from "vue-router"
-import { createStore, Store } from "./store"
-import { createRouter } from "./router"
 
 Vue.use(VueRouter)
 Vue.use(Vuex)
@@ -18,22 +18,15 @@ Vue.use(Vuex)
 type TRefs = {
 }
 
-let store = createStore()
-let router = createRouter(store)
+const default_layout = 'default';
 
 let App = (Vue as VueWithProps<{$refs: TRefs}>).extend({
-	data()
-	{
-		return {
+	computed: {
+		layout: function()
+		{
+			return( this.$route.meta.layout || default_layout) + '-layout';
 		}
-	},
-	created()
-	{
-	},
-	methods: {
-	},
-	router,
-	store,
+	}
 })
 export default App
 
@@ -49,7 +42,7 @@ export default App
 html,
 body {
     font-family: 'GothamPro', 'Lato', 'Arial', sans-serif;
-	margin: 0;
+    margin: 0;
 }
 #root {
     height: 100%;

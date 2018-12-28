@@ -28,11 +28,12 @@ export function createRouter(store: Store)
 			{ path: '/', component: Index },
 			{ path: '/login', component: Login },
 			{ path: '/webrtc', component: WebrtcVue },
-			{ path: '/wallets', component: Wallets },
+			{ path: '/wallets', component: Wallets},
 			{
 				path: '/wallet/:blockchain/:address',
 				name: 'wallet',
 				component: Wallet,
+				meta: { layout: 'app' },
 				children: [
 					{
 						path: 'create',
