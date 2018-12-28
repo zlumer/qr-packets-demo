@@ -40,10 +40,9 @@ export default App
 </script>
 
 <style lang="scss">
-html {
-	font-family: GothamPro, Lato, Arial, sans-serif;
-	display: block;
-	line-height: 1.15;
+@font-face {
+    font-family: 'GothamPro';
+    src: url(GothamPro.woff);
 }
 html,
 body {
