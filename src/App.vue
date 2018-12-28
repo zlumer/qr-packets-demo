@@ -40,6 +40,8 @@ export default App
 </script>
 
 <style lang="scss">
+@import url(normalize.css);
+
 @font-face {
     font-family: 'GothamPro';
     src: url(GothamPro.woff);
