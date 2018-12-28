@@ -20,7 +20,7 @@
 					<div class="address">{{address}}</div>
 				</h2>
 				<h3>
-					Network: <b>Test</b>
+					Network: <b>{{networkName}}</b>
 				</h3>
 			</div>
 		</div>
@@ -124,6 +124,10 @@ export default Vue.extend({
 		wallet: function()
 		{
 			return this.$store.state.currentWallet!
+		},
+		networkName: function()
+		{
+			return this.$store.getters.currentBlockchain.networkName
 		},
 	},
 	components: {
