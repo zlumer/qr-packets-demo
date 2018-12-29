@@ -113,8 +113,9 @@ export default (Vue as VueWithProps<{ $refs: TRefs }>).extend({
 		this.$store.dispatch('updateTokenPrice', { blockchain: 'eos' }).then(() =>
 		{
 			let amount = parseFloat(this.$refs.txform.values['amount'] + "")
+			console.log(`EOS updating amount: ${amount} (${this.eosPrice})[${this.$store.getters.eosPrice}]`, this.$store.state.tokenPrices)
 			if (!isNaN(amount))
-				this.$refs.txform.setValue('usd', amount * this.$store.getters.eosPrice)
+				this.$refs.txform.setValue('usd', amount * this.eosPrice)
 		})
 	},
 	methods: {
@@ -123,6 +124,7 @@ export default (Vue as VueWithProps<{ $refs: TRefs }>).extend({
 			this.loading = true
 			this.txHeaders = await this.eos.getTxHeaders()
 			let amount = parseFloat(form.amount + "").toFixed(4)
+			let memo = (typeof form.memo === 'undefined') ? '' : form.memo
 			this.tx = {
 				to: form.to,
 				value: `${amount} EOS`,
@@ -132,7 +134,7 @@ export default (Vue as VueWithProps<{ $refs: TRefs }>).extend({
 		},
 		onFormChange({ field, value }: { field: string, value: unknown })
 		{
-			// console.log(`form change! ${field} ${value}`, field, value)
+			console.log(`form change! ${field}=${value} (${this.eosPrice})`, field, value)
 
 			if (!this.eosPrice)
 				return // we can't update when the price is not ready for any reason
