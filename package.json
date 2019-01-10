@@ -5,7 +5,7 @@
   "author": "zlumer",
   "license": "MIT",
   "scripts": {
-    "dev": "poi",
+    "start": "poi",
     "build": "poi build"
   },
   "dependencies": {
