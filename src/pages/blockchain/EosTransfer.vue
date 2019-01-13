@@ -68,6 +68,10 @@ export default (Vue as VueWithProps<{ $refs: TRefs }>).extend({
 		{
 			return this.$store.state.currentWallet!
 		},
+		txMemoNotUndef: function()
+		{
+			return (typeof this.tx.memo === 'undefined') ? '' : this.tx.memo
+		},
 		preparedTx: function()
 		{
 			return {
@@ -84,7 +88,7 @@ export default (Vue as VueWithProps<{ $refs: TRefs }>).extend({
 							to: this.tx.to,
 							from: this.address,
 							quantity: this.tx.value,
-							memo: this.tx.memo
+							memo: this.txMemoNotUndef,
 						}
 					}
 				]
