@@ -1,7 +1,6 @@
 <template>
-    <main>
         <div class="center-window">
-            <div style="width: 38rem;">
+            <div>
                 <h2 class="header">Welcome!</h2>
                 <h3 class="subheader">Sign in to your wallet below</h3>
                 <div class="separator"></div>
@@ -19,7 +18,6 @@
                 </div>
             </div>
         </div>
-    </main>
 </template>
 
 <script lang="ts">
@@ -30,20 +28,6 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-
-.container {
-	min-height: 100vh;
-    background: linear-gradient(57deg, rgb(13, 13, 13) 0%, rgb(22, 10, 46) 100%);
-}
-
-main {
-	-webkit-box-align: center;
-    align-items: center;
-    display: flex;
-    -webkit-box-pack: center;
-    justify-content: center;
-    min-height: calc((100vh - 4rem) - 4rem);
-}
 
 .center-window {
 	max-width: 50rem;
@@ -76,7 +60,7 @@ main {
 	display: flex;
     -webkit-box-pack: justify;
     justify-content: space-between;
-    width: 100%;
+    width: 38rem;
 }
 
 .login-button {
