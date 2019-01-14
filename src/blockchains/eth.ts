@@ -1,6 +1,8 @@
 import Web3 = require('web3')
 import { TransactionReceipt } from 'web3/types'
 
+import erc20abi = require('./erc20abi.json')
+
 export const utils = Web3.utils
 
 export function getNetwork(providerUrl: string)
@@ -13,6 +15,20 @@ export function getNetwork(providerUrl: string)
 		async getNonce(address: string): Promise<number>
 		{
 			return await web3.eth.getTransactionCount(address)
+		},
+		async getTokenInfo(address: string): Promise<{ name: string, symbol: string, notatoken?: boolean }>
+		{
+			try
+			{
+				let cntr = new web3.eth.Contract(erc20abi, address)
+				let [name, symbol] = await Promise.all([cntr.methods.name().call(), cntr.methods.symbol().call()])
+				return { name, symbol }
+			}
+			catch (error)
+			{
+				console.log(error)
+				return { name: '...', symbol: '...', notatoken: true }
+			}
 		},
 		async sendTx(tx: string): Promise<TransactionReceipt>
 		{

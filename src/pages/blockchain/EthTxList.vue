@@ -1,10 +1,53 @@
 <template>
-	<span v-if="error" data-cy="error">ERROR LOADING TRANSACTIONS: {{ error }}</span>
-	<span v-else-if="loading" data-cy="loading">Loading tx list...</span>
-	<ul v-else data-cy="tx-list">
-		<li :key="tx.hash" v-for="tx in txs">hash: {{ tx.hash.substr(0, 10) + "..." }}, from: {{ tx.from.substr(0, 10) + "..." }}, to: {{ tx.to.substr(0, 10) + "..." }}, amount: {{ (tx.value / 1e18).toFixed(4) }}</li>
-	</ul>
+	<div class="tx-list-container">
+		<span v-if="error" data-cy="error">ERROR LOADING TRANSACTIONS: {{ error }}</span>
+		<span v-else-if="loading" data-cy="loading">Loading tx list...</span>
+
+		<table v-else data-cy="tx-list">
+			<thead>
+				<tr>
+				<th>Date</th>
+				<th>TxHash</th>
+				<th>Address</th>
+				<th>Value</th>
+				</tr>
+			</thead>
+			<tbody>
+					<tr :key="tx.hash" v-for="tx in txs">
+						<td>{{new Date(tx.timeStamp * 1000).toLocaleString()}}</td>
+						<td>{{ tx.hash.substr(0, 10) + "..." }}</td>
+						<td>{{ tx.from.substr(0, 10) + "..." }}</td>
+						<td>{{ (tx.value / 1e18).toFixed(4) }}</td>
+					</tr>
+			</tbody>
+		</table>
+	</div>
 </template>
+
+<style lang="scss" scoped>
+.tx-list-container {
+	background: #fff;
+	padding: 2rem;
+	box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.04);
+	border-radius: .8rem;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+	width: 100%;
+	td {
+		color: #2e3d3f;
+		padding: 1rem .5rem;
+	}
+	th {
+		color: #457b9d;
+		padding: .5rem;
+	}
+	tr {
+		border-bottom: 1px solid #b2bcb9;
+	}
+}
+</style>
 
 <script lang="ts">
 import Vue from 'src/vue-ts'

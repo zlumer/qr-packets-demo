@@ -16,7 +16,20 @@
 
 <script lang="ts">
 import Vue from 'src/vue-ts'
+import { IBlockchainSymbol } from 'src/store/interop'
+
+function unique<T extends string>(arr: T[]): T[]
+{
+	let unique = {} as any
+	arr.forEach(x => unique[x] = 1)
+	return Object.keys(unique) as T[]
+}
+
 export default Vue.extend({
+	beforeMount() {
+		let blockchains = unique(this.wallets.map(w => w.blockchain))
+		blockchains.forEach(key => this.$store.dispatch('updateTokenPrice', { blockchain: key }))
+	},
 	computed: {
 		wallets: function()
 		{

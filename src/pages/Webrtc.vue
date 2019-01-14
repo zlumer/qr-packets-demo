@@ -1,16 +1,20 @@
 <template>
-	<div>
+	<white-popup
+		header="Online Login"
+		subheader="Scan QR code with Cold Crypto mobile app to login"
+	>
 		<h1 v-if="connected">CONNECTED</h1>
 		<div v-else data-cy="webrtc-force" ref="wrapper">
 			<span v-if="status">{{ status }}</span>
 			<qr-gif :qrs="[qr]" v-if="sid"></qr-gif>
 		</div>
-	</div>
+	</white-popup>
 </template>
 
 <script lang="ts">
 import Vue, { VueWithProps } from 'src/vue-ts'
 import QrGif from "../components/QrGif.vue"
+import WhitePopup from 'src/components/WhitePopup.vue'
 import { getSingleton, reset as webrtcReset } from "../webrtcsingleton"
 import { JsonRpcWebsocket } from "../network/jrpcws"
 import { JsonRpcWebRtc } from "../network/jrpcrtc"
@@ -71,7 +75,7 @@ export default (Vue as VueWithProps<{$refs: TRefs}>).extend({
 			let wss = new WebrtcHSInitiator(this.url, (sid) =>
 			{
 				this.sid = sid
-				this.status = 'PLEASE SCAN QR CODE'
+				this.status = ''
 			}, async (rtc) =>
 			{
 				this.status = 'CONNECTED!'
@@ -133,6 +137,7 @@ export default (Vue as VueWithProps<{$refs: TRefs}>).extend({
 	},
 	components: {
 		QrGif,
+		WhitePopup,
 	}
 })
 </script>
