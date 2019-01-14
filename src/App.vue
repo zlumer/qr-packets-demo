@@ -9,12 +9,7 @@
 <script lang="ts">
 
 import Vue, { VueWithProps } from "./vue-ts"
-import Vuex from "vuex"
-import VueRouter from "vue-router"
 import { layoutNameToComponent } from "./layouts"
-
-Vue.use(VueRouter)
-Vue.use(Vuex)
 
 type TRefs = {
 }
