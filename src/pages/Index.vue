@@ -21,8 +21,13 @@
 <script lang="ts">
 import Vue from 'src/vue-ts'
 import WhitePopup from 'src/components/WhitePopup.vue'
+import { reset } from 'src/webrtcsingleton'
 
 export default Vue.extend({
+    beforeMount()
+    {
+        reset(true)
+    },
     components: {
         WhitePopup,
     }
