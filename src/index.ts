@@ -1,9 +1,8 @@
 import Vue from 'vue'
 import App from './App.vue'
-import AppLayout from './layouts/App.vue'
-import DefaultLayout from './layouts/Default.vue'
 import { createRouter } from "./router"
 import { createStore } from "./store"
+import { registerLayouts } from './layouts'
 
 let store = createStore()
 let router = createRouter(store)
@@ -16,8 +15,7 @@ declare global
 	}
 }
 
-Vue.component('app-layout', AppLayout)
-Vue.component('default-layout', DefaultLayout)
+registerLayouts()
 
 window.vm = new Vue({
 	router,

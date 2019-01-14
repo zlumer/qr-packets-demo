@@ -11,6 +11,7 @@
 import Vue, { VueWithProps } from "./vue-ts"
 import Vuex from "vuex"
 import VueRouter from "vue-router"
+import { layoutNameToComponent } from "./layouts"
 
 Vue.use(VueRouter)
 Vue.use(Vuex)
@@ -18,13 +19,11 @@ Vue.use(Vuex)
 type TRefs = {
 }
 
-const default_layout = 'default';
-
 let App = (Vue as VueWithProps<{$refs: TRefs}>).extend({
 	computed: {
 		layout: function()
 		{
-			return( this.$route.meta.layout || default_layout) + '-layout';
+            return layoutNameToComponent(this.$route.meta.layout || "default")
 		}
 	}
 })
