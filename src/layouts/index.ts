@@ -1,10 +1,12 @@
 import Vue from 'vue'
 import AppLayout from './App.vue'
 import DefaultLayout from './Default.vue'
+import HomeLayout from './Home.vue'
 
 const LAYOUTS = {
 	app: AppLayout,
 	default: DefaultLayout,
+	home: HomeLayout,
 }
 
 export type ILayoutName = keyof typeof LAYOUTS
