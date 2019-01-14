@@ -5,16 +5,20 @@
 			<form-input v-model="values[name]" @input="onInput(name)" :cy="form[name].cy" :enabled="!signing" />
 		</span>
 		<br/>
-		<button type="submit" @click="onButton" :disabled="signing || !canSign">SIGN TX</button>
-		<span v-if="loading">loading...</span>
-		<remote-call v-if="signing && !loading" method="signTransferTx" :params="txJson" @result="onResult"></remote-call>
-		<button type="submit" @click="onCancel" v-if="signing && !loading">Cancel</button>
+		<remote-sign
+			:loading="loading"
+			:tx-json="txJson"
+			:method="method"
+			:can-sign="canSign"
+			@sign="onButton"
+			@cancel="onCancel"
+		/>
 	</div>
 </template>
 
 <script lang="ts">
 import Vue from 'src/vue-ts'
-import RemoteCall from './RemoteCall.vue'
+import RemoteSign from './RemoteSign.vue'
 import FormInput from './FormInput.vue'
 
 export interface IFormInputField<T>
@@ -52,6 +56,11 @@ export default Vue.extend({
 			required: false,
 			default: false
 		},
+		method: {
+			type: String,
+			required: false,
+			default: 'signTransferTx'
+		},
 		txJson: {
 			type: String,
 			required: false
@@ -69,24 +78,17 @@ export default Vue.extend({
 		{
 			return this.inputsValid && this.validate()
 		},
-		wallet: function()
-		{
-			return this.$store.state.currentWallet!
-		},
-		blockchainId: function()
-		{
-			return this.wallet.blockchain
-		},
-		blockchain: function()
-		{
-			return this.$store.getters.currentBlockchain
-		}
 	},
 	methods: {
 		async onButton()
 		{
 			this.signing = true
 			this.$emit('sign', this.values)
+		},
+		async onCancel()
+		{
+			this.signing = false
+			this.$emit('cancel')
 		},
 		onInput(field: string)
 		{
@@ -96,23 +98,9 @@ export default Vue.extend({
 		{
 			this.values[field] = value
 		},
-		onCancel()
-		{
-			this.signing = false
-			this.$emit('cancel')
-		},
-		onResult(signedTx: string)
-		{
-			console.log(`signed tx: ${signedTx}`)
-			this.$store.commit('setTxToPush', { tx: signedTx, wallet: this.wallet })
-			this.$router.push({ name: "pushtx", params: {
-				blockchain: this.blockchainId,
-				txhash: this.blockchain.getTxHash(signedTx)
-			} })
-		}
 	},
 	components: {
-		RemoteCall,
+		RemoteSign,
 		FormInput,
 	}
 })
