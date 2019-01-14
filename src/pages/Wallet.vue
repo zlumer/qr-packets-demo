@@ -8,9 +8,9 @@
 						Create New Tx
 					</button>
 				</router-link>
-				<router-link :to="{name:'newcontract', query:{ chainId: wallet.chainId }}">
+				<router-link :to="{name:'erc20', query:{ chainId: wallet.chainId }}">
 					<button>
-						Call Contract
+						Transfer ERC20 tokens
 					</button>
 				</router-link>
 			</div>

@@ -5,6 +5,7 @@ import Login from "./pages/Login.vue"
 import Wallets from "./pages/Wallets.vue"
 import Wallet from "./pages/Wallet.vue"
 import TransferHoc from "./pages/blockchain/TransferHoc.vue"
+import EthTokens from "./pages/blockchain/EthTokens.vue"
 import PushTxVue from "./pages/PushTx.vue"
 import WebrtcVue from "./pages/Webrtc.vue"
 
@@ -46,6 +47,11 @@ export function createRouter(store: Store)
 						name: 'newtx',
 						component: TransferHoc
 					},
+					{
+						path: 'erc20',
+						name: 'erc20',
+						component: EthTokens
+					}
 				],
 				beforeEnter: updateWallet
 			},
