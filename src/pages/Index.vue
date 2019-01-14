@@ -1,60 +1,36 @@
 <template>
-        <div class="center-window">
-            <div>
-                <h2 class="header">Welcome!</h2>
-                <h3 class="subheader">Sign in to your wallet below</h3>
-                <div class="separator"></div>
-                <div class="button-container">
-                    <div class="login-button button-left">
-                        <router-link to="/login">
-                            <button class="button-blue">Airgapped login</button>
-                        </router-link>
-                    </div>
-                    <div class="login-button button-right">
-                        <router-link to="/webrtc">
-                            <button class="button-white">Online login</button>
-                        </router-link>
-                    </div>
-                </div>
+    <white-popup
+        header="Welcome!"
+        subheader="Sign in to your wallet below"
+    >
+        <div class="button-container">
+            <div class="login-button button-left">
+                <router-link to="/login">
+                    <button class="button-blue">Airgapped login</button>
+                </router-link>
+            </div>
+            <div class="login-button button-right">
+                <router-link to="/webrtc">
+                    <button class="button-white">Online login</button>
+                </router-link>
             </div>
         </div>
+    </white-popup>
 </template>
 
 <script lang="ts">
 import Vue from 'src/vue-ts'
+import WhitePopup from 'src/components/WhitePopup.vue'
 
 export default Vue.extend({
+    components: {
+        WhitePopup,
+    }
 })
 </script>
 
 <style lang="scss" scoped>
 
-.center-window {
-	max-width: 50rem;
-    min-width: 30rem;
-    background: rgb(255, 255, 255);
-    border-radius: 0.8rem;
-    padding: 2rem;
-}
-
-.header {
-	color: rgb(22, 10, 46);
-    font-size: 1.4rem;
-    font-weight: normal;
-    margin: 0px 0px 0.25rem;
-}
-.subheader {
-    color: rgba(22, 10, 46, 0.5);
-    font-size: 1.05rem;
-    font-weight: normal;
-    margin: 0px;
-}
-.separator {
-	background-color: transparent;
-    height: 1px;
-    width: 100%;
-    margin: 1rem 0px;
-}
 
 .button-container {
 	display: flex;
