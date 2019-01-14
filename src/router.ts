@@ -9,6 +9,7 @@ import PushTxVue from "./pages/PushTx.vue"
 import WebrtcVue from "./pages/Webrtc.vue"
 
 import { Store } from "./store"
+import { ILayoutName } from "./layouts"
 
 export function createRouter(store: Store)
 {
@@ -22,18 +23,23 @@ export function createRouter(store: Store)
 		next()
 	}
 
+	function metaLayout(layout: ILayoutName)
+	{
+		return { layout }
+	}
+
 	return new VueRouter({
 		mode: 'history',
 		routes: [
-			{ path: '/', component: Index },
-			{ path: '/login', component: Login },
-			{ path: '/webrtc', component: WebrtcVue },
-			{ path: '/wallets', component: Wallets},
+			{ path: '/', component: Index, meta: metaLayout('home') },
+			{ path: '/login', component: Login, meta: metaLayout('home') },
+			{ path: '/webrtc', component: WebrtcVue, meta: metaLayout('home') },
+			{ path: '/wallets', component: Wallets, meta: metaLayout('app') },
 			{
 				path: '/wallet/:blockchain/:address',
 				name: 'wallet',
 				component: Wallet,
-				meta: { layout: 'app' },
+				meta: metaLayout('app'),
 				children: [
 					{
 						path: 'create',

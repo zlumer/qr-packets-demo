@@ -1,41 +1,31 @@
 <template>
-	<div class="container">
-		<mp-header />
-		<main>
-			<div class="center-window">
-				<div style="width: 38rem;">
-					<h2 class="header">Welcome!</h2>
-					<h3 class="subheader">Sign in to your wallet below</h3>
-					<div class="separator"></div>
-					<div class="button-container">
-						<div class="login-button button-left">
-							<router-link to="/login">
-								<button class="button-blue">Airgapped login</button>
-							</router-link>
-						</div>
-						<div class="login-button button-right">
-							<router-link to="/webrtc">
-								<button class="button-white">Online login</button>
-							</router-link>
-						</div>
-					</div>
-				</div>
-			</div>
-		</main>
-		<mp-footer />
-	</div>
+    <main>
+        <div class="center-window">
+            <div style="width: 38rem;">
+                <h2 class="header">Welcome!</h2>
+                <h3 class="subheader">Sign in to your wallet below</h3>
+                <div class="separator"></div>
+                <div class="button-container">
+                    <div class="login-button button-left">
+                        <router-link to="/login">
+                            <button class="button-blue">Airgapped login</button>
+                        </router-link>
+                    </div>
+                    <div class="login-button button-right">
+                        <router-link to="/webrtc">
+                            <button class="button-white">Online login</button>
+                        </router-link>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 </template>
 
 <script lang="ts">
 import Vue from 'src/vue-ts'
-import Header from 'src/components/MainPageHeader.vue'
-import Footer from 'src/components/MainPageFooter.vue'
 
 export default Vue.extend({
-	components: {
-		"mp-header": Header,
-		"mp-footer": Footer,
-	}
 })
 </script>
 
