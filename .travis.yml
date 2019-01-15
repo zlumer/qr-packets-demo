@@ -6,14 +6,17 @@ services:
   - docker
 install:
   - yarn
-script:
-  - POI_PATH=/qr-packets-demo yarn build
-deploy:
-  provider: pages
-  skip-cleanup: true
-  github-token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
-  keep-history: true
-  target-branch: gh-pages
-  local-dir: dist
-  on:
-    branch: master
+  - yarn patch-package
+jobs:
+  include:
+    - stage: github build
+      script: POI_PATH=/qr-packets-demo yarn build
+      deploy:
+        provider: pages
+        skip-cleanup: true
+        github-token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
+        keep-history: true
+        target-branch: gh-pages
+        local-dir: dist
+        on:
+          branch: master
