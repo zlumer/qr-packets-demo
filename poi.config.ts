@@ -6,8 +6,9 @@ console.log(path ? `GOT PUBLIC PATH: ${path}` : `no public path used`)
 const options: Options = {
   entry: 'src/index.ts',
   babel: {
-    include: ['base-x', 'simple-peer']
+    include: ['base-x']
   },
+  minimize: false,
   plugins: [
     require('@poi/plugin-typescript')()
   ],
