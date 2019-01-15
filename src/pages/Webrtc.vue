@@ -129,7 +129,7 @@ export default (Vue as VueWithProps<{$refs: TRefs}>).extend({
 		},
 		async getWalletsOld()
 		{
-			let wallets = await getSingleton().jrpc.callRaw(`getWalletList`, {blockchains:["eth"]})
+			let wallets = await getSingleton().jrpc.callRaw(`getWalletList`, {blockchains:["eth"]}, !getSingleton().full)
 			
 			this.$store.commit('setWalletList', { wallets })
 			this.$router.push({ path: "/wallets" })

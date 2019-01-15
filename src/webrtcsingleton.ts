@@ -1,8 +1,5 @@
 import { JsonRpc } from './network/jsonrpc'
 
-import SimplePeer from "simple-peer"
-import { SignalData } from './network/SimplePeer'
-
 let i = 0
 
 export function init(initiator: boolean)
@@ -20,6 +17,7 @@ export function init(initiator: boolean)
 	]
 	let obj = {
 		jrpc: null as unknown as JsonRpc,
+		full: false,
 	}
 	return obj
 }

@@ -48,7 +48,7 @@ export default Vue.extend({
 		{
 			if (!this.webrtcConnected)
 				return
-			let result = await getSingleton().jrpc.callRaw(this.method, JSON.parse(this.params))
+			let result = await getSingleton().jrpc.callRaw(this.method, JSON.parse(this.params), !getSingleton().full)
 			this.$emit('result', result)
 		},
 		onQr(qr: string)
