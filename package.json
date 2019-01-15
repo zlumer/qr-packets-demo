@@ -6,7 +6,8 @@
   "license": "MIT",
   "scripts": {
     "start": "poi",
-    "build": "poi build"
+    "build": "poi build",
+    "prepare": "patch-package"
   },
   "dependencies": {
     "eosjs": "16.0.9",
@@ -28,7 +29,9 @@
     "@types/web3": "^1.0.12",
     "jest": "^23.6.0",
     "node-sass": "^4.11.0",
+    "patch-package": "^5.1.1",
     "poi": "^10.2.10",
+    "postinstall-prepare": "^1.0.1",
     "sass-loader": "^7.1.0",
     "ts-jest": "^23.10.5",
     "ts-node": "^7.0.1",

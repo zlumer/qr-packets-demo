@@ -1,0 +1,16 @@
+patch-package
+old mode 100644
+new mode 100755
+old mode 100644
+new mode 100755
+--- a/node_modules/web3-providers-http/src/index.js
++++ b/node_modules/web3-providers-http/src/index.js
+@@ -54,7 +54,7 @@ HttpProvider.prototype._prepareRequest = function(){
+     request.open('POST', this.host, true);
+     request.setRequestHeader('Content-Type','application/json');
+     request.timeout = this.timeout && this.timeout !== 1 ? this.timeout : 0;
+-    request.withCredentials = true;
++    // request.withCredentials = true;
+ 
+     if(this.headers) {
+         this.headers.forEach(function(header) {
