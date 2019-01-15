@@ -20,3 +20,14 @@ jobs:
         local-dir: dist
         on:
           branch: master
+    - stage: duxi build
+      script: POI_PATH=/cold yarn build
+      deploy:
+        provider: pages
+        skip-cleanup: true
+        github-token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
+        keep-history: true
+        target-branch: gh-pages-cold
+        local-dir: dist
+        on:
+          branch: master
