@@ -74,11 +74,14 @@ export default Vue.extend({
 				to: '',
 				nonce: NaN,
 				gasPrice: '',
+				gasLimit: '300000',
 				value: '',
 				data: '',
 			},
-			method: 'transfer(address,uint256)',
-			args: null as [string, string] | null,
+			abi: {
+				method: 'transfer(address,uint256)',
+				args: null as [string, string] | null,
+			},
 			inputs: ['to', 'amount', 'gas']
 		}
 	},
@@ -95,8 +98,7 @@ export default Vue.extend({
 		{
 			console.log(this.tx)
 			return JSON.stringify({
-				args: this.args,
-				method: this.method,
+				abi: this.abi,
 				tx: this.tx,
 				wallet: this.wallet
 			})
@@ -134,14 +136,15 @@ export default Vue.extend({
 			this.loading = true
 			this.nonce = await this.web3.getNonce(this.address)
 			let addrTo = `000000000000000000000000` + form.to.toLowerCase().replace('0x', '')
-			let amount = eth.utils.toWei(form.amount).replace('0x', '')
+			let amount = eth.utils.numberToHex(eth.utils.toBN(eth.utils.toWei(form.amount))).replace('0x','')
 			amount = '0'.repeat(64 - amount.length) + amount
-			this.args = [`0x${addrTo}`, `0x${amount}`]
+			this.abi.args = [`0x${addrTo}`, `0x${amount}`]
 			this.tx = {
 				from: this.address,
 				to: this.token.address,
 				nonce: this.nonce,
 				gasPrice: eth.utils.toWei(form.gas, 'gwei'),
+				gasLimit: '300000',
 				value: eth.utils.toWei('0'),
 				data: `0xa9059cbb${addrTo}${amount}`,
 			}
