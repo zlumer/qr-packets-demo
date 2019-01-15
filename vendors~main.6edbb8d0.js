@@ -61102,7 +61102,7 @@ HttpProvider.prototype._prepareRequest = function(){
     request.open('POST', this.host, true);
     request.setRequestHeader('Content-Type','application/json');
     request.timeout = this.timeout && this.timeout !== 1 ? this.timeout : 0;
-    request.withCredentials = true;
+    // request.withCredentials = true;
 
     if(this.headers) {
         this.headers.forEach(function(header) {
@@ -94107,4 +94107,4 @@ module.exports = {"version":"eosio::abi/1.0","types":[],"structs":[{"name":"nonc
 
 /***/ })
 ]]);
-//# sourceMappingURL=vendors~main.e5646fff.js.map
+//# sourceMappingURL=vendors~main.6edbb8d0.js.map
