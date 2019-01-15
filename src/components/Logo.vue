@@ -1,10 +1,30 @@
 <template>
 	<!--<a class="css-1fdxz4i" href="/cold/">-->
 		<router-link to="/" class="logo-link">
-            <h1>Cold Crypto<sup>beta mode</sup></h1>
+            <h1 :style="{ color: hcolor }">Cold Crypto<sup>beta mode</sup></h1>
 		</router-link>
 	<!--</a>-->
 </template>
+
+<script lang="ts">
+import Vue from 'src/vue-ts'
+
+export default Vue.extend({
+    props: {
+        black: {
+            type: Boolean,
+            default: false,
+        }
+    },
+    computed: {
+        hcolor: function()
+        {
+            return this.black ? 'rgb(23, 25, 51)' : '#fff'
+        }
+    }
+})
+</script>
+
 
 <style lang="scss" scoped>
 .logo-link {
@@ -12,7 +32,6 @@
     text-decoration: none;
 }
 h1 {
-    color: #fff;
     font-size: 1.3rem;
     margin: 0;
     text-transform: uppercase;
@@ -20,6 +39,7 @@ h1 {
     line-height: 1.3rem;
     width: inherit;
 }
+
 sup {
 	color: rgb(242, 73, 77);
     font-size: 0.5rem;

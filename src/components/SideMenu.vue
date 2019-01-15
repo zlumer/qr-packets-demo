@@ -1,6 +1,6 @@
 <template>
     <aside class="side-container">
-        <logo :reverse="true"/>
+        <logo :black="true"/>
         <menu class="menu-container">
             <!-- // TODO: Make link to wallets -->
             <div class="link">Wallets</div>
