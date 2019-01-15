@@ -8,7 +8,7 @@ function ensureToken(state: IState, token: string)
 		state.tokenPrices[token] = { price: NaN, loading: false }
 }
 
-export const options: StoreOptions<IState, MutationPayloadMap, ActionPayloadMap, GettersReturnMap> = {
+export const options: SOptions = {
 	state: {
 		tokenPrices: { }
 	},

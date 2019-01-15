@@ -3,7 +3,7 @@ import { IBlockchainSymbol, IWallet } from "./interop"
 import { TypedBlockchains, typedBlockchains } from "src/blockchains"
 import { IBlockchain } from "src/blockchains/IBlockchain"
 
-export const options: StoreOptions<IState, MutationPayloadMap, ActionPayloadMap, GettersReturnMap> = {
+export const options: SOptions = {
 	state: {
 		wallets: [],
 		currentWallet: null,
