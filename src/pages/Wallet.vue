@@ -10,7 +10,7 @@
 				</router-link>
 				<router-link :to="{name:'erc20', query:{ chainId: wallet.chainId }}">
 					<button>
-						Transfer ERC20 tokens
+						Transfer ERC20
 					</button>
 				</router-link>
 			</div>
