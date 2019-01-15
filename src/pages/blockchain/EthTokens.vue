@@ -1,12 +1,12 @@
 <template>
 	<div>
-		<span>Token contract address:</span>
+		<input-label>Token contract address:</input-label>
 		<input
 			type="text"
 			v-model="token.address"
 			@input="onTokenAddressChange"
 			data-cy="form-token"
-		>
+		/>
 		<div v-if="!token.loaded && token.status">{{token.status}}</div>
 		<div v-if="token.loaded">{{token.name}} ({{token.symbol}})</div>
 		<br/>
@@ -27,6 +27,7 @@
 <script lang="ts">
 import Vue, { VueWithProps } from 'src/vue-ts'
 import TransferForm, { IFormInputField } from 'src/components/TransferForm.vue'
+import InputLabel from "src/components/form/InputLabel.vue"
 import * as eth from "src/blockchains/eth"
 
 function validateAddress(addr: string)
@@ -125,6 +126,8 @@ export default Vue.extend({
 			this.token.name = name
 			this.token.symbol = symbol
 			this.token.loaded = true
+			this.token.status = ''
+			this.$emit('token_loaded', this.token)
 		},
 		async sign(form: { to: string, gas: string, amount: string })
 		{
@@ -154,11 +157,29 @@ export default Vue.extend({
 		},
 	},
 	components: {
-		TransferForm
+		TransferForm,
+		InputLabel,
 	}
 })
 </script>
 
 <style lang="scss" scoped>
+
+input {
+	box-sizing: border-box;
+    color: rgba(22, 10, 46, 0.6);
+    font-size: 0.9rem;
+    width: 100%;
+    background: rgb(243, 242, 244);
+    border-width: 2px;
+    border-style: solid;
+    border-color: rgb(115, 108, 130);
+    border-image: initial;
+    border-radius: 6rem;
+    margin: 0.25rem 0px;
+    outline: none;
+    padding: 0.75rem 1rem;
+	margin-bottom: 1rem;
+}
 
 </style>
