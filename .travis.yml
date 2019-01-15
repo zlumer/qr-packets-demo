@@ -7,7 +7,7 @@ services:
 install:
   - yarn
 script:
-  - yarn build /qr-packets-demo
+  - POI_PATH=/qr-packets-demo yarn build
 deploy:
   provider: pages
   skip-cleanup: true

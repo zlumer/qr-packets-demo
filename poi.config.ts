@@ -1,7 +1,7 @@
 import { Options } from 'poi'
 
-let path = process.argv[3] || ''
-console.log(`GOT PUBLIC PATH: ${path}`)
+let path = process.env.POI_PATH || ''
+console.log(path ? `GOT PUBLIC PATH: ${path}` : `no public path used`)
 
 const options: Options = {
   entry: 'src/index.ts',
