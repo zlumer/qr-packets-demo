@@ -1,0 +1,19 @@
+{
+	"Vue scaffold with store": {
+		"scope": "vue",
+		"prefix": "scaffold",
+		"body": ["<template>", "", "</template>",
+			"",
+			"<script lang=\"ts\">",
+			"import Vue from 'src/vue-ts'",
+			"",
+			"export default Vue.extend({",
+				"\t",
+			"})",
+			"</script>",
+			"",
+			"<style lang=\"scss\" scoped>", "", "</style>"
+		],
+		"description": "Vue scaffold with store, ts, scss (scoped)"
+	}
+}
