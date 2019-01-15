@@ -1,8 +1,14 @@
 <template>
 	<div>
 		<span v-for="name in inputs" :key="name">
-			{{ form[name].label }}
-			<form-input v-model="values[name]" @input="onInput(name)" :cy="form[name].cy" :enabled="!signing" />
+			<input-label>{{ form[name].label }}</input-label>
+			<form-input
+				v-model="values[name]"
+				:cy="form[name].cy"
+				:enabled="!signing"
+				:placeholder="form[name].placeholder"
+				@input="onInput(name)"
+			/>
 		</span>
 		<br/>
 		<remote-sign
@@ -20,10 +26,12 @@
 import Vue from 'src/vue-ts'
 import RemoteSign from './RemoteSign.vue'
 import FormInput from './FormInput.vue'
+import InputLabel from './form/InputLabel.vue'
 
 export interface IFormInputField<T>
 {
 	label: string
+	placeholder?: string
 	type?: 'text' | 'number'
 	validate?: (value: T) => boolean
 }
@@ -102,6 +110,7 @@ export default Vue.extend({
 	components: {
 		RemoteSign,
 		FormInput,
+		InputLabel,
 	}
 })
 </script>
