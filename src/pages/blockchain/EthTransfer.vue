@@ -45,8 +45,8 @@ export default (Vue as VueWithProps<{ $refs: TRefs }>).extend({
 			loading: false,
 			nonce: NaN,
 			form: {
-				to: { label: "To:", cy: "form-to", validate: validateAddress },
-				amount: { label: "Amount:", cy: "form-amount", type: 'number', validate: validateNumber },
+				to: { label: "To:", placeholder: "Address", cy: "form-to", validate: validateAddress },
+				amount: { label: "Amount:", placeholder: "0", cy: "form-amount", type: 'number', validate: validateNumber },
 				usd: { label: "USD value:", cy: "form-usd", type: 'number' },
 				gas: { label: "Gas price:", cy: "form-gas", type: 'number', validate: validateNumber },
 			},
