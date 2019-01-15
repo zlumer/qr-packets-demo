@@ -12,6 +12,10 @@ import WebrtcVue from "./pages/Webrtc.vue"
 import { Store } from "./store"
 import { ILayoutName } from "./layouts"
 
+declare let ROOT_PATH: string
+const BASE_PATH = ROOT_PATH
+console.log(`BASE_PATH: ${BASE_PATH}`)
+
 export function createRouter(store: Store)
 {
 	const updateWallet: NavigationGuard = (to, from, next) =>
@@ -30,6 +34,7 @@ export function createRouter(store: Store)
 	}
 
 	return new VueRouter({
+		...(BASE_PATH ? { base: BASE_PATH } : {}),
 		mode: 'history',
 		routes: [
 			{ path: '/', component: Index, meta: metaLayout('home') },

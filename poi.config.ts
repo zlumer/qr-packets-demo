@@ -11,7 +11,10 @@ const options: Options = {
   plugins: [
     require('@poi/plugin-typescript')()
   ],
-  publicPath: path
+  publicPath: path,
+  define: {
+    ROOT_PATH: `"${path}"`
+  }
 }
 
 export default options
