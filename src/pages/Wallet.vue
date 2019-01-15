@@ -1,14 +1,24 @@
 <template>
 	<div class="column">
-		<router-view></router-view>
+		<overlay-popup v-if="hasPopup"
+			:header="popupHeader"
+			@close="closePopup"
+		>
+			<router-view></router-view>
+		</overlay-popup>
 		<div class="row">
 			<div class="column column-buttons">
-				<router-link :to="{name:'newtx', query:{ chainId: wallet.chainId }}">
+				<router-link
+					:to="{name:'newtx', query:{ chainId: wallet.chainId }}"
+				>
 					<button>
-						Create New Tx
+						Send {{blockchain.toUpperCase()}}
 					</button>
 				</router-link>
-				<router-link :to="{name:'erc20', query:{ chainId: wallet.chainId }}">
+				<router-link
+					v-if="blockchain == 'eth'"
+					:to="{name:'erc20', query:{ chainId: wallet.chainId }}"
+				>
 					<button>
 						Transfer ERC20
 					</button>
@@ -29,8 +39,62 @@
 	</div>
 </template>
 
+<script lang="ts">
+import Vue from 'src/vue-ts'
+import TxListHoc from './blockchain/TxListHoc.vue'
+import OverlayPopup from 'src/components/popup/OverlayPopup.vue'
+
+export default Vue.extend({
+	data()
+	{
+		return {
+		}
+	},
+	computed: {
+		address: function()
+		{
+			return this.wallet.address
+		},
+		blockchain: function()
+		{
+			return this.wallet.blockchain
+		},
+		wallet: function()
+		{
+			return this.$store.state.currentWallet!
+		},
+		networkName: function()
+		{
+			return this.$store.getters.currentBlockchain.networkName
+		},
+		hasPopup: function()
+		{
+			return !!this.$route.meta.popup
+		},
+		popupHeader: function()
+		{
+			const headers = {
+				newtx: 'Send ETH',
+				erc20: 'Send tokens',
+			}
+			return headers[this.$route.name as keyof typeof headers] || ''
+		},
+	},
+	methods: {
+		closePopup()
+		{
+			this.$router.push({ name: 'wallet', params: this.$route.params, query: this.$route.query })
+		}
+	},
+	components: {
+		TxListHoc,
+		OverlayPopup,
+	},
+})
+</script>
 
 <style lang="scss" scoped>
+
 .column {
 	display: flex;
 	flex-flow: column nowrap;
@@ -100,38 +164,3 @@ h3 {
 }
 
 </style>
-
-
-<script lang="ts">
-import Vue from 'src/vue-ts'
-import TxListHoc from './blockchain/TxListHoc.vue'
-
-export default Vue.extend({
-	data()
-	{
-		return {
-		}
-	},
-	computed: {
-		address: function()
-		{
-			return this.wallet.address
-		},
-		blockchain: function()
-		{
-			return this.wallet.blockchain
-		},
-		wallet: function()
-		{
-			return this.$store.state.currentWallet!
-		},
-		networkName: function()
-		{
-			return this.$store.getters.currentBlockchain.networkName
-		},
-	},
-	components: {
-		TxListHoc
-	},
-})
-</script>

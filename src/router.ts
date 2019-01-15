@@ -45,12 +45,14 @@ export function createRouter(store: Store)
 					{
 						path: 'create',
 						name: 'newtx',
-						component: TransferHoc
+						component: TransferHoc,
+						meta: { ...metaLayout('app'), popup: true },
 					},
 					{
 						path: 'erc20',
 						name: 'erc20',
-						component: EthTokens
+						component: EthTokens,
+						meta: { ...metaLayout('app'), popup: true },
 					}
 				],
 				beforeEnter: updateWallet
