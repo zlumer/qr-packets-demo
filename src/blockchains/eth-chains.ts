@@ -72,6 +72,9 @@ export function getNetworkByChainId(chainId: number | string): EthereumBlockchai
 export function getCachedNetworkByChainId(chainId: number | string): EthereumBlockchain
 {
 	chainId = parseInt(chainId + "")
+	if (isNaN(chainId))
+		chainId = 1 // eth mainnet
+	
 	let chain = CACHE[chainId as IChainId]
 	if (chain)
 		return chain
