@@ -74,7 +74,7 @@ export default Vue.extend({
 		popupHeader: function()
 		{
 			const headers = {
-				newtx: 'Send ETH',
+				newtx: `Send ${this.blockchain.toUpperCase()}`,
 				erc20: 'Send tokens',
 			}
 			return headers[this.$route.name as keyof typeof headers] || ''
