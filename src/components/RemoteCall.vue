@@ -1,7 +1,17 @@
 <template>
-	<QrExchange v-if="!webrtcConnected && !loadingWebrtc" :qrs="[`${method}|${id}|${params}`]" :intro="intro" v-on:qr="onQr"></QrExchange>
-	<div v-else-if="loadingWebrtc">Trying to connect to WebRTC...</div>
-	<div v-else>Press button on your phone</div>
+	<qr-exchange
+		v-if="!webrtcConnected && !loadingWebrtc"
+		:qrs="[`${method}|${id}|${params}`]"
+		:intro="intro"
+		:qr-width="qrWidth"
+		@qr="onQr"
+	/>
+	<div
+		v-else-if="loadingWebrtc"
+	>Trying to connect to WebRTC...</div>
+	<div
+		v-else
+	>Press button on your phone</div>
 </template>
 
 <script lang="ts">
@@ -21,6 +31,10 @@ export default Vue.extend({
 	},
 	props: {
 		intro: String,
+		qrWidth: {
+			type: String,
+			default: '60%',
+		},
 		id: {
 			type: [String, Number],
 			default: Math.floor(Math.random() * 100000).toString(),

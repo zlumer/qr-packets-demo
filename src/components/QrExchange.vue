@@ -1,10 +1,16 @@
 <template>
 <div class="container">
 	<!-- <span>{{intro}}</span> -->
-	<div class="qr">
+	<div
+		class="qr"
+		:style="{ width: qrWidth }"
+	>
 		<Qr :qrs="qrs" />
 	</div>
-	<div class="qr-reader">
+	<div
+		class="qr-reader"
+		:style="{ width: readerWidth }"
+	>
 		<QrReader ref="reader" v-on:qr="onQr"></QrReader>
 	</div>
 </div>
@@ -30,10 +36,19 @@ export default (Vue as VueWithProps<{$refs: TRefs}>).extend({
 		}
 	},
 	props: {
-		intro: String,
+		qrWidth: {
+			type: String,
+			default: '50%',
+		},
 		qrs: {
 			type: Array as () => string[],
 			default: [],
+		}
+	},
+	computed: {
+		readerWidth: function()
+		{
+			return `calc(100% - ${this.qrWidth})`
 		}
 	},
 	methods: {
@@ -62,12 +77,13 @@ export default (Vue as VueWithProps<{$refs: TRefs}>).extend({
 }
 
 .qr {
-	width: calc(100% - 100px);
+	// width: calc(100% - 300px);
+	// max-height: min();
 	display: flex;
     flex-flow: column nowrap;
 }
 .qr-reader {
-	width: 300px;
+	// width: 300px;
 	display: flex;
     flex-flow: column nowrap;
 }

@@ -1,22 +1,23 @@
 <template>
 	<div>
-		<span v-for="name in inputs" :key="name">
-			<input-label>{{ form[name].label }}</input-label>
-			<form-input
-				v-model="values[name]"
-				:cy="form[name].cy"
-				:enabled="!signing"
-				:placeholder="form[name].placeholder"
-				@input="onInput(name)"
-			/>
-		</span>
-		<br/>
+		<div v-if="!signing || loading">
+			<span v-for="name in inputs" :key="name">
+				<input-label>{{ form[name].label }}</input-label>
+				<form-input
+					v-model="values[name]"
+					:cy="form[name].cy"
+					:enabled="!signing"
+					:placeholder="form[name].placeholder"
+					@input="onInput(name)"
+				/>
+			</span>
+		</div>
 		<remote-sign
 			:loading="loading"
 			:tx-json="txJson"
 			:method="method"
 			:can-sign="canSign"
-			@sign="onButton"
+			@sign="onSign"
 			@cancel="onCancel"
 		/>
 	</div>
@@ -88,7 +89,7 @@ export default Vue.extend({
 		},
 	},
 	methods: {
-		async onButton()
+		async onSign()
 		{
 			this.signing = true
 			this.$emit('sign', this.values)

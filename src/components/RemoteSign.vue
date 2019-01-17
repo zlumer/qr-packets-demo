@@ -1,9 +1,24 @@
 <template>
 	<div>
-		<button type="submit" @click="onButton" :disabled="signing || !canSign">SIGN TX</button>
-		<span v-if="loading">loading...</span>
-		<remote-call v-if="signing && !loading" :method="method" :params="txJson" @result="onResult"></remote-call>
-		<button type="submit" @click="onCancel" v-if="signing && !loading">Cancel</button>
+		<button v-if="!signing || loading"
+			type="submit"
+			:disabled="signing || !canSign"
+			@click="onButton"
+		>{{signCaption}}</button>
+		<span
+			v-if="loading"
+		>loading...</span>
+		<remote-call
+			v-if="signing && !loading"
+			qr-width="70%"
+			:method="method"
+			:params="txJson"
+			@result="onResult" />
+		<button
+			v-if="signing && !loading"
+			type="submit"
+			@click="onCancel"
+		>{{cancelCaption}}</button>
 	</div>
 </template>
 
@@ -19,6 +34,14 @@ export default Vue.extend({
 		}
 	},
 	props: {
+		signCaption: {
+			type: String,
+			default: 'Sign'
+		},
+		cancelCaption: {
+			type: String,
+			default: '\u2190 Back'
+		},
 		loading: {
 			type: Boolean,
 			required: false,
