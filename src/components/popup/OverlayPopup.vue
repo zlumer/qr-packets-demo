@@ -1,15 +1,17 @@
 <template>
 	<grey-overlay class="above-all container">
-		<white-rect>
-			<div class="header">
-				<h1>{{headerState}}</h1>
-				<close-button
-					:href="closeHref"
-					@click="$emit('close')"
-				/>
-			</div>
-			<slot></slot>
-		</white-rect>
+		<div class="modal">
+			<white-rect class="modal-conten">
+				<div class="header">
+					<h1>{{headerState}}</h1>
+					<close-button
+						:href="closeHref"
+						@click="$emit('close')"
+					/>
+				</div>
+				<slot></slot>
+			</white-rect>
+		</div>
 	</grey-overlay>
 </template>
 
@@ -54,6 +56,17 @@ export default Vue.extend({
 	display: flex;
     justify-content: center;
 	position: fixed;
+}
+
+.modal {
+	display: flex;
+	height: 100vh;
+	justify-content: center;
+	align-items: center;
+}
+
+.modal-content {
+	
 }
 
 .header {
