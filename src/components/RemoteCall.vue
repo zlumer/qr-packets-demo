@@ -11,7 +11,8 @@
 	>Trying to connect to WebRTC...</div>
 	<div
 		v-else
-	>Press button on your phone</div>
+		style="margin-top: 40px;"
+	>Please proceed on your phone</div>
 </template>
 
 <script lang="ts">
