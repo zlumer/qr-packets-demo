@@ -58,16 +58,17 @@ export function createRouter(store: Store)
 						name: 'erc20',
 						component: EthTokens,
 						meta: { ...metaLayout('app'), popup: true },
+					},
+					{
+						path: '/pushtx/:blockchain/:txhash',
+						name: 'pushtx',
+						component: PushTxVue,
+						props: true,
+						meta: { ...metaLayout('app'), popup: true },
 					}
 				],
 				beforeEnter: updateWallet
 			},
-			{
-				path: '/pushtx/:blockchain/:txhash',
-				name: 'pushtx',
-				component: PushTxVue,
-				props: true
-			}
 		]
 	})
 }

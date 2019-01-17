@@ -76,6 +76,7 @@ export default Vue.extend({
 			const headers = {
 				newtx: `Send ${this.blockchain.toUpperCase()}`,
 				erc20: 'Send tokens',
+				pushtx: 'Push TX',
 			}
 			return headers[this.$route.name as keyof typeof headers] || ''
 		},
