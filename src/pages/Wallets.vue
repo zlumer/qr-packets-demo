@@ -26,9 +26,21 @@ function unique<T extends string>(arr: T[]): T[]
 }
 
 export default Vue.extend({
-	beforeMount() {
+	beforeMount()
+	{
 		let blockchains = unique(this.wallets.map(w => w.blockchain))
 		blockchains.forEach(key => this.$store.dispatch('updateTokenPrice', { blockchain: key }))
+	},
+	mounted()
+	{
+		if (this.wallets.length == 1)
+		{
+			let w = this.wallets[0]
+			this.$router.replace({ name: 'wallet', params: {
+				address: w.address,
+				blockchain: w.blockchain,
+			}, query: { chainId: w.chainId + "" } })
+		}
 	},
 	computed: {
 		wallets: function()
