@@ -1,7 +1,7 @@
 <template>
-<section :style="topSectionSize">
+<section class="top-conatiner">
 	<section class="container">
-		<div class="overlay" :style="{ 'border-width': width / 4 + 'px' }" />
+		<div class="overlay" />
 		<video
 			ref="video"
 			data-cy="video-video"
@@ -39,14 +39,6 @@ export default (Vue as VueWithProps<{$refs: TRefs}>).extend({
 		}
 	},
 	props: {
-		width: {
-			type: Number,
-			required: true,
-		},
-		height: {
-			type: Number,
-			required: true,
-		},
 		autoplay: {
 			type: Boolean,
 			required: false,
@@ -61,10 +53,6 @@ export default (Vue as VueWithProps<{$refs: TRefs}>).extend({
 				return video.getAttribute('data-fake-qr') || null
 			
 			return null
-		},
-		topSectionSize: function()
-		{
-			return { width: `${this.width}px`, height: `${this.height}px` }
 		}
 	},
 	beforeDestroy()
@@ -140,6 +128,9 @@ export default (Vue as VueWithProps<{$refs: TRefs}>).extend({
 
 <style lang="scss" scoped>
 
+.top-container {
+	width: 100%;
+}
 .container {
 	overflow: hidden;
     position: relative;
@@ -152,7 +143,8 @@ export default (Vue as VueWithProps<{$refs: TRefs}>).extend({
     left: 0px;
     z-index: 1;
     box-sizing: border-box;
-    border: 50px solid rgba(0, 0, 0, 0.3);
+	border: 50px solid rgba(0, 0, 0, 0.3);
+	border-width: 25%;
     box-shadow: rgba(255, 0, 0, 0.5) 0px 0px 0px 5px inset;
     position: absolute;
     width: 100%;

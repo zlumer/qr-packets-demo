@@ -1,8 +1,12 @@
 <template>
-<div>
-	<span>{{intro}}</span>
-	<Qr :qrs="qrs"></Qr>
-	<QrReader ref="reader" :width="100" :height="100" v-on:qr="onQr"></QrReader>
+<div class="container">
+	<!-- <span>{{intro}}</span> -->
+	<div class="qr">
+		<Qr :qrs="qrs" />
+	</div>
+	<div class="qr-reader">
+		<QrReader ref="reader" v-on:qr="onQr"></QrReader>
+	</div>
 </div>
 </template>
 
@@ -46,3 +50,27 @@ export default (Vue as VueWithProps<{$refs: TRefs}>).extend({
 	}
 })
 </script>
+
+<style lang="scss" scoped>
+
+.container {
+	justify-content: space-around;
+	display: flex;
+    -webkit-box-pack: justify;
+	width: 100%;
+	align-items: center;
+}
+
+.qr {
+	width: calc(100% - 100px);
+	display: flex;
+    flex-flow: column nowrap;
+}
+.qr-reader {
+	width: 300px;
+	display: flex;
+    flex-flow: column nowrap;
+}
+
+</style>
+
