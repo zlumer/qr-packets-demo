@@ -11,7 +11,7 @@
 				<router-link
 					:to="{name:'newtx', query:{ chainId: wallet.chainId }}"
 				>
-					<button>
+					<button class="blue-button">
 						Send {{blockchain.toUpperCase()}}
 					</button>
 				</router-link>
@@ -19,7 +19,7 @@
 					v-if="blockchain == 'eth'"
 					:to="{name:'erc20', query:{ chainId: wallet.chainId }}"
 				>
-					<button>
+					<button class="blue-button">
 						Transfer ERC20
 					</button>
 				</router-link>
@@ -122,22 +122,6 @@ export default Vue.extend({
 	height: 1px;
 	margin: 1rem 0;
 	width: 100%;
-}
-button {
-	border: 0;
-	border-radius: .2rem;
-	cursor: pointer;
-	font-size: .9rem;
-	margin: .25rem 0;
-	outline: 0;
-	padding: .5rem 2rem;
-	line-height: 1.45rem;
-	width: 100%;
-	border-radius: 6rem;
-	background: #00BCF9;
-	color: #fff;
-	transition: .2s ease-in-out all;
-	font-size: 1.1rem;	
 }
 h1 {
 	color: #160A2E;

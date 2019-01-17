@@ -1,6 +1,8 @@
 <template>
 	<div>
-		<button v-if="!signing || loading"
+		<button
+			v-if="!signing || loading"
+			class="blue-button"
 			type="submit"
 			:disabled="signing || !canSign"
 			@click="onButton"

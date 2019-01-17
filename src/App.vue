@@ -28,6 +28,7 @@ export default App
 
 <style lang="scss">
 @import url(normalize.css);
+@import url(global.scss);
 
 @font-face {
     font-family: 'GothamPro';

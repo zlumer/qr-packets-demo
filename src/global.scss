@@ -1,0 +1,20 @@
+.blue-button {
+	border: 0;
+	border-radius: .2rem;
+	cursor: pointer;
+	font-size: .9rem;
+	margin: .25rem 0;
+	outline: 0;
+	padding: .5rem 2rem;
+	line-height: 1.45rem;
+	width: 100%;
+	border-radius: 6rem;
+	background: #00BCF9;
+	color: #fff;
+	transition: .2s ease-in-out all;
+	font-size: 1.1rem;	
+}
+.blue-button:disabled {
+	cursor: not-allowed;
+	background: #ccc;
+}
