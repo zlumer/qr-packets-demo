@@ -1,5 +1,11 @@
 <template>
 	<div>
+		<a
+			v-if="signing && !loading"
+			class="back-link"
+			href="."
+			@click.stop.prevent="onCancel"
+		>{{cancelCaption}}</a>
 		<button
 			v-if="!signing || loading"
 			class="blue-button"
@@ -16,11 +22,6 @@
 			:method="method"
 			:params="txJson"
 			@result="onResult" />
-		<button
-			v-if="signing && !loading"
-			type="submit"
-			@click="onCancel"
-		>{{cancelCaption}}</button>
 	</div>
 </template>
 
@@ -103,4 +104,16 @@ export default Vue.extend({
 	}
 })
 </script>
+
+<style lang="scss" scoped>
+
+.back-link {
+	color: gray;
+	text-decoration: none;
+}
+.back-link :visited {
+	color: gray;
+}
+
+</style>
 
