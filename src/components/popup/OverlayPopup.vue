@@ -3,7 +3,10 @@
 		<white-rect>
 			<div class="header">
 				<h1>{{headerState}}</h1>
-				<close-button @click="$emit('close')"></close-button>
+				<close-button
+					:href="closeHref"
+					@click="$emit('close')"
+				/>
 			</div>
 			<slot></slot>
 		</white-rect>
@@ -21,6 +24,10 @@ export default Vue.extend({
 		header: {
 			type: String,
 			default: ''
+		},
+		closeHref: {
+			type: String,
+			default: '.'
 		}
 	},
 	computed: {

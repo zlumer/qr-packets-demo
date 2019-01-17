@@ -1,8 +1,8 @@
 <template>
 	<a
-		href="#"
-		@click.stop.prevent="$emit('click')"
 		class="link"
+		:href="href"
+		@click.stop.prevent="$emit('click')"
 	><big-x></big-x></a>
 </template>
 
@@ -11,6 +11,12 @@ import Vue from 'src/vue-ts'
 import BigX from "./BigX.vue"
 
 export default Vue.extend({
+	props: {
+		href: {
+			type: String,
+			default: '#'
+		}
+	},
 	components: {
 		BigX,
 	}
