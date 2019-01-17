@@ -1,9 +1,23 @@
 <template>
-<div>
-	<video ref="video" data-cy="video-video" :width="width" :height="height" style="display: none;">Camera not available</video>
-	<canvas ref="canvas" style="display: none;"></canvas>
-	<div data-cy="video-ready" v-if="videoReady" style="display: none;" />
-</div>
+<section :style="topSectionSize">
+	<section class="container">
+		<div class="overlay" :style="{ 'border-width': width / 4 + 'px' }" />
+		<video
+			ref="video"
+			data-cy="video-video"
+			style="display: none;"
+		>Camera not available</video>
+		<canvas
+			ref="canvas"
+			style="display: none;"
+		></canvas>
+		<div
+			v-if="videoReady"
+			data-cy="video-ready"
+			style="display: none;"
+		/>
+	</section>
+</section>
 </template>
 
 <script lang="ts">
@@ -47,6 +61,10 @@ export default (Vue as VueWithProps<{$refs: TRefs}>).extend({
 				return video.getAttribute('data-fake-qr') || null
 			
 			return null
+		},
+		topSectionSize: function()
+		{
+			return { width: `${this.width}px`, height: `${this.height}px` }
 		}
 	},
 	beforeDestroy()
@@ -120,3 +138,36 @@ export default (Vue as VueWithProps<{$refs: TRefs}>).extend({
 })
 </script>
 
+<style lang="scss" scoped>
+
+.container {
+	overflow: hidden;
+    position: relative;
+    width: 100%;
+    padding-top: 100%;
+}
+
+.overlay {
+	top: 0px;
+    left: 0px;
+    z-index: 1;
+    box-sizing: border-box;
+    border: 50px solid rgba(0, 0, 0, 0.3);
+    box-shadow: rgba(255, 0, 0, 0.5) 0px 0px 0px 5px inset;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+video {
+	top: 0px;
+    left: 0px;
+    display: block;
+    position: absolute;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+</style>
