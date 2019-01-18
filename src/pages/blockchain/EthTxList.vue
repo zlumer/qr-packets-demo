@@ -8,15 +8,23 @@
 				<tr>
 				<th>Date</th>
 				<th>TxHash</th>
-				<th>Address</th>
+				<th>From</th>
+				<th>To</th>
 				<th>Value</th>
 				</tr>
 			</thead>
 			<tbody>
 					<tr :key="tx.hash" v-for="tx in txs">
 						<td>{{new Date(tx.timeStamp * 1000).toLocaleString()}}</td>
-						<td>{{ tx.hash.substr(0, 10) + "..." }}</td>
-						<td>{{ tx.from.substr(0, 10) + "..." }}</td>
+						<td class="short">{{ tx.hash }}</td>
+						<td class="short">
+							<span v-if="!isSelf(tx.from)">{{ tx.from }}</span>
+							<span v-else class="self-tag">this wallet</span>
+						</td>
+						<td class="short">
+							<span v-if="!isSelf(tx.to)">{{ tx.to || tx.contractAddress }}</span>
+							<span v-else class="self-tag">this wallet</span>
+						</td>
 						<td>{{ (tx.value / 1e18).toFixed(4) }}</td>
 					</tr>
 			</tbody>
@@ -31,6 +39,12 @@
 	box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.04);
 	border-radius: .8rem;
 }
+.self-tag {
+	padding: 4px;
+	border-radius: 4px;
+    color: #00BCF9;
+	background: rgba(179, 236, 254, 0.6);
+}
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
@@ -38,6 +52,12 @@ table {
 	td {
 		color: #2e3d3f;
 		padding: 1rem .5rem;
+	}
+	td.short {
+		max-width: 15vw;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		overflow: hidden;
 	}
 	th {
 		color: #457b9d;
@@ -81,6 +101,12 @@ export default Vue.extend({
 		{
 			return this.$store.getters.blockchains.eth(this.wallet.chainId)
 		},
+	},
+	methods: {
+		isSelf: function(addr: string)
+		{
+			return addr == this.wallet.address
+		}
 	},
 	mounted: async function ()
 	{
