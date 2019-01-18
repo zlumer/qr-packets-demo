@@ -14,6 +14,10 @@ export const options: SOptions = {
 		},
 	},
 	getters: {
+		calcWalletId: (state, getters) => wallet =>
+		{
+			return `${wallet.blockchain}/${wallet.chainId}/${wallet.address}`
+		},
 		txHash: (state, getters) => (tx, bc) =>
 		{
 			return getters.blockchains[bc](state.currentWallet!.chainId).getTxHash(tx)
@@ -96,6 +100,7 @@ type ActionPayloadMap = {
 }
 
 type GettersReturnMap = {
+	calcWalletId: (wallet: IWallet) => string
 	txHash: (tx: string, blockchain: IBlockchainSymbol) => string
 	txToPushHash?: string
 	blockchains: TypedBlockchains,
