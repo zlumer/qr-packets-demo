@@ -26,7 +26,16 @@ export function createRouter(store: Store)
 		let address: string = to.params.address
 		let chainId: string = (to.query.chainId || "").toString()
 		store.commit('setCurrentWallet', { wallet: { blockchain, address, chainId } })
-		next()
+		return next()
+	}
+	const beforeEach: NavigationGuard = (to, from, next) =>
+	{
+		if (to.name == 'wallet')
+			return updateWallet(to, from, next)
+		if (to.matched.some(x => x.name == 'wallet'))
+			return updateWallet(to, from, next)
+		
+		return next()
 	}
 
 	function metaLayout(layout: ILayoutName)
@@ -34,7 +43,7 @@ export function createRouter(store: Store)
 		return { layout }
 	}
 
-	return new VueRouter({
+	let router = new VueRouter({
 		...(BASE_PATH ? { base: BASE_PATH } : {}),
 		mode: 'history',
 		routes: [
@@ -68,8 +77,9 @@ export function createRouter(store: Store)
 						meta: { ...metaLayout('app'), popup: true },
 					}
 				],
-				beforeEnter: updateWallet
 			},
 		]
 	})
+	router.beforeEach(beforeEach)
+	return router
 }
