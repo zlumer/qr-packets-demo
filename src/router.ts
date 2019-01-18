@@ -11,6 +11,7 @@ import WebrtcVue from "./pages/Webrtc.vue"
 
 import { Store } from "./store"
 import { ILayoutName } from "./layouts"
+import { IBlockchainSymbol } from "./store/interop"
 
 declare let ROOT_PATH: string
 const BASE_PATH = ROOT_PATH
@@ -21,7 +22,7 @@ export function createRouter(store: Store)
 	const updateWallet: NavigationGuard = (to, from, next) =>
 	{
 		console.log('updating wallet!', to, from, next)
-		let blockchain = to.params.blockchain as 'eth'
+		let blockchain = to.params.blockchain as IBlockchainSymbol
 		let address: string = to.params.address
 		let chainId: string = (to.query.chainId || "").toString()
 		store.commit('setCurrentWallet', { wallet: { blockchain, address, chainId } })
