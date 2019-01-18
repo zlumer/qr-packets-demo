@@ -33,7 +33,7 @@ export default Vue.extend({
 	},
 	mounted()
 	{
-		if (this.wallets.length == 1)
+		if (this.wallets.length >= 1)
 		{
 			let w = this.wallets[0]
 			this.$router.replace({ name: 'wallet', params: {
