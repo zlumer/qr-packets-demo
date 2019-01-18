@@ -105,7 +105,7 @@ export default Vue.extend({
 	methods: {
 		isSelf: function(addr: string)
 		{
-			return addr == this.wallet.address
+			return addr.toLowerCase() == this.wallet.address.toLowerCase()
 		}
 	},
 	mounted: async function ()
