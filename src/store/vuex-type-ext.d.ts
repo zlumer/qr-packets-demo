@@ -54,11 +54,11 @@ export type MutationDictionary<TState, TMutationPayloadMap> = {
 	[P in keyof TMutationPayloadMap]: (state: TState, ...payload: OptionalArg<P, TMutationPayloadMap[P]>) => void;
 };
 
-export type GettersDictionary<TState, TGettersReturnMap, TExtraGetters = unknown> = {
+export type GettersDictionary<TState, TGettersReturnMap, TExtraGetters = {}> = {
 	[P in keyof TGettersReturnMap]: (
 		state: ReadonlyCascade<TState>,
 		getters: Readonly<TGettersReturnMap & TExtraGetters>
-	) => ReadonlyCascade<TGettersReturnMap[P]>
+	) => TGettersReturnMap[P]
 }
 
 type Omit<T, K> = Pick<T, Exclude<keyof T, K>>
@@ -107,8 +107,6 @@ type Writealso<T> =
 		? WriteFunction<T>
 	: T extends ReadonlyArray<infer U>
 		? WriteArray<T>
-	: T extends ReadonlyCascade<infer U>
-		? { [key in keyof U]: Writealso<U[key]> }
 	: T extends Readonly<infer U>
 		? { [key in keyof U]: Writealso<U[key]> }
 	: never
@@ -140,11 +138,11 @@ export type StoreOptions<TState = unknown, TMutationPayloadMap = unknown, TActio
 		TExtraStore extends Store = Store> =
 	& OptionalField<keyof TGettersReturnMap, { getters: GettersDictionary<TState & TExtraStore["state"], TGettersReturnMap, TExtraStore["getters"]> }, {}>
 	& OptionalField<keyof TState, { state: TState }, {}>
-	& OptionalField<keyof TMutationPayloadMap, { mutations: MutationDictionary<TState & TExtraStore["state"], TMutationPayloadMap> }, {}>
+	& OptionalField<keyof TMutationPayloadMap, { mutations: MutationDictionary<TState & Writealso<TExtraStore["state"]>, TMutationPayloadMap> }, {}>
 	& OptionalField<keyof TState, { actions: ActionDictionary<TActionPayloadMap, ActionContext<
 		TState & TExtraStore["state"],
-		Dispatcher<TActionPayloadMap & TExtraStore["dispatch"]>,
-		Mutator<TMutationPayloadMap & TExtraStore["commit"]>,
+		Dispatcher<TActionPayloadMap> & Pick<TExtraStore, "dispatch">,
+		Mutator<TMutationPayloadMap> & Pick<TExtraStore, "commit">,
 		TGettersReturnMap & TExtraStore["getters"]>>
 	}, {}>
 
