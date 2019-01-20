@@ -15,5 +15,40 @@
 			"<style lang=\"scss\" scoped>", "", "</style>"
 		],
 		"description": "Vue scaffold with store, ts, scss (scoped)"
+	},
+	"Vuex typed store": {
+		"scope": "typescript",
+		"prefix": "vuex",
+		"description": "Vuex typed store",
+		"body": [
+			"import { StoreOptions, Store as IStore } from \"./vuex-type-ext\"",
+			"",
+			"export const options: SOptions = {",
+			"\tstate: {",
+			"\t},",
+			"\tgetters: {",
+			"\t},",
+			"\tmutations: {",
+			"\t},",
+			"\tactions: {",
+			"\t},",
+			"}",
+			"",
+			"export type Store = IStore<IState, MutationPayloadMap, ActionPayloadMap, GettersReturnMap>",
+			"export type SOptions = StoreOptions<IState, MutationPayloadMap, ActionPayloadMap, GettersReturnMap>",
+			"",
+			"export interface IState",
+			"{",
+			"}",
+			"",
+			"type MutationPayloadMap = {",
+			"}",
+			"",
+			"type ActionPayloadMap = {",
+			"}",
+			"",
+			"type GettersReturnMap = {",
+			"}",
+		]
 	}
 }
