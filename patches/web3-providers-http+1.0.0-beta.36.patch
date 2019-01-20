@@ -1,8 +1,4 @@
 patch-package
-old mode 100644
-new mode 100755
-old mode 100644
-new mode 100755
 --- a/node_modules/web3-providers-http/src/index.js
 +++ b/node_modules/web3-providers-http/src/index.js
 @@ -54,7 +54,7 @@ HttpProvider.prototype._prepareRequest = function(){
