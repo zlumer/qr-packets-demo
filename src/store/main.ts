@@ -2,6 +2,7 @@ import { StoreOptions, Store as IStore } from "./vuex-type-ext"
 import { IBlockchainSymbol, IWallet } from "./interop"
 import { TypedBlockchains, typedBlockchains } from "src/blockchains"
 import { IBlockchain } from "src/blockchains/IBlockchain"
+import { calcWalletId } from "./utils"
 
 export const options: SOptions = {
 	state: {
@@ -14,10 +15,7 @@ export const options: SOptions = {
 		},
 	},
 	getters: {
-		calcWalletId: (state, getters) => wallet =>
-		{
-			return `${wallet.blockchain}/${wallet.chainId}/${wallet.address}`
-		},
+		calcWalletId: (state, getters) => wallet => calcWalletId(wallet),
 		txHash: (state, getters) => (tx, bc) =>
 		{
 			return getters.blockchains[bc](state.currentWallet!.chainId).getTxHash(tx)
