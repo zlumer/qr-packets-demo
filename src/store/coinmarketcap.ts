@@ -1,3 +1,4 @@
+import Vue from "src/vue-ts"
 import { StoreOptions, Store as IStore } from "./vuex-type-ext"
 import * as cmc from "src/blockchains/coinmarketcap"
 import { IBlockchainSymbol } from "./interop"
@@ -5,7 +6,7 @@ import { IBlockchainSymbol } from "./interop"
 function ensureToken(state: IState, token: string)
 {
 	if (!state.tokenPrices[token])
-		state.tokenPrices[token] = { price: NaN, loading: false }
+		Vue.set(state.tokenPrices, token, { price: NaN, loading: false })
 }
 
 export const options: SOptions = {
