@@ -64,30 +64,19 @@ export type GettersDictionary<TState, TGettersReturnMap, TExtraGetters = {}> = {
 type Omit<T, K> = Pick<T, Exclude<keyof T, K>>
 type ArrayElement<T> = T extends Array<infer U> ? U : never
 type ReadonlyFunction<T extends Function> = T extends (...args: infer ARGS) => infer TRet ? (...args: ARGS) => Readonly<TRet> : never
+type primitive = string | number | boolean | undefined | null
 type ReadonlyCascade<T> =
-	/* T extends unknown
+	T extends primitive
 		? T
-	:  */T extends Function
+	: T extends Function
 		? ReadonlyFunction<T>
 	: T extends Array<infer U>
 		? ReadonlyArray<Readonly<ArrayElement<T>>>
-	: T extends boolean
-		? Readonly<T>
-	: T extends string
-		? Readonly<T>
-	: T extends number
-		? Readonly<T>
-	: T extends {}
-		? { readonly [key in keyof T]: ReadonlyCascade<T[key]> }
 	: { readonly [key in keyof T]: ReadonlyCascade<T[key]> }
 
 type WritealsoObj<T> =
-	T extends Readonly<string>
-		? string
-	: T extends Readonly<boolean>
-		? boolean
-	: T extends Readonly<number>
-		? number
+	T extends primitive
+		? T
 	: T extends Readonly<infer U>
 		? { [key in keyof U]: WritealsoObj<U[key]> }
 	: T
@@ -95,7 +84,9 @@ type WritealsoObj<T> =
 type WriteArray<T> = T extends ReadonlyArray<infer U> ? Array<WritealsoObj<U>> : never
 type WriteFunction<T> = T extends (...args: infer ARGS) => infer TRet ? (...args: ARGS) => Writealso<TRet> : never
 type Writealso<T> =
-	T extends Readonly<string>
+	T extends primitive
+		? T
+	: T extends Readonly<string>
 		? string
 	: [T] extends [Readonly<string>]
 		? string
