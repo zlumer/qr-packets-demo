@@ -1,0 +1,16 @@
+patch-package
+--- a/node_modules/vue/types/vue.d.ts
++++ b/node_modules/vue/types/vue.d.ts
+@@ -90,10 +90,8 @@ export interface VueConstructor<V extends Vue = Vue> {
+ 
+   nextTick(callback: () => void, context?: any[]): void;
+   nextTick(): Promise<void>
+-  set<T>(object: object, key: string, value: T): T;
+-  set<T>(array: T[], key: number, value: T): T;
+-  delete(object: object, key: string): void;
+-  delete<T>(array: T[], key: number): void;
++  set<U, K extends keyof U>(object: U, key: K, value: U[K]): U[K];
++  delete<U>(object: U, key: keyof U): void;
+ 
+   directive(
+     id: string,
