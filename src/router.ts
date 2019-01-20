@@ -50,7 +50,7 @@ export function createRouter(store: Store)
 			{ path: '/', component: Index, meta: metaLayout('home') },
 			{ path: '/login', component: Login, meta: metaLayout('home') },
 			{ path: '/webrtc', component: WebrtcVue, meta: metaLayout('home') },
-			{ path: '/wallets', component: Wallets, meta: metaLayout('app') },
+			{ path: '/wallets', component: Wallets, meta: metaLayout('default') },
 			{
 				path: '/wallet/:blockchain/:address',
 				name: 'wallet',
