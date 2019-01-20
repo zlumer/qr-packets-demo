@@ -47,8 +47,18 @@ export const kovan = {
 
 export async function loadTxList(host: string, address: string): Promise<ITx[]>
 {
+	try
+	{
 	let res = await load(host, `/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=YourApiKeyToken`)
 	return (res.result as ITx[]).reverse()
+}
+	catch (e)
+	{
+		if (e.message === "No transactions found")
+			return []
+		
+		throw e
+	}
 }
 export async function load(host: string, path: string): Promise<IResponse<unknown>>
 {
