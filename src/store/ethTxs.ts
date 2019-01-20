@@ -43,8 +43,6 @@ export const options: SOptions = {
 	actions: {
 		ethtx_softUpdateTxs: async (store, payload) =>
 		{
-			console.log(`ethtx_softUpdateTxs ${JSON.stringify(payload.wallet)}`)
-			console.log(store.getters.ethtx_isLoading(payload.wallet))
 			if (store.getters.ethtx_isLoading(payload.wallet))
 				return
 			
@@ -52,15 +50,10 @@ export const options: SOptions = {
 			store.commit('ethtx_setLoading', { ...payload, loading: true })
 			try
 			{
-				console.log('really started loading')
 				let txs = await store.getters.blockchains.eth(payload.wallet.chainId).loadTxList(payload.wallet)
-				console.log('really started loading 1')
 				txs.map(x => x.from)
-				console.log('really started loading 2')
 				store.commit('ethtx_setTxs', { ...payload, txs })
-				console.log('really started loading 3')
 				store.commit('ethtx_setLoading', { ...payload, loading: false })
-				console.log('really started loading 4')
 			}
 			catch (error)
 			{
@@ -69,8 +62,6 @@ export const options: SOptions = {
 		},
 		ethtx_hardUpdateTxs: async (store, payload) =>
 		{
-			console.log(`ethtx_hardUpdateTxs ${JSON.stringify(payload.wallet)}`)
-			console.log(store.getters.ethtx_isLoading(payload.wallet))
 			if (store.getters.ethtx_isLoading(payload.wallet))
 				return
 			
