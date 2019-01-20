@@ -1,5 +1,6 @@
 <template>
-	<div class="column">
+	<div v-if="!wallet">ERROR: NO ACTIVE WALLET! (should never happen)</div>
+	<div class="column" v-else>
 		<overlay-popup v-if="hasPopup"
 			:header="popupHeader"
 			@close="closePopup"
