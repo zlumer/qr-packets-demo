@@ -50,7 +50,9 @@ export async function loadTxList(host: string, address: string): Promise<ITx[]>
 	try
 	{
 	let res = await load(host, `/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=YourApiKeyToken`)
-	return (res.result as ITx[]).reverse()
+		let txs = res.result as ITx[]
+		txs = txs.filter((val, idx, arr) => idx == arr.findIndex(x => x.hash == val.hash)) // remove duplicates
+		return txs.reverse()
 }
 	catch (e)
 	{
