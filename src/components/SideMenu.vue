@@ -71,6 +71,9 @@ export default Vue.extend({
 		},
 		isActiveWallet: function(w: IWallet)
 		{
+			if (!this.selectedAddress || !w || !w.address)
+				return false
+			
 			return this.selectedAddress.toLowerCase() === w.address.toLowerCase()
 		}
 	},
