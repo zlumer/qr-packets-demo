@@ -9,6 +9,7 @@
 				<th>Date</th>
 				<th>TxHash</th>
 				<th>From</th>
+				<th></th>
 				<th>To</th>
 				<th>Value</th>
 				</tr>
@@ -21,6 +22,7 @@
 							<span v-if="!isSelf(tx.from)">{{ tx.from }}</span>
 							<span v-else class="self-tag">this wallet</span>
 						</td>
+						<td class="arrow">{{ "\u2192" }}</td>
 						<td class="short">
 							<span v-if="!isSelf(tx.to)">{{ tx.to || tx.contractAddress }}</span>
 							<span v-else class="self-tag">this wallet</span>
@@ -56,8 +58,15 @@ table {
 	td.short {
 		max-width: 15vw;
 		text-overflow: ellipsis;
+		padding: 0;
 		white-space: nowrap;
 		overflow: hidden;
+
+		text-align: center;
+	}
+	td.arrow {
+		max-width: 4rem;
+		text-align: center;
 	}
 	th {
 		color: #457b9d;
