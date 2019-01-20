@@ -71,7 +71,7 @@ type ReadonlyCascade<T> =
 	: T extends Function
 		? ReadonlyFunction<T>
 	: T extends Array<infer U>
-		? ReadonlyArray<Readonly<ArrayElement<T>>>
+		? IfTuple<T, T, ReadonlyArray<Readonly<ArrayElement<T>>>>
 	: { readonly [key in keyof T]: ReadonlyCascade<T[key]> }
 
 type WritealsoObj<T> =
@@ -81,25 +81,20 @@ type WritealsoObj<T> =
 		? { [key in keyof U]: WritealsoObj<U[key]> }
 	: T
 
+// https://stackoverflow.com/questions/52786547/recursively-setting-a-typescript-type-not-read-only-without-clobbering-tuples
+type IfTuple<T extends any[], Y = true, N = false> = "0" extends keyof T ? Y : N
+
 type WriteArray<T> = T extends ReadonlyArray<infer U> ? Array<WritealsoObj<U>> : never
 type WriteFunction<T> = T extends (...args: infer ARGS) => infer TRet ? (...args: ARGS) => Writealso<TRet> : never
 type Writealso<T> =
 	T extends primitive
 		? T
-	: T extends Readonly<string>
-		? string
-	: [T] extends [Readonly<string>]
-		? string
-	: T extends Readonly<boolean>
-		? boolean
-	: T extends Readonly<number>
-		? number
 	: T extends Readonly<Function>
 		? WriteFunction<T>
 	: T extends ReadonlyArray<infer U>
 		? WriteArray<T>
 	: T extends Readonly<infer U>
-		? { [key in keyof U]: Writealso<U[key]> }
+		? { -readonly [key in keyof T]: Writealso<T[key]> }
 	: never
 
 type CommonProps<T1 extends {}, T2 extends {}> = {
