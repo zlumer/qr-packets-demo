@@ -8039,6 +8039,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
     var result = {};
@@ -8047,10 +8050,11 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var vue_ts_1 = __importDefault(__webpack_require__(/*! src/vue-ts */ 4));
 var cmc = __importStar(__webpack_require__(/*! src/blockchains/coinmarketcap */ 191));
 function ensureToken(state, token) {
     if (!state.tokenPrices[token])
-        state.tokenPrices[token] = { price: NaN, loading: false };
+        vue_ts_1.default.set(state.tokenPrices, token, { price: NaN, loading: false });
 }
 exports.options = {
     state: {
@@ -9253,4 +9257,4 @@ component.options.__file = "BigX.vue"
 
 /***/ })
 /******/ ]);
-//# sourceMappingURL=main.fb877e0c.js.map
+//# sourceMappingURL=main.e81a3469.js.map
