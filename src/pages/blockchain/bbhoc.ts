@@ -5,8 +5,8 @@ import VueOrig, { VueConstructor } from 'vue'
 
 let bb = Vue.extend({
 	props: {
-		wallet: {
-			type: Object as () => IWallet,
+		blockchain: {
+			type: String as () => IBlockchainSymbol,
 			required: true,
 		},
 		eth: Function as any as () => VueConstructor<VueOrig>,
@@ -14,16 +14,19 @@ let bb = Vue.extend({
 		neo: Function as any as () => VueConstructor<VueOrig>,
 		btc: Function as any as () => VueConstructor<VueOrig>,
 		pha: Function as any as () => VueConstructor<VueOrig>,
+		props: Object,
 	},
 	computed: {
 	},
 	render: function (h)
 	{
-		let comp = this[this.wallet.blockchain]
+		let comp = this[this.blockchain]
 		if (!comp)
-			return h('div', [`error: no component for blockchain ${this.wallet.blockchain} (${comp})`])
+			return h('div', [`error: no component for blockchain ${this.blockchain} (${comp})`])
 		
-		return h(comp, {props: this.$props})
+		// console.log(`BBHOC render with props:`)
+		// console.log(this.props)
+		return h(comp, {props: this.props})
 	}
 })
 
@@ -34,14 +37,25 @@ export function generate(chains: {[key in IBlockchainSymbol]?: VueConstructor<Vu
 			wallet: {
 				type: Object as () => IWallet,
 				required: false,
+			},
+			blockchain: {
+				type: String as () => IBlockchainSymbol,
+				required: false,
 			}
 		},
 		render: function(h)
 		{
+			let wallet = this.wallet || this.$store.state.currentWallet
+			// console.log(`BBHOC wallet:`)
+			// console.log(wallet)
+			let blockchain = this.blockchain || (wallet && wallet.blockchain)
+			// console.log(blockchain)
 			return h(bb, {
 				props: {
-					wallet: this.wallet || this.$store.state.currentWallet,
-					...chains
+					wallet,
+					blockchain,
+					props: this.$props,
+					...chains,
 				}
 			})
 		},
