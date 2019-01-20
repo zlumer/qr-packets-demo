@@ -1,10 +1,10 @@
-interface IError
+export interface IError
 {
 	status: "0"
 	message: "NOTOK"
 	result: string
 }
-interface ITx
+export interface ITx
 {
 	blockNumber: string
 	timeStamp: string
@@ -25,7 +25,7 @@ interface ITx
 	gasUsed: string
 	confirmations: string
 }
-interface IResponse<T>
+export interface IResponse<T>
 {
 	status: "1"
 	message:"OK"
@@ -49,11 +49,11 @@ export async function loadTxList(host: string, address: string): Promise<ITx[]>
 {
 	try
 	{
-	let res = await load(host, `/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=YourApiKeyToken`)
+		let res = await load(host, `/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=YourApiKeyToken`)
 		let txs = res.result as ITx[]
 		txs = txs.filter((val, idx, arr) => idx == arr.findIndex(x => x.hash == val.hash)) // remove duplicates
 		return txs.reverse()
-}
+	}
 	catch (e)
 	{
 		if (e.message === "No transactions found")

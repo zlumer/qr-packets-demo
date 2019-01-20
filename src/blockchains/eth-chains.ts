@@ -34,7 +34,7 @@ const CHAINS = {
 }
 const CACHE = { } as { [chainId in IChainId]: EthereumBlockchain }
 
-interface IEthTxHistoryItem
+export interface IEthTxHistoryItem
 {
 	hash: string
 	from: string
