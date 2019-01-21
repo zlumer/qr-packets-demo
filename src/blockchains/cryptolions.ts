@@ -47,9 +47,6 @@ type IResponse<T>  = T
 export const jungle = {
 	loadTxList: (address: string) => loadTxList('https://junglehistory.cryptolions.io:4433', address)
 }
-export const mainnet = {
-	loadTxList: (address: string) => { throw new Error("eos mainnet transaction list is not supported on cryptolions!") }
-}
 
 export async function loadTxList(host: string, address: string): Promise<IEosTxHistoryItem<IEosTransferActionData>[]>
 {
