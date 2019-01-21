@@ -1,10 +1,43 @@
 <template>
 	<header>
 		<div class="copyright">
-			© Cold Crypto 2018. All rights reserved.
+			© Cold Crypto 2018. All rights reserved. Version:
+			<span class="version"><a :href="commitLink"><code>{{ version }}</code></a></span>
+			<div class="api">API by
+				<a href="https://etherscan.io/">Etherscan</a>,
+				<a href="https://coinmarketcap.com/">CoinMarketCap</a>,
+				<a href="https://greymass.com/">Greymass</a>.
+				Blockchain nodes by
+				<a href="https://infura.io/">Infura</a>,
+				<a href="https://cryptolions.io/">CryptoLions</a>.
+			</div>
 		</div>
 	</header>
 </template>
+
+<script lang="ts">
+import Vue from 'src/vue-ts'
+import config from 'src/config'
+
+export default Vue.extend({
+	computed: {
+		version: function()
+		{
+			return config.gitVersion
+		},
+		commitLink: function()
+		{
+			let remoteUrl = config.gitRemote
+			if (!remoteUrl)
+				return '#'
+			
+			remoteUrl = remoteUrl.replace('git@github.com:', 'https://github.com/')
+			remoteUrl = remoteUrl.replace(/\.git$/, '')
+			return `${remoteUrl}/commit/${this.version.split('@')[1]}`
+		}
+	}
+})
+</script>
 
 
 <style lang="scss" scoped>
@@ -17,6 +50,10 @@ header {
 	color: rgba(255, 255, 255, 0.2);
     font-size: 0.85rem;
     padding-left: 2rem;
+}
+.copyright a {
+	text-decoration-color: none;
+	color: inherit;
 }
 
 </style>
