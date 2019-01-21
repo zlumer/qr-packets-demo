@@ -5,7 +5,7 @@ let path = process.env.POI_PATH || ''
 console.log(path ? `GOT PUBLIC PATH: ${path}` : `no public path used`)
 
 let remoteUrl = git.remoteUrl()
-let version = `${git.branch()}@${git.tag()}`
+let version = `${git.tag()}`
 console.log(`Building version ${version}`)
 
 const options: Options = {

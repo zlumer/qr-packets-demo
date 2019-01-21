@@ -33,7 +33,7 @@ export default Vue.extend({
 			
 			remoteUrl = remoteUrl.replace('git@github.com:', 'https://github.com/')
 			remoteUrl = remoteUrl.replace(/\.git$/, '')
-			return `${remoteUrl}/commit/${this.version.split('@')[1]}`
+			return `${remoteUrl}/tree/${this.version}`
 		}
 	}
 })
