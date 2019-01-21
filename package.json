@@ -22,11 +22,13 @@
   },
   "devDependencies": {
     "@poi/plugin-typescript": "^10.2.0",
+    "@types/git-rev-sync": "^1.12.0",
     "@types/jest": "^23.3.10",
     "@types/node": "^10.9.4",
     "@types/qrcode": "^1.2.0",
     "@types/simple-peer": "^6.1.5",
     "@types/web3": "^1.0.12",
+    "git-rev-sync": "^1.12.0",
     "jest": "^23.6.0",
     "node-sass": "^4.11.0",
     "patch-package": "^5.1.1",

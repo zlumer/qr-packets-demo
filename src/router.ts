@@ -12,10 +12,9 @@ import WebrtcVue from "./pages/Webrtc.vue"
 import { Store } from "./store"
 import { ILayoutName } from "./layouts"
 import { IBlockchainSymbol } from "./store/interop"
+import config from "./config"
 
-declare let ROOT_PATH: string
-const BASE_PATH = ROOT_PATH
-console.log(`BASE_PATH: ${BASE_PATH}`)
+const BASE_PATH = config.basePath
 
 export function createRouter(store: Store)
 {
