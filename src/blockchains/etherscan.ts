@@ -1,36 +1,4 @@
-export interface IError
-{
-	status: "0"
-	message: "NOTOK"
-	result: string
-}
-export interface ITx
-{
-	blockNumber: string
-	timeStamp: string
-	hash: string
-	nonce: string
-	blockHash: string
-	transactionIndex: string
-	from: string
-	to: string
-	value: string
-	gas: string
-	gasPrice: string
-	isError: string
-	txreceipt_status: string
-	input: string
-	contractAddress: string
-	cumulativeGasUsed: string
-	gasUsed: string
-	confirmations: string
-}
-export interface IResponse<T>
-{
-	status: "1"
-	message:"OK"
-	result: T
-}
+import { ITx, IResponse } from "./etherscan.i"
 
 export const mainnet = {
 	loadTxList: (address: string) => loadTxList('https://api.etherscan.io', address)
