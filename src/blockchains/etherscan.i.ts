@@ -4,26 +4,35 @@ export interface IError
 	message: "NOTOK"
 	result: string
 }
-export interface ITx
+interface ITxBase
 {
-	blockNumber: string
-	timeStamp: string
-	hash: string
-	nonce: string
 	blockHash: string
-	transactionIndex: string
-	from: string
-	to: string
-	value: string
-	gas: string
-	gasPrice: string
-	isError: string
-	txreceipt_status: string
-	input: string
+	blockNumber: string
+	confirmations: string
 	contractAddress: string
 	cumulativeGasUsed: string
+	from: string
+	gas: string
+	gasPrice: string
 	gasUsed: string
-	confirmations: string
+	hash: string
+	input: string
+	nonce: string
+	timeStamp: string
+	to: string
+	transactionIndex: string
+	value: string
+}
+export interface ITx extends ITxBase
+{
+	isError: string
+	txreceipt_status: string
+}
+export interface ITokenTx extends ITxBase
+{
+	tokenDecimal: string // "18"
+	tokenName: string
+	tokenSymbol: string
 }
 export interface IResponse<T>
 {
