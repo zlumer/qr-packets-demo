@@ -1,18 +1,19 @@
 import Vuex, { Store } from "vuex"
 
-import { StoreOptions, MergeMultiple, Merge, Merge3 } from "./vuex-type-ext"
+import { StoreOptions, MergeMultiple, Merge } from "./vuex-type-ext"
 
 import { options as cmc, Store as StoreCMC, IState as StateCMC } from "./coinmarketcap"
 import { options as main, Store as StoreMain, IState as StateMain } from "./main"
 import { options as ethTxs, Store as StoreEthTxs, IState as StateEthTxs } from "./ethTxs"
+import { options as ethTokens, Store as StoreEthTokens, IState as StateEthTokens } from "./ethTokens"
 
 export function createStore()
 {
-	return new Vuex.Store<IState>(mergeOptions(cmc, main, ethTxs))
+	return new Vuex.Store<IState>(mergeOptions(cmc, main, ethTxs, ethTokens))
 }
 
-export type Store = Merge3<StoreCMC, StoreMain, StoreEthTxs>
-export type IState = Merge3<StateCMC, StateMain, StateEthTxs>
+export type Store = MergeMultiple<StoreCMC, StoreMain, StoreEthTxs, StoreEthTokens>
+export type IState = MergeMultiple<StateCMC, StateMain, StateEthTxs, StateEthTokens>
 
 
 
