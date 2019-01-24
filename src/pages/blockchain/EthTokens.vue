@@ -1,16 +1,44 @@
 <template>
 	<div>
 		<input-label>Token contract address:</input-label>
-		<input
-			type="text"
-			v-model="token.address"
-			@input="onTokenAddressChange"
+		<vue-select
+			v-model="token"
 			data-cy="form-token"
-		/>
-		<div v-if="!token.address"></div>
+			class="select-combobox"
+			placeholder="Select token"
+			maxHeight="40vh"
+			label="address"
+			taggable
+			:loading="!tokensListLoaded || (isValidAddress && !tokenInfoLoaded)"
+			:options="tokenInfos"
+			@input="onTokenAddressChange"
+			@option:created="onNewTokenCall"
+		>
+			<template
+				slot="option"
+				slot-scope="opt"
+			>
+				<span
+					v-if="hasLoadedBalance(opt.address)"
+				>
+					<span v-if="isNaN(getTokenBalance(opt.address))">{{opt.symbol}}</span>
+					<strong v-else>{{getTokenBalance(opt.address)}} {{opt.symbol}}</strong>
+					{{opt.address}}
+				</span>
+				<span
+					v-else
+				>{{opt.address}}</span>
+			</template>
+			<template
+				slot="no-options"
+			>
+				No ERC20 tokens found on this wallet.
+			</template>
+		</vue-select>
+		<div v-if="!tokenAddress"></div>
 		<div v-else-if="!isValidAddress">Incorrect token address</div>
 		<div v-else-if="!tokenInfoLoaded">Loading token info...</div>
-		<div v-else-if="!validToken">ERC20 token not found on contract <code>{{token.address}}</code></div>
+		<div v-else-if="!validToken">ERC20 token not found on contract <code>{{tokenAddress}}</code></div>
 		<div v-else>{{tokenName}} ({{tokenSymbol}})
 			<div v-if="!balanceLoaded">loading your balance...</div>
 			<div v-else>Your balance: {{tokenBalance}} {{tokenSymbol}}</div>
@@ -63,9 +91,7 @@ export default Vue.extend({
 		return {
 			loading: false,
 			nonce: NaN,
-			token: {
-				address: '',
-			},
+			token: null as { address: string } | null,
 			form: {
 				to: { label: "To:", cy: "form-to", validate: validateAddress },
 				amount: { label: "Amount:", cy: "form-amount", type: 'number', validate: validateNumber },
@@ -111,14 +137,26 @@ export default Vue.extend({
 		},
 		isValidAddress: function()
 		{
-			return this.token.address && eth.isValidEthAddress(this.token.address)
+			return !!(this.tokenAddress && eth.isValidEthAddress(this.tokenAddress))
+		},
+		tokenAddress: function()
+		{
+			return this.token ? this.token.address : ''
 		},
 		tokenInfo: function()
 		{
 			if (!this.isValidAddress)
 				return undefined
 			
-			return this.$store.getters.ethTokens_getTokenInfo(this.wallet.chainId as IChainId, this.token.address)
+			return this.$store.getters.ethTokens_getTokenInfo(this.wallet.chainId as IChainId, this.tokenAddress)
+		},
+		tokenInfos: function()
+		{
+			return this.$store.getters.ethTokens_getTokensInfo(this.wallet.chainId as IChainId, this.tokensList)
+				.map((x, i) => ({
+					...x,
+					address: this.tokensList[i],
+				}))
 		},
 		tokenInfoLoaded: function()
 		{
@@ -145,19 +183,64 @@ export default Vue.extend({
 			
 			return this.tokenInfo.name
 		},
+		tokenDecimals : function()
+		{
+			if (!this.validToken || !this.tokenInfo || this.tokenInfo.notatoken)
+				return NaN
+			
+			return this.tokenInfo.decimals
+		},
 		balanceLoaded: function()
 		{
-			return this.$store.getters.ethTokens_hasLoadedBalance(this.wallet, this.token.address)
+			return this.hasLoadedBalance(this.tokenAddress)
 		},
 		tokenBalance: function()
 		{
-			return this.$store.getters.ethTokens_getTokenBalance(this.wallet, this.token.address)
+			return this.getTokenBalance(this.tokenAddress)
+		},
+		tokensListLoaded: function()
+		{
+			return this.$store.getters.ethTokens_hasLoadedTokenList(this.wallet)
+		},
+		tokensList: function()
+		{
+			if (!this.tokensListLoaded)
+				return []
+			
+			return this.$store.getters.ethTokens_getTokenList(this.wallet)
 		},
 	},
+	mounted()
+	{
+		this.$store.dispatch('ethTokens_updateTokenList', { wallet: this.wallet })
+	},
 	methods: {
+		hasLoadedBalance(tokenAddr: string)
+		{
+			return this.$store.getters.ethTokens_hasLoadedBalance(this.wallet, tokenAddr)
+		},
+		getTokenBalance(tokenAddr: string)
+		{
+			let balance = this.$store.getters.ethTokens_getTokenBalance(this.wallet, tokenAddr)
+			
+			let tokenInfo = this.$store.getters.ethTokens_getTokenInfo(this.wallet.chainId as IChainId, tokenAddr)
+			if (!tokenInfo || tokenInfo.notatoken)
+				return NaN
+			
+			let decimals = tokenInfo.decimals
+			if (decimals == 18)
+				return eth.utils.fromWei(balance)
+			
+			return parseFloat(balance) / (10 ** decimals)
+		},
+		onNewTokenCall(address: string)
+		{
+			this.token = { address }
+			this.$store.dispatch('ethTokens_updateTokenBalance', { wallet: this.wallet, tokenAddr: address })
+		},
 		async onTokenAddressChange()
 		{
-			let addr = this.token.address
+			let addr = this.tokenAddress
 			if (!addr || !eth.isValidEthAddress(addr))
 				return
 			
@@ -168,12 +251,13 @@ export default Vue.extend({
 			this.loading = true
 			this.nonce = await this.web3.getNonce(this.address)
 			let addrTo = `000000000000000000000000` + form.to.toLowerCase().replace('0x', '')
-			let amount = eth.utils.numberToHex(eth.utils.toBN(eth.utils.toWei(form.amount))).replace('0x','')
+			let weiAmount = (this.tokenDecimals === 18) ? eth.utils.toWei(form.amount) : Math.round(parseFloat(form.amount) * (10 ** this.tokenDecimals)).toFixed(0)
+			let amount = eth.utils.numberToHex(eth.utils.toBN(weiAmount)).replace('0x','')
 			amount = '0'.repeat(64 - amount.length) + amount
 			this.abi.args = [`0x${addrTo}`, `0x${amount}`]
 			this.tx = {
 				from: this.address,
-				to: this.token.address,
+				to: this.tokenAddress,
 				nonce: this.nonce,
 				gasPrice: eth.utils.toWei(form.gas, 'gwei'),
 				gasLimit: '300000',
@@ -199,6 +283,29 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
+
+.select-combobox {
+	/deep/ .dropdown-toggle {
+		box-sizing: border-box;
+		color: rgba(22, 10, 46, 0.6);
+		font-size: 0.9rem;
+		width: 100%;
+		background: rgb(243, 242, 244);
+		border-width: 2px;
+		border-style: solid;
+		border-color: rgb(115, 108, 130);
+		border-image: initial;
+		border-radius: 6rem;
+		margin: 0.25rem 0px;
+		outline: none;
+		padding: 0.75rem 1rem;
+		margin-bottom: 1rem;
+	}
+	/deep/ button.clear {
+		display: none;
+		pointer-events: none;
+	}
+}
 
 input {
 	box-sizing: border-box;
