@@ -29,6 +29,7 @@ export default App
 <style lang="scss">
 @import url(normalize.css);
 @import url(global.scss);
+@import url(https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons);
 
 @font-face {
     font-family: 'GothamPro';
@@ -38,6 +39,7 @@ html,
 body {
     font-family: 'GothamPro', 'Lato', 'Arial', sans-serif;
     margin: 0;
+    font-size: 16px;
 }
 #root {
     height: 100%;
