@@ -7,10 +7,16 @@
 			@input="onTokenAddressChange"
 			data-cy="form-token"
 		/>
-		<div v-if="!token.loaded && token.status">{{token.status}}</div>
-		<div v-if="token.loaded">{{token.name}} ({{token.symbol}})</div>
+		<div v-if="!token.address"></div>
+		<div v-else-if="!isValidAddress">Incorrect token address</div>
+		<div v-else-if="!tokenInfoLoaded">Loading token info...</div>
+		<div v-else-if="!validToken">ERC20 token not found on contract <code>{{token.address}}</code></div>
+		<div v-else>{{tokenName}} ({{tokenSymbol}})
+			<div v-if="!balanceLoaded">loading your balance...</div>
+			<div v-else>Your balance: {{tokenBalance}} {{tokenSymbol}}</div>
+		</div>
 		<br/>
-		<transfer-form v-if="token.loaded"
+		<transfer-form v-if="validToken"
 			ref="txform"
 			:form="form"
 			:inputs="inputs"
@@ -29,6 +35,7 @@ import Vue, { VueWithProps } from 'src/vue-ts'
 import TransferForm, { IFormInputField } from 'src/components/TransferForm.vue'
 import InputLabel from "src/components/form/InputLabel.vue"
 import * as eth from "src/blockchains/eth"
+import { IChainId } from 'src/blockchains/eth-chains'
 
 function validateAddress(addr: string)
 {
@@ -58,11 +65,6 @@ export default Vue.extend({
 			nonce: NaN,
 			token: {
 				address: '',
-				name: '',
-				symbol: '',
-				decimals: 0,
-				loaded: false,
-				status: '',
 			},
 			form: {
 				to: { label: "To:", cy: "form-to", validate: validateAddress },
@@ -107,29 +109,59 @@ export default Vue.extend({
 		{
 			return this.$store.getters.blockchains.eth(this.wallet.chainId).web3
 		},
+		isValidAddress: function()
+		{
+			return this.token.address && eth.isValidEthAddress(this.token.address)
+		},
+		tokenInfo: function()
+		{
+			if (!this.isValidAddress)
+				return undefined
+			
+			return this.$store.getters.ethTokens_getTokenInfo(this.wallet.chainId as IChainId, this.token.address)
+		},
+		tokenInfoLoaded: function()
+		{
+			if (!this.isValidAddress)
+				return false
+			
+			return !!this.tokenInfo
+		},
+		validToken: function()
+		{
+			return this.tokenInfoLoaded && !this.tokenInfo!.notatoken
+		},
+		tokenSymbol: function()
+		{
+			if (!this.validToken || !this.tokenInfo || this.tokenInfo.notatoken)
+				return ''
+			
+			return this.tokenInfo.symbol
+		},
+		tokenName: function()
+		{
+			if (!this.validToken || !this.tokenInfo || this.tokenInfo.notatoken)
+				return ''
+			
+			return this.tokenInfo.name
+		},
+		balanceLoaded: function()
+		{
+			return this.$store.getters.ethTokens_hasLoadedBalance(this.wallet, this.token.address)
+		},
+		tokenBalance: function()
+		{
+			return this.$store.getters.ethTokens_getTokenBalance(this.wallet, this.token.address)
+		},
 	},
 	methods: {
 		async onTokenAddressChange()
 		{
-			this.token.loaded = false
 			let addr = this.token.address
 			if (!addr || !eth.isValidEthAddress(addr))
-			{
-				this.token.status = 'incorrect token address'
 				return
-			}
-			this.token.status = 'loading token data...'
-			let { name, symbol, notatoken } = await this.web3.getTokenInfo(addr)
-			if (notatoken)
-			{
-				this.token.status = `ERC20 token is not found on ${addr}`
-				return
-			}
-			this.token.name = name
-			this.token.symbol = symbol
-			this.token.loaded = true
-			this.token.status = ''
-			this.$emit('token_loaded', this.token)
+			
+			this.$store.dispatch('ethTokens_updateTokenBalance', { wallet: this.wallet, tokenAddr: addr })
 		},
 		async sign(form: { to: string, gas: string, amount: string })
 		{
