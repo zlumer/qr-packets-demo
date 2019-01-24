@@ -16,7 +16,7 @@ export function getNetwork(providerUrl: string)
 		{
 			return await web3.eth.getTransactionCount(address)
 		},
-		async getErc20Balance(address: string, tokenAddr: string): Promise<number>
+		async getErc20Balance(address: string, tokenAddr: string): Promise<string>
 		{
 			try
 			{
@@ -27,7 +27,7 @@ export function getNetwork(providerUrl: string)
 			catch (err)
 			{
 				console.log(err)
-				return NaN
+				return ''
 			}
 		},
 		async getTokenInfo(tokenAddr: string): Promise<{ name: string, symbol: string, decimals: number, notatoken?: boolean }>

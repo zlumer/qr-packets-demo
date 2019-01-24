@@ -32,9 +32,9 @@ export const options: SOptions = {
 			let key = calcWalletId(wallet)
 			let tokens = state.ethTokens.accounts[key]
 			if (!tokens)
-				return 0
+				return ''
 			
-			return tokens[tokenAddr] ? tokens[tokenAddr].amount : 0
+			return tokens[tokenAddr] ? tokens[tokenAddr].amount : ''
 		},
 		ethTokens_hasLoadedBalance: (state, getters) => (wallet, tokenAddr) =>
 		{
@@ -50,6 +50,16 @@ export const options: SOptions = {
 		{
 			let info = state.ethTokens.tokens[chainId][tokenAddr]
 			return info
+		},
+		ethTokens_getTokensInfo: (state, getters) => (chainId, tokenAddrs) =>
+		{
+			return tokenAddrs.map(x => state.ethTokens.tokens[chainId][x])
+		},
+		ethTokens_hasLoadedTokenList: (state, getters) => (wallet) =>
+		{
+			let key = calcWalletId(wallet)
+			let tokens = state.ethTokens.accounts[key]
+			return !!tokens
 		}
 	},
 	mutations: {
@@ -64,7 +74,7 @@ export const options: SOptions = {
 			if (tkn)
 				tkn.loading = loading
 			else
-				Vue.set(w, tokenAddr, { amount: NaN, loading: loading })
+				Vue.set(w, tokenAddr, { amount: '', loading: loading })
 		},
 		ethTokens_setTokenBalance(state, { wallet, contractAddr, amount })
 		{
@@ -131,7 +141,7 @@ export const options: SOptions = {
 		async ethTokens_updateTokenInfo(store, { chainId, tokenAddr })
 		{
 			if (store.state.ethTokens.tokens[chainId][tokenAddr])
-				return console.log(`Store.EthTokens: token ${tokenAddr} on ${chainId} already loaded`), Promise.resolve()
+				return /* console.log(`Store.EthTokens: token ${tokenAddr} on ${chainId} already loaded`), */ Promise.resolve()
 			
 			let info = await typedBlockchains.eth(chainId).web3.getTokenInfo(tokenAddr)
 			if (info.notatoken)
@@ -173,14 +183,14 @@ export interface IState
 		accounts: {
 			[walletKey: string]: {
 				[contractAddr: string]: {
-					loading: boolean,
-					amount: number,
+					loading: boolean
+					amount: string
 				}
 			}
 		}
 	}
 }
-type ITokenInfo = ITokenInfoOk | INotAToken
+export type ITokenInfo = ITokenInfoOk | INotAToken
 interface ITokenInfoOk
 {
 	notatoken: false
@@ -198,7 +208,7 @@ interface INotAToken
 
 type MutationPayloadMap = {
 	// ethTokens_updateTokens: { address: string, tokens: { [token: string]: number } }
-	ethTokens_setTokenBalance: { wallet: IWallet, contractAddr: string, amount: number }
+	ethTokens_setTokenBalance: { wallet: IWallet, contractAddr: string, amount: string }
 	ethTokens_setTokenInfo: { chainId: IChainId, contractAddr: string, info: ITokenInfo }
 	ethTokens_setBalanceLoading: { wallet: IWallet, tokenAddr: string, loading: boolean }
 }
@@ -213,7 +223,9 @@ type GettersReturnMap = {
 	// ethTokens_timePassed: number
 	// ethTokens_canGetAddressInfo: boolean
 	ethTokens_getTokenList: (wallet: IWallet) => string[]
-	ethTokens_getTokenBalance: (wallet: IWallet, tokenAddr: string) => number
+	ethTokens_hasLoadedTokenList: (wallet: IWallet) => boolean
+	ethTokens_getTokenBalance: (wallet: IWallet, tokenAddr: string) => string
 	ethTokens_hasLoadedBalance: (wallet: IWallet, tokenAddr: string) => boolean
 	ethTokens_getTokenInfo: (chainId: IChainId, tokenAddr: string) => ITokenInfo | undefined
+	ethTokens_getTokensInfo: (chainId: IChainId, tokenAddrs: string[]) => (ITokenInfo | undefined)[]
 }
