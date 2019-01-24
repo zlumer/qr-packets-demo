@@ -16,18 +16,41 @@ export function getNetwork(providerUrl: string)
 		{
 			return await web3.eth.getTransactionCount(address)
 		},
-		async getTokenInfo(address: string): Promise<{ name: string, symbol: string, notatoken?: boolean }>
+		async getErc20Balance(address: string, tokenAddr: string): Promise<number>
 		{
 			try
 			{
-				let cntr = new web3.eth.Contract(erc20abi, address)
+				let cntr = new web3.eth.Contract(erc20abi, tokenAddr)
+				let balance = await cntr.methods.balanceOf(address).call()
+				return balance
+			}
+			catch (err)
+			{
+				console.log(err)
+				return NaN
+			}
+		},
+		async getTokenInfo(tokenAddr: string): Promise<{ name: string, symbol: string, decimals: number, notatoken?: boolean }>
+		{
+			try
+			{
+				let cntr = new web3.eth.Contract(erc20abi, tokenAddr)
 				let [name, symbol] = await Promise.all([cntr.methods.name().call(), cntr.methods.symbol().call()])
-				return { name, symbol }
+				try
+				{
+					let decimals = await cntr.methods.decimals().call()
+					return { name, symbol, decimals: parseInt(decimals) }
+				}
+				catch (e)
+				{
+
+				}
+				return { name, symbol, decimals: 18 }
 			}
 			catch (error)
 			{
 				console.log(error)
-				return { name: '...', symbol: '...', notatoken: true }
+				return { name: '...', symbol: '...', decimals: 18, notatoken: true }
 			}
 		},
 		async sendTx(tx: string): Promise<TransactionReceipt>
