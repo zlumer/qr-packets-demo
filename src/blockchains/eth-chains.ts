@@ -11,25 +11,25 @@ const CHAINS = {
 		testnet: false,
 		name: "Mainnet",
 		url: 'https://mainnet.infura.io/',
-		loadTxList: etherscan.mainnet.loadTxList
+		etherscan: etherscan.mainnet
 	},
 	3: {
 		testnet: true,
 		name: "Ropsten",
 		url: "wss://ropsten.infura.io/ws",
-		loadTxList: etherscan.ropsten.loadTxList
+		etherscan: etherscan.ropsten
 	},
 	4: {
 		testnet: true,
 		name: "Rinkeby",
 		url: 'https://rinkeby.infura.io/',
-		loadTxList: etherscan.rinkeby.loadTxList
+		etherscan: etherscan.rinkeby
 	},
 	42: {
 		testnet: true,
 		name: "Kovan",
 		url: 'wss://kovan.infura.io/_ws',
-		loadTxList: etherscan.kovan.loadTxList
+		etherscan: etherscan.kovan
 	},
 }
 const CACHE = { } as { [chainId in IChainId]: EthereumBlockchain }
@@ -42,7 +42,9 @@ export interface IEthTxHistoryItem
 	value: string
 }
 
-export type EthereumBlockchain = IBlockchain<IEthTxHistoryItem, string> & { web3: ReturnType<typeof getNetwork> }
+export type EthereumBlockchain = IBlockchain<IEthTxHistoryItem, string>
+	& { web3: ReturnType<typeof getNetwork> }
+	& { etherscan: etherscan.IEtherscanNetwork }
 
 const getUsdRate = () => coinmarketcap.loadPrice(coinmarketcap.tickerIds.eth)
 
@@ -65,7 +67,8 @@ export function getNetworkByChainId(chainId: number | string): EthereumBlockchai
 			return receipt.transactionHash
 		},
 		getUsdValue: testnet ? () => Promise.resolve(0) : getUsdRate,
-		loadTxList: wallet => settings.loadTxList(wallet.address),
+		loadTxList: wallet => settings.etherscan.loadTxList(wallet.address),
+		etherscan: settings.etherscan,
 		web3
 	}
 }
