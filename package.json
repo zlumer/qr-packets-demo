@@ -16,6 +16,7 @@
     "simple-peer": "^9.2.0",
     "vue": "^2.5.17",
     "vue-router": "^3.0.2",
+    "vue-select": "^2.5.1",
     "vuex": "^3.0.1",
     "web3": "^1.0.0-beta.36",
     "wrtc": "^0.3.2"
@@ -27,6 +28,7 @@
     "@types/node": "^10.9.4",
     "@types/qrcode": "^1.2.0",
     "@types/simple-peer": "^6.1.5",
+    "@types/vue-select": "^2.4.0",
     "@types/web3": "^1.0.12",
     "git-rev-sync": "^1.12.0",
     "jest": "^23.6.0",

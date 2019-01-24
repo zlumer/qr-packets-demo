@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import VueSelect from "vue-select"
 import Vuex from "vuex"
 import VueRouter from "vue-router"
 import App from './App.vue'
@@ -8,6 +9,8 @@ import { registerLayouts } from './layouts'
 
 Vue.use(VueRouter)
 Vue.use(Vuex)
+
+Vue.component('vue-select', VueSelect as any)
 
 registerLayouts()
 
