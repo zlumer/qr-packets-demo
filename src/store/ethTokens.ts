@@ -89,6 +89,11 @@ export const options: SOptions = {
 			else
 				Vue.set(w, contractAddr, { amount: amount, loading: false })
 		},
+		ethTokens_setTokenBalanceEmpty(state, { wallet })
+		{
+			let key = calcWalletId(wallet)
+			Vue.set(state.ethTokens.accounts, key, {})
+		},
 		ethTokens_setTokenInfo(state, { chainId, contractAddr, info })
 		{
 			let tokens = state.ethTokens.tokens[chainId]
@@ -102,6 +107,8 @@ export const options: SOptions = {
 			let txs = await web3.etherscan.getTokenTxList(wallet.address)
 			let addressesObj = txs.reduce((addresses, tx) => (addresses[tx.contractAddress] = 1, addresses), {} as { [addr: string]: 1 })
 			let addresses = Object.keys(addressesObj)
+			if (!addresses.length)
+				store.commit('ethTokens_setTokenBalanceEmpty', { wallet })
 			addresses.forEach(addr =>
 			{
 				store.dispatch('ethTokens_updateTokenBalance', {
@@ -208,6 +215,7 @@ interface INotAToken
 
 type MutationPayloadMap = {
 	// ethTokens_updateTokens: { address: string, tokens: { [token: string]: number } }
+	ethTokens_setTokenBalanceEmpty: { wallet: IWallet }
 	ethTokens_setTokenBalance: { wallet: IWallet, contractAddr: string, amount: string }
 	ethTokens_setTokenInfo: { chainId: IChainId, contractAddr: string, info: ITokenInfo }
 	ethTokens_setBalanceLoading: { wallet: IWallet, tokenAddr: string, loading: boolean }
