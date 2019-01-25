@@ -3907,12 +3907,12 @@ exports.generate = generate;
 // webpack env variables
 Object.defineProperty(exports, "__esModule", { value: true });
 console.log("ROOT_PATH: " + "/cold");
-console.assert("2cd44e135a2fc9a3399ccbad564269c0de7de0ab", "GIT_VERSION is not defined!");
+console.assert("3664d0d0b37d31c5d6bde49c585b249e4001aec5", "GIT_VERSION is not defined!");
 console.assert("https://github.com/zlumer/qr-packets-demo.git", "GIT_REMOTE is not defined!");
 exports.default = {
     blockchains: ["eth"],
     basePath: "/cold",
-    gitVersion: "2cd44e135a2fc9a3399ccbad564269c0de7de0ab",
+    gitVersion: "3664d0d0b37d31c5d6bde49c585b249e4001aec5",
     gitRemote: "https://github.com/zlumer/qr-packets-demo.git",
 };
 
@@ -5691,6 +5691,13 @@ exports.typedBlockchains = {
     neo: function (chainId) { throw new Error('NEO is not supported yet!'); },
     btc: function (chainId) { throw new Error('BTC is not supported yet!'); },
     pha: function (chainId) { throw new Error('Phantom is not supported yet!'); },
+};
+exports.defaultChainIds = {
+    eth: eth_chains_1.defaultChainId,
+    eos: eos_1.defaultChainId,
+    btc: '',
+    neo: '',
+    pha: '',
 };
 
 
@@ -8379,7 +8386,11 @@ exports.options = {
             console.log("SET_WALLET_LIST: ", payload);
             state.wallets = payload.wallets;
         },
-        setCurrentWallet: function (state, payload) { return state.currentWallet = payload.wallet; },
+        setCurrentWallet: function (state, payload) {
+            state.currentWallet = payload.wallet;
+            if (!payload.wallet.chainId)
+                state.currentWallet.chainId = blockchains_1.defaultChainIds[payload.wallet.blockchain];
+        },
         setTxToPush: function (state, payload) { return state.txToPush = payload; },
         resetTxToPush: function (state) { return state.txToPush = null; },
         webrtcIncId: function (state) { return state.webrtc.outgoingId++; },
@@ -8526,10 +8537,11 @@ function getNetworkByChainId(chainId) {
     };
 }
 exports.getNetworkByChainId = getNetworkByChainId;
+exports.defaultChainId = 1; // eth mainnet
 function getCachedNetworkByChainId(chainId) {
     chainId = parseInt(chainId + "");
     if (isNaN(chainId))
-        chainId = 1; // eth mainnet
+        chainId = exports.defaultChainId;
     var chain = CACHE[chainId];
     if (chain)
         return chain;
@@ -8795,10 +8807,11 @@ function getNetworkByChainId(chainId) {
     };
 }
 var CACHE = {};
+exports.defaultChainId = 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906';
 function getCachedNetworkByChainId(chainId) {
     chainId = chainId + "";
     if (!chainId)
-        chainId = 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906'; // eos mainnet
+        chainId = exports.defaultChainId; // eos mainnet
     var chain = CACHE[chainId];
     if (chain)
         return chain;
@@ -9695,4 +9708,4 @@ component.options.__file = "BigX.vue"
 
 /***/ })
 /******/ ]);
-//# sourceMappingURL=main.c1c44c46.js.map
+//# sourceMappingURL=main.cb0c8e1b.js.map
