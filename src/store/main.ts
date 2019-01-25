@@ -1,6 +1,6 @@
 import { StoreOptions, Store as IStore } from "./vuex-type-ext"
 import { IBlockchainSymbol, IWallet } from "./interop"
-import { TypedBlockchains, typedBlockchains } from "src/blockchains"
+import { TypedBlockchains, typedBlockchains, defaultChainIds } from "src/blockchains"
 import { IBlockchain } from "src/blockchains/IBlockchain"
 import { calcWalletId } from "./utils"
 
@@ -37,7 +37,12 @@ export const options: SOptions = {
 			console.log(`SET_WALLET_LIST: `, payload)
 			state.wallets = payload.wallets
 		},
-		setCurrentWallet: (state, payload) => state.currentWallet = payload.wallet,
+		setCurrentWallet: (state, payload) =>
+		{
+			state.currentWallet = payload.wallet
+			if (!payload.wallet.chainId)
+				state.currentWallet.chainId = defaultChainIds[payload.wallet.blockchain]
+		},
 		setTxToPush: (state, payload) => state.txToPush = payload,
 		resetTxToPush: state => state.txToPush = null,
 		webrtcIncId: state => state.webrtc.outgoingId++,

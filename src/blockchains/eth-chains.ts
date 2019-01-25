@@ -72,11 +72,14 @@ export function getNetworkByChainId(chainId: number | string): EthereumBlockchai
 		web3
 	}
 }
+
+export const defaultChainId = 1 // eth mainnet
+
 export function getCachedNetworkByChainId(chainId: number | string): EthereumBlockchain
 {
 	chainId = parseInt(chainId + "")
 	if (isNaN(chainId))
-		chainId = 1 // eth mainnet
+		chainId = defaultChainId
 	
 	let chain = CACHE[chainId as IChainId]
 	if (chain)

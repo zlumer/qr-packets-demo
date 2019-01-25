@@ -1,7 +1,7 @@
 import { IBlockchainSymbol } from "src/store/interop"
-import { EthereumBlockchain, getCachedNetworkByChainId as getEth } from "./eth-chains"
+import { EthereumBlockchain, getCachedNetworkByChainId as getEth, defaultChainId as ethCid } from "./eth-chains"
 import { IBlockchain } from "./IBlockchain"
-import { EosBlockchain, getCachedNetworkByChainId as getEos } from "./eos"
+import { EosBlockchain, getCachedNetworkByChainId as getEos, defaultChainId as eosCid } from "./eos"
 
 export type GetBlockchain<
 	TSym extends IBlockchainSymbol,
@@ -21,6 +21,14 @@ export const typedBlockchains: TypedBlockchains = {
 	neo: chainId => { throw new Error('NEO is not supported yet!') },
 	btc: chainId => { throw new Error('BTC is not supported yet!') },
 	pha: chainId => { throw new Error('Phantom is not supported yet!') },
+}
+
+export const defaultChainIds = {
+	eth: ethCid,
+	eos: eosCid,
+	btc: '',
+	neo: '',
+	pha: '',
 }
 
 
