@@ -5,6 +5,8 @@ import erc20abi = require('./erc20abi.json')
 
 export const utils = Web3.utils
 
+export const ERC20TransferEventTopic = "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
+
 export function getNetwork(providerUrl: string)
 {
 	const web3 = new Web3()
