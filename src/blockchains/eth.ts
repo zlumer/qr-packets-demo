@@ -2,10 +2,17 @@ import Web3 = require('web3')
 import { TransactionReceipt } from 'web3/types'
 
 import erc20abi = require('./erc20abi.json')
+import tokenList = require('./erc20tokens.json')
 
 export const utils = Web3.utils
 
 export const ERC20TransferEventTopic = "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
+
+export const verifiedTokens = {
+	list: tokenList,
+	map: tokenList.reduce((obj, token) => (obj[token.address.toLowerCase()] = token, obj), {} as { [addr: string]: ITokenInfo })
+}
+export type ITokenInfo = typeof tokenList[number]
 
 export function getNetwork(providerUrl: string)
 {

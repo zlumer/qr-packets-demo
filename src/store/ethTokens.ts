@@ -1,9 +1,10 @@
 import Vue from "src/vue-ts"
 import { StoreOptions, Store as IStore } from "./vuex-type-ext"
-import { IChainId } from "src/blockchains/eth-chains"
+import { IChainId, defaultChainId } from "src/blockchains/eth-chains"
 import { IWallet } from "./interop"
 import { calcWalletId } from "./utils"
 import { typedBlockchains } from "src/blockchains"
+import { verifiedTokens } from "src/blockchains/eth"
 
 export const options: SOptions = {
 	state: {
@@ -48,12 +49,14 @@ export const options: SOptions = {
 		},
 		ethTokens_getTokenInfo: (state, getters) => (chainId, tokenAddr) =>
 		{
-			let info = state.ethTokens.tokens[chainId][tokenAddr]
+			let info = state.ethTokens.tokens[chainId][tokenAddr.toLowerCase()]
 			return info
 		},
 		ethTokens_getTokensInfo: (state, getters) => (chainId, tokenAddrs) =>
 		{
-			return tokenAddrs.map(x => state.ethTokens.tokens[chainId][x])
+			return tokenAddrs
+				.map(addr => addr.toLowerCase())
+				.map(x => state.ethTokens.tokens[chainId][x])
 		},
 		ethTokens_hasLoadedTokenList: (state, getters) => (wallet) =>
 		{
@@ -149,6 +152,27 @@ export const options: SOptions = {
 		{
 			if (store.state.ethTokens.tokens[chainId][tokenAddr])
 				return /* console.log(`Store.EthTokens: token ${tokenAddr} on ${chainId} already loaded`), */ Promise.resolve()
+			
+			if (chainId == defaultChainId)
+			{
+				let verified = verifiedTokens.map[tokenAddr.toLowerCase()]
+				if (verified)
+				{
+					store.commit('ethTokens_setTokenInfo', {
+						chainId,
+						contractAddr: tokenAddr,
+						info: {
+							notatoken: false,
+							symbol: verified.symbol,
+							decimals: verified.decimals,
+							name: verified.name,
+							price: 0,
+							verified: true,
+						}
+					})
+					return Promise.resolve()
+				}
+			}
 			
 			let info = await typedBlockchains.eth(chainId).web3.getTokenInfo(tokenAddr)
 			if (info.notatoken)
