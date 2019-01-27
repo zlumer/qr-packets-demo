@@ -1,7 +1,7 @@
 <template>
 	<grey-overlay class="above-all container">
 		<div class="modal">
-			<white-rect class="modal-conten">
+			<white-rect class="modal-content">
 				<div class="header">
 					<h1>{{headerState}}</h1>
 					<close-button
@@ -63,10 +63,6 @@ export default Vue.extend({
 	height: 100vh;
 	justify-content: center;
 	align-items: center;
-}
-
-.modal-content {
-	
 }
 
 .header {
