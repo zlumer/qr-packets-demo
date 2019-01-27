@@ -2498,7 +2498,7 @@ exports.default = vue_ts_1.default.extend({
 /***/ }),
 /* 142 */
 /*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader??ref--1-oneOf-2-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/sass-loader/lib/loader.js??ref--1-oneOf-2-2!./node_modules/vue-loader/lib??vue-loader-options!./src/components/popup/OverlayPopup.vue?vue&type=style&index=0&id=4e44c077&lang=scss&scoped=true& ***!
+  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader??ref--1-oneOf-2-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/sass-loader/lib/loader.js??ref--1-oneOf-2-2!./node_modules/vue-loader/lib??vue-loader-options!./src/components/popup/OverlayPopup.vue?vue&type=style&index=0&id=165d0ee1&lang=scss&scoped=true& ***!
   \*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /*! exports used: default */
@@ -4115,12 +4115,12 @@ exports.generate = generate;
 // webpack env variables
 Object.defineProperty(exports, "__esModule", { value: true });
 console.log("ROOT_PATH: " + "/qr-packets-demo");
-console.assert("5b25a613ed9c079b6aa892a707e40edaf04e0595", "GIT_VERSION is not defined!");
+console.assert("05787a4c73b8130fed4128471d45fd601b6267e6", "GIT_VERSION is not defined!");
 console.assert("https://github.com/zlumer/qr-packets-demo.git", "GIT_REMOTE is not defined!");
 exports.default = {
     blockchains: ["eth"],
     basePath: "/qr-packets-demo",
-    gitVersion: "5b25a613ed9c079b6aa892a707e40edaf04e0595",
+    gitVersion: "05787a4c73b8130fed4128471d45fd601b6267e6",
     gitRemote: "https://github.com/zlumer/qr-packets-demo.git",
 };
 
@@ -5001,7 +5001,7 @@ var staticRenderFns = []
 /***/ }),
 /* 230 */
 /*!******************************************************************************************************!*\
-  !*** ./src/components/popup/OverlayPopup.vue?vue&type=template&id=4e44c077&scoped=true& + 1 modules ***!
+  !*** ./src/components/popup/OverlayPopup.vue?vue&type=template&id=165d0ee1&scoped=true& + 1 modules ***!
   \******************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /*! exports used: render, staticRenderFns */
@@ -5009,12 +5009,12 @@ var staticRenderFns = []
 
 "use strict";
 
-// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./src/components/popup/OverlayPopup.vue?vue&type=template&id=4e44c077&scoped=true&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('grey-overlay',{staticClass:"above-all container"},[_c('div',{staticClass:"modal"},[_c('white-rect',{staticClass:"modal-conten"},[_c('div',{staticClass:"header"},[_c('h1',[_vm._v(_vm._s(_vm.headerState))]),_vm._v(" "),_c('close-button',{attrs:{"href":_vm.closeHref},on:{"click":function($event){_vm.$emit('close')}}})],1),_vm._v(" "),_vm._t("default")],2)],1)])}
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./src/components/popup/OverlayPopup.vue?vue&type=template&id=165d0ee1&scoped=true&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('grey-overlay',{staticClass:"above-all container"},[_c('div',{staticClass:"modal"},[_c('white-rect',{staticClass:"modal-content"},[_c('div',{staticClass:"header"},[_c('h1',[_vm._v(_vm._s(_vm.headerState))]),_vm._v(" "),_c('close-button',{attrs:{"href":_vm.closeHref},on:{"click":function($event){_vm.$emit('close')}}})],1),_vm._v(" "),_vm._t("default")],2)],1)])}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/popup/OverlayPopup.vue?vue&type=template&id=4e44c077&scoped=true&
+// CONCATENATED MODULE: ./src/components/popup/OverlayPopup.vue?vue&type=template&id=165d0ee1&scoped=true&
 /* concated harmony reexport render */__webpack_require__.d(__webpack_exports__, "a", function() { return render; });
 /* concated harmony reexport staticRenderFns */__webpack_require__.d(__webpack_exports__, "b", function() { return staticRenderFns; });
 
@@ -7017,10 +7017,10 @@ component.options.__file = "EosTxList.vue"
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _OverlayPopup_vue_vue_type_template_id_4e44c077_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./OverlayPopup.vue?vue&type=template&id=4e44c077&scoped=true& */ 230);
+/* harmony import */ var _OverlayPopup_vue_vue_type_template_id_165d0ee1_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./OverlayPopup.vue?vue&type=template&id=165d0ee1&scoped=true& */ 230);
 /* harmony import */ var _OverlayPopup_vue_vue_type_script_lang_ts___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./OverlayPopup.vue?vue&type=script&lang=ts& */ 132);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _OverlayPopup_vue_vue_type_script_lang_ts___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _OverlayPopup_vue_vue_type_script_lang_ts___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _OverlayPopup_vue_vue_type_style_index_0_id_4e44c077_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./OverlayPopup.vue?vue&type=style&index=0&id=4e44c077&lang=scss&scoped=true& */ 408);
+/* harmony import */ var _OverlayPopup_vue_vue_type_style_index_0_id_165d0ee1_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./OverlayPopup.vue?vue&type=style&index=0&id=165d0ee1&lang=scss&scoped=true& */ 408);
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ 0);
 
 
@@ -7032,11 +7032,11 @@ __webpack_require__.r(__webpack_exports__);
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
   _OverlayPopup_vue_vue_type_script_lang_ts___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _OverlayPopup_vue_vue_type_template_id_4e44c077_scoped_true___WEBPACK_IMPORTED_MODULE_0__[/* render */ "a"],
-  _OverlayPopup_vue_vue_type_template_id_4e44c077_scoped_true___WEBPACK_IMPORTED_MODULE_0__[/* staticRenderFns */ "b"],
+  _OverlayPopup_vue_vue_type_template_id_165d0ee1_scoped_true___WEBPACK_IMPORTED_MODULE_0__[/* render */ "a"],
+  _OverlayPopup_vue_vue_type_template_id_165d0ee1_scoped_true___WEBPACK_IMPORTED_MODULE_0__[/* staticRenderFns */ "b"],
   false,
   null,
-  "4e44c077",
+  "165d0ee1",
   null
   
 )
@@ -7185,17 +7185,17 @@ component.options.__file = "WhiteRect.vue"
 /***/ }),
 /* 408 */
 /*!*********************************************************************************************************!*\
-  !*** ./src/components/popup/OverlayPopup.vue?vue&type=style&index=0&id=4e44c077&lang=scss&scoped=true& ***!
+  !*** ./src/components/popup/OverlayPopup.vue?vue&type=style&index=0&id=165d0ee1&lang=scss&scoped=true& ***!
   \*********************************************************************************************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module exports are unknown */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_OverlayPopup_vue_vue_type_style_index_0_id_4e44c077_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader??ref--1-oneOf-2-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/sass-loader/lib/loader.js??ref--1-oneOf-2-2!../../../node_modules/vue-loader/lib??vue-loader-options!./OverlayPopup.vue?vue&type=style&index=0&id=4e44c077&lang=scss&scoped=true& */ 142);
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_OverlayPopup_vue_vue_type_style_index_0_id_4e44c077_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_OverlayPopup_vue_vue_type_style_index_0_id_4e44c077_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_OverlayPopup_vue_vue_type_style_index_0_id_165d0ee1_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader??ref--1-oneOf-2-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/sass-loader/lib/loader.js??ref--1-oneOf-2-2!../../../node_modules/vue-loader/lib??vue-loader-options!./OverlayPopup.vue?vue&type=style&index=0&id=165d0ee1&lang=scss&scoped=true& */ 142);
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_OverlayPopup_vue_vue_type_style_index_0_id_165d0ee1_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_OverlayPopup_vue_vue_type_style_index_0_id_165d0ee1_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__);
 /* unused harmony reexport * */
- /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_OverlayPopup_vue_vue_type_style_index_0_id_4e44c077_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default.a); 
+ /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_OverlayPopup_vue_vue_type_style_index_0_id_165d0ee1_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 /* 409 */
@@ -9748,4 +9748,4 @@ component.options.__file = "BigX.vue"
 
 /***/ })
 /******/ ]);
-//# sourceMappingURL=main.0756d91d.js.map
+//# sourceMappingURL=main.d247eab8.js.map
