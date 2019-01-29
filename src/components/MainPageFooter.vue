@@ -6,6 +6,8 @@
 			<div class="api">API by
 				<a href="https://etherscan.io/">Etherscan</a>,
 				<a href="https://coinmarketcap.com/">CoinMarketCap</a>,
+				<a href="https://etherchain.org/">Etherchain</a>,
+				<a href="https://ethgasstation.info/">ETH Gas Station</a>,
 				<a href="https://greymass.com/">Greymass</a>.
 				Blockchain nodes by
 				<a href="https://infura.io/">Infura</a>,
