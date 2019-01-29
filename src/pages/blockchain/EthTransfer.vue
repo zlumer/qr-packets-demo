@@ -9,13 +9,22 @@
 			@sign="sign"
 			@cancel="cancel"
 			@change="onFormChange"
-		/>
+		>
+			<template slot="additional-inputs">
+				<eth-gas-price
+					v-model="gasPrice"
+					:gas="21000"
+					:monetary="true"
+				/>
+			</template>
+		</transfer-form>
 	</div>
 </template>
 
 <script lang="ts">
 import Vue, { VueWithProps } from 'src/vue-ts'
 import TransferForm, { IFormInputField } from 'src/components/TransferForm.vue'
+import EthGasPrice from 'src/components/form/EthGasPrice.vue'
 import * as eth from "src/blockchains/eth"
 
 function validateAddress(addr: string)
@@ -44,11 +53,11 @@ export default (Vue as VueWithProps<{ $refs: TRefs }>).extend({
 		return {
 			loading: false,
 			nonce: NaN,
+			gasPrice: 1,
 			form: {
 				to: { label: "To:", placeholder: "Address", cy: "form-to", validate: validateAddress },
 				amount: { label: "Amount:", placeholder: "0", cy: "form-amount", type: 'number', validate: validateNumber },
 				usd: { label: "USD value:", cy: "form-usd", type: 'number' },
-				gas: { label: "Gas price:", cy: "form-gas", type: 'number', validate: validateNumber },
 			},
 			tx: {
 				from: '',
@@ -57,7 +66,7 @@ export default (Vue as VueWithProps<{ $refs: TRefs }>).extend({
 				gasPrice: '',
 				value: '',
 			},
-			inputs: ['to', 'amount', 'usd', 'gas']
+			inputs: ['to', 'amount', 'usd']
 		}
 	},
 	computed: {
@@ -93,7 +102,7 @@ export default (Vue as VueWithProps<{ $refs: TRefs }>).extend({
 		})
 	},
 	methods: {
-		async sign(form: { to: string, gas: string, amount: string })
+		async sign(form: { to: string, amount: string })
 		{
 			this.loading = true
 			this.nonce = await this.web3.getNonce(this.address)
@@ -101,7 +110,7 @@ export default (Vue as VueWithProps<{ $refs: TRefs }>).extend({
 				from: this.address,
 				to: form.to,
 				nonce: this.nonce,
-				gasPrice: eth.utils.toWei(form.gas, 'gwei'),
+				gasPrice: eth.utils.toWei(this.gasPrice + "", 'gwei'),
 				value: eth.utils.toWei(form.amount),
 			}
 			this.loading = false
@@ -133,6 +142,7 @@ export default (Vue as VueWithProps<{ $refs: TRefs }>).extend({
 	},
 	components: {
 		TransferForm,
+		EthGasPrice,
 	}
 })
 </script>
