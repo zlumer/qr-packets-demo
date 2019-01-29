@@ -11,6 +11,7 @@
 					@input="onInput(name)"
 				/>
 			</span>
+			<slot name="additional-inputs"></slot>
 		</div>
 		<remote-sign
 			:loading="loading"
