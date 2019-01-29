@@ -54,7 +54,15 @@
 			@sign="sign"
 			@cancel="cancel"
 			@change="onFormChange"
-		/>
+		>
+			<template slot="additional-inputs">
+				<eth-gas-price
+					v-model="gasPrice"
+					:gas="300000"
+					:monetary="true"
+				/>
+			</template>
+		</transfer-form>
 	</div>
 </template>
 
@@ -62,6 +70,7 @@
 import Vue, { VueWithProps } from 'src/vue-ts'
 import TransferForm, { IFormInputField } from 'src/components/TransferForm.vue'
 import InputLabel from "src/components/form/InputLabel.vue"
+import EthGasPrice from 'src/components/form/EthGasPrice.vue'
 import * as eth from "src/blockchains/eth"
 import { IChainId } from 'src/blockchains/eth-chains'
 
@@ -90,12 +99,12 @@ export default Vue.extend({
 	{
 		return {
 			loading: false,
+			gasPrice: 1,
 			nonce: NaN,
 			token: null as { address: string } | null,
 			form: {
 				to: { label: "To:", cy: "form-to", validate: validateAddress },
 				amount: { label: "Amount:", cy: "form-amount", type: 'number', validate: validateNumber },
-				gas: { label: "Gas price:", cy: "form-gas", type: 'number', validate: validateNumber },
 			},
 			tx: {
 				from: '',
@@ -110,7 +119,7 @@ export default Vue.extend({
 				method: 'transfer(address,uint256)',
 				args: null as [string, string] | null,
 			},
-			inputs: ['to', 'amount', 'gas']
+			inputs: ['to', 'amount']
 		}
 	},
 	computed: {
@@ -246,7 +255,7 @@ export default Vue.extend({
 			
 			this.$store.dispatch('ethTokens_updateTokenBalance', { wallet: this.wallet, tokenAddr: addr })
 		},
-		async sign(form: { to: string, gas: string, amount: string })
+		async sign(form: { to: string, amount: string })
 		{
 			this.loading = true
 			this.nonce = await this.web3.getNonce(this.address)
@@ -259,7 +268,7 @@ export default Vue.extend({
 				from: this.address,
 				to: this.tokenAddress,
 				nonce: this.nonce,
-				gasPrice: eth.utils.toWei(form.gas, 'gwei'),
+				gasPrice: eth.utils.toWei(this.gasPrice + "", 'gwei'),
 				gasLimit: '300000',
 				value: eth.utils.toWei('0'),
 				data: `0xa9059cbb${addrTo}${amount}`,
@@ -278,6 +287,7 @@ export default Vue.extend({
 	components: {
 		TransferForm,
 		InputLabel,
+		EthGasPrice,
 	}
 })
 </script>
