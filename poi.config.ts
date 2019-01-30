@@ -17,6 +17,10 @@ const options: Options = {
   plugins: [
     require('@poi/plugin-typescript')()
   ],
+  html: {
+    title: 'Cold Crypto · Secure Crypto Wallet for ETH and EOS',
+    description: 'Secure cold wallet for crypto assets. Store your crypto safely on any cheap mobile phone.'
+  },
   publicPath: path,
   define: {
     ROOT_PATH: `"${path}"`,
