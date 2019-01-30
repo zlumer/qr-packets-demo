@@ -21,7 +21,9 @@ jobs:
         on:
           branch: master
     - stage: duxi build
-      script: POI_PATH=/cold yarn build
+      script:
+        - POI_PATH=/cold yarn build
+        - git show -s --pretty=%H > ./dist/gitrev
       deploy:
         provider: pages
         skip-cleanup: true
