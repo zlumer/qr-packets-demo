@@ -75,7 +75,7 @@ export default Vue.extend({
 		},
 		blockchain: function()
 		{
-			return this.$store.getters.currentBlockchain
+			return this.$store.getters.currentBlockchain!
 		}
 	},
 	methods: {

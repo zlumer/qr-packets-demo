@@ -2,12 +2,13 @@ import { StoreOptions, Store as IStore } from "./vuex-type-ext"
 import { IBlockchainSymbol, IWallet } from "./interop"
 import { TypedBlockchains, typedBlockchains, defaultChainIds } from "src/blockchains"
 import { IBlockchain } from "src/blockchains/IBlockchain"
-import { calcWalletId } from "./utils"
+import { calcWalletId, pick } from "./utils"
 
 export const options: SOptions = {
 	state: {
 		wallets: [],
 		currentWallet: null,
+		currentChain: null,
 		txToPush: null,
 		webrtc: {
 			outgoingId: 1,
@@ -16,9 +17,12 @@ export const options: SOptions = {
 	},
 	getters: {
 		calcWalletId: (state, getters) => wallet => calcWalletId(wallet),
-		txHash: (state, getters) => (tx, bc) =>
+		txHash: (state, getters) => (tx, bc, chainId) =>
 		{
-			return getters.blockchains[bc](state.currentWallet!.chainId).getTxHash(tx)
+			if (typeof chainId === 'undefined')
+				chainId = (state.currentChain && state.currentChain.blockchain == bc) ? state.currentChain.chainId : defaultChainIds[bc]
+
+			return getters.blockchains[bc](chainId).getTxHash(tx)
 		},
 		txToPushHash: (state, getters) =>
 		{
@@ -26,10 +30,10 @@ export const options: SOptions = {
 			if (!tx)
 				return undefined
 			
-			return getters.txHash(tx.tx, tx.wallet.blockchain)
+			return getters.txHash(tx.tx, tx.wallet.blockchain, tx.wallet.chainId)
 		},
 		blockchains: (state, getters) => typedBlockchains,
-		currentBlockchain: (state, getters) => getters.blockchains[state.currentWallet!.blockchain](state.currentWallet!.chainId)
+		currentBlockchain: (state, getters) => state.currentChain ? getters.blockchains[state.currentChain.blockchain](state.currentChain.chainId) : null,
 	},
 	mutations: {
 		setWalletList: (state, payload) =>
@@ -40,8 +44,14 @@ export const options: SOptions = {
 		setCurrentWallet: (state, payload) =>
 		{
 			state.currentWallet = payload.wallet
+			
+			if (!payload.wallet)
+				return state.currentChain = null
+			
 			if (!payload.wallet.chainId)
 				state.currentWallet.chainId = defaultChainIds[payload.wallet.blockchain]
+			
+			state.currentChain = pick(state.currentWallet, ['blockchain', 'chainId'])
 		},
 		setTxToPush: (state, payload) => state.txToPush = payload,
 		resetTxToPush: state => state.txToPush = null,
@@ -74,6 +84,10 @@ export interface IState
 {
 	wallets: IWallet[]
 	currentWallet: IWallet | null
+	currentChain: {
+		blockchain: IBlockchainSymbol
+		chainId: string | number
+	} | null
 	txToPush: {
 		tx: string
 		wallet: IWallet
@@ -104,8 +118,8 @@ type ActionPayloadMap = {
 
 type GettersReturnMap = {
 	calcWalletId: (wallet: IWallet) => string
-	txHash: (tx: string, blockchain: IBlockchainSymbol) => string
+	txHash: (tx: string, blockchain: IBlockchainSymbol, chainId?: string | number) => string
 	txToPushHash?: string
 	blockchains: TypedBlockchains,
-	currentBlockchain: IBlockchain<unknown, unknown>
+	currentBlockchain: IBlockchain<unknown, unknown> | null
 }

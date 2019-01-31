@@ -66,7 +66,7 @@ export default Vue.extend({
 		},
 		networkName: function()
 		{
-			return this.$store.getters.currentBlockchain.networkName
+			return this.$store.getters.currentBlockchain!.networkName
 		},
 		hasPopup: function()
 		{
