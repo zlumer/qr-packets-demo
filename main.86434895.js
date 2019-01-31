@@ -2510,7 +2510,7 @@ exports.default = vue_ts_1.default.extend({
 /***/ }),
 /* 143 */
 /*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader??ref--1-oneOf-2-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/sass-loader/lib/loader.js??ref--1-oneOf-2-2!./node_modules/vue-loader/lib??vue-loader-options!./src/pages/Wallet.vue?vue&type=style&index=0&id=7923f42d&lang=scss&scoped=true& ***!
+  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader??ref--1-oneOf-2-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/sass-loader/lib/loader.js??ref--1-oneOf-2-2!./node_modules/vue-loader/lib??vue-loader-options!./src/pages/Wallet.vue?vue&type=style&index=0&id=28c1bd26&lang=scss&scoped=true& ***!
   \****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /*! exports used: default */
@@ -2662,6 +2662,11 @@ exports.default = vue_ts_1.default.extend({
                 amount: { label: "Amount:", placeholder: "0", cy: "form-amount", type: 'number', validate: validateNumber },
                 usd: { label: "USD value:", cy: "form-usd", type: 'number' },
             },
+            values: {
+                to: '',
+                amount: '',
+                usd: '',
+            },
             tx: {
                 from: '',
                 to: '',
@@ -2693,9 +2698,20 @@ exports.default = vue_ts_1.default.extend({
     mounted: function () {
         var _this = this;
         this.$store.dispatch('updateTokenPrice', { blockchain: 'eth' }).then(function () {
-            var amount = parseFloat(_this.$refs.txform.values['amount'] + "");
+            var amount = parseFloat(_this.values.amount + "");
+            var usd = parseFloat(_this.values.usd + "");
             if (!isNaN(amount))
-                _this.$refs.txform.setValue('usd', amount * _this.$store.getters.ethPrice);
+                _this.values.usd = _this.ethToUsd(amount) + "";
+            else if (!isNaN(usd))
+                _this.values.amount = _this.usdToEth(usd) + "";
+        });
+        Object.keys(this.values).map(function (x) { return "form-" + x; }).forEach(function (key) {
+            var param = _this.$route.query[key];
+            if (typeof param !== 'undefined') {
+                var v = _this.values;
+                var field = key.split('-')[1];
+                _this.values[field] = param + "";
+            }
         });
     },
     methods: {
@@ -2715,13 +2731,19 @@ exports.default = vue_ts_1.default.extend({
                                 to: form.to,
                                 nonce: this.nonce,
                                 gasPrice: eth.utils.toWei(this.gasPrice + "", 'gwei'),
-                                value: eth.utils.toWei(form.amount),
+                                value: eth.utils.toWei(form.amount + ""),
                             };
                             this.loading = false;
                             return [2 /*return*/];
                     }
                 });
             });
+        },
+        ethToUsd: function (eth) {
+            return eth * this.ethPrice;
+        },
+        usdToEth: function (usd) {
+            return usd / this.ethPrice;
         },
         onFormChange: function (_a) {
             // console.log(`form change! ${field} ${value}`, field, value)
@@ -2731,12 +2753,12 @@ exports.default = vue_ts_1.default.extend({
             if (field == 'amount') {
                 var val = parseFloat(value + "");
                 if (!isNaN(val))
-                    this.$refs.txform.setValue('usd', val * this.ethPrice);
+                    this.values.usd = this.ethToUsd(val) + "";
             }
             if (field == 'usd') {
                 var val = parseFloat(value + "");
                 if (!isNaN(val))
-                    this.$refs.txform.setValue('amount', val / this.ethPrice);
+                    this.values.amount = this.usdToEth(val) + "";
             }
         },
         cancel: function () {
@@ -2837,10 +2859,13 @@ exports.default = vue_ts_1.default.extend({
     data: function () {
         return {
             signing: false,
-            values: {}
         };
     },
     props: {
+        value: {
+            type: Object,
+            required: true
+        },
         form: {
             type: Object,
             required: true
@@ -2873,7 +2898,7 @@ exports.default = vue_ts_1.default.extend({
         inputsValid: function () {
             var _this = this;
             return !this.inputs
-                .map(function (n) { return (__assign({}, _this.form[n], { value: _this.values[n] })); })
+                .map(function (n) { return (__assign({}, _this.form[n], { value: _this.value[n] })); })
                 .map(function (x) { return x.validate ? x.validate(x.value) : true; })
                 .some(function (x) { return !x; });
         },
@@ -2886,7 +2911,7 @@ exports.default = vue_ts_1.default.extend({
             return __awaiter(this, void 0, void 0, function () {
                 return __generator(this, function (_a) {
                     this.signing = true;
-                    this.$emit('sign', this.values);
+                    this.$emit('sign', this.value);
                     return [2 /*return*/];
                 });
             });
@@ -2901,10 +2926,8 @@ exports.default = vue_ts_1.default.extend({
             });
         },
         onInput: function (field) {
-            this.$emit('change', { field: field, value: this.values[field] });
-        },
-        setValue: function (field, value) {
-            this.values[field] = value;
+            this.$emit('input', this.value);
+            this.$emit('change', { field: field, value: this.value[field] });
         },
     },
     components: {
@@ -3062,7 +3085,7 @@ exports.default = vue_ts_1.default.extend({
 /***/ }),
 /* 152 */
 /*!*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader??ref--1-oneOf-2-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/sass-loader/lib/loader.js??ref--1-oneOf-2-2!./node_modules/vue-loader/lib??vue-loader-options!./src/components/RemoteSign.vue?vue&type=style&index=0&id=d6f847b8&lang=scss&scoped=true& ***!
+  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader??ref--1-oneOf-2-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/sass-loader/lib/loader.js??ref--1-oneOf-2-2!./node_modules/vue-loader/lib??vue-loader-options!./src/components/RemoteSign.vue?vue&type=style&index=0&id=078d047a&lang=scss&scoped=true& ***!
   \*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /*! exports used: default */
@@ -3261,7 +3284,7 @@ exports.default = vue_ts_1.default.extend({
         totalGasEth: function () {
             if (isNaN(this.totalGas))
                 return NaN;
-            return eth.utils.fromWei(eth.utils.toWei(this.totalGas + "", 'gwei'));
+            return eth.utils.fromWei(eth.utils.toWei(this.totalGas.toFixed(9), 'gwei'));
         },
         totalCost: function () {
             return this.totalGas * this.gweiUsdPrice;
@@ -3285,7 +3308,7 @@ exports.default = vue_ts_1.default.extend({
 /***/ }),
 /* 161 */
 /*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader??ref--1-oneOf-2-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/sass-loader/lib/loader.js??ref--1-oneOf-2-2!./node_modules/vue-loader/lib??vue-loader-options!./src/components/form/EthGasPrice.vue?vue&type=style&index=0&id=699b749e&lang=scss&scoped=true& ***!
+  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader??ref--1-oneOf-2-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/sass-loader/lib/loader.js??ref--1-oneOf-2-2!./node_modules/vue-loader/lib??vue-loader-options!./src/components/form/EthGasPrice.vue?vue&type=style&index=0&id=378b7646&lang=scss&scoped=true& ***!
   \*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /*! exports used: default */
@@ -3398,6 +3421,12 @@ exports.default = vue_ts_1.default.extend({
                 usd: { label: "USD value:", cy: "form-usd", type: 'number' },
                 memo: { label: "Memo:", cy: "form-memo", type: '' },
             },
+            values: {
+                to: '',
+                memo: '',
+                usd: '',
+                amount: '',
+            },
             tx: {
                 to: '',
                 memo: '',
@@ -3451,10 +3480,21 @@ exports.default = vue_ts_1.default.extend({
     mounted: function () {
         var _this = this;
         this.$store.dispatch('updateTokenPrice', { blockchain: 'eos' }).then(function () {
-            var amount = parseFloat(_this.$refs.txform.values['amount'] + "");
+            var amount = parseFloat(_this.values.amount + "");
+            var usd = parseFloat(_this.values.usd + "");
             console.log("EOS updating amount: " + amount + " (" + _this.eosPrice + ")[" + _this.$store.getters.eosPrice + "]", _this.$store.state.tokenPrices);
             if (!isNaN(amount))
-                _this.$refs.txform.setValue('usd', amount * _this.eosPrice);
+                _this.values.usd = amount * _this.eosPrice + "";
+            else if (!isNaN(usd))
+                _this.values.amount = usd / _this.eosPrice + "";
+        });
+        Object.keys(this.values).map(function (x) { return "form-" + x; }).forEach(function (key) {
+            var param = _this.$route.query[key];
+            if (typeof param !== 'undefined') {
+                var v = _this.values;
+                var field = key.split('-')[1];
+                _this.values[field] = param + "";
+            }
         });
     },
     methods: {
@@ -3490,12 +3530,12 @@ exports.default = vue_ts_1.default.extend({
             if (field == 'amount') {
                 var val = parseFloat(value + "");
                 if (!isNaN(val))
-                    this.$refs.txform.setValue('usd', val * this.eosPrice);
+                    this.values.usd = val * this.eosPrice + "";
             }
             if (field == 'usd') {
                 var val = parseFloat(value + "");
                 if (!isNaN(val))
-                    this.$refs.txform.setValue('amount', val / this.eosPrice);
+                    this.values.amount = val / this.eosPrice + "";
             }
         },
         cancel: function () {
@@ -3620,6 +3660,10 @@ exports.default = vue_ts_1.default.extend({
             form: {
                 to: { label: "To:", cy: "form-to", validate: validateAddress },
                 amount: { label: "Amount:", cy: "form-amount", type: 'number', validate: validateNumber },
+            },
+            formValues: {
+                to: '',
+                amount: '',
             },
             tx: {
                 from: '',
@@ -3791,7 +3835,7 @@ exports.default = vue_ts_1.default.extend({
 /***/ }),
 /* 166 */
 /*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader??ref--1-oneOf-2-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/sass-loader/lib/loader.js??ref--1-oneOf-2-2!./node_modules/vue-loader/lib??vue-loader-options!./src/pages/blockchain/EthTokens.vue?vue&type=style&index=0&id=7e41f49a&lang=scss&scoped=true& ***!
+  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader??ref--1-oneOf-2-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/sass-loader/lib/loader.js??ref--1-oneOf-2-2!./node_modules/vue-loader/lib??vue-loader-options!./src/pages/blockchain/EthTokens.vue?vue&type=style&index=0&id=33092699&lang=scss&scoped=true& ***!
   \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /*! exports used: default */
@@ -4229,12 +4273,12 @@ exports.generate = generate;
 // webpack env variables
 Object.defineProperty(exports, "__esModule", { value: true });
 console.log("ROOT_PATH: " + "/cold");
-console.assert("7dd336d3db59f70fa8e9599cfa9f3a69e110f8cc", "GIT_VERSION is not defined!");
+console.assert("74959ac8d7724641517bcb9c52624c40de968825", "GIT_VERSION is not defined!");
 console.assert("https://github.com/zlumer/qr-packets-demo.git", "GIT_REMOTE is not defined!");
 exports.default = {
     blockchains: ["eth"],
     basePath: "/cold",
-    gitVersion: "7dd336d3db59f70fa8e9599cfa9f3a69e110f8cc",
+    gitVersion: "74959ac8d7724641517bcb9c52624c40de968825",
     gitRemote: "https://github.com/zlumer/qr-packets-demo.git",
 };
 
@@ -4442,7 +4486,7 @@ exports.allToArray = allToArray;
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _TransferForm_vue_vue_type_template_id_9c536028___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TransferForm.vue?vue&type=template&id=9c536028& */ 236);
+/* harmony import */ var _TransferForm_vue_vue_type_template_id_17c41806___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TransferForm.vue?vue&type=template&id=17c41806& */ 236);
 /* harmony import */ var _TransferForm_vue_vue_type_script_lang_ts___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TransferForm.vue?vue&type=script&lang=ts& */ 148);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _TransferForm_vue_vue_type_script_lang_ts___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _TransferForm_vue_vue_type_script_lang_ts___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ 0);
@@ -4455,8 +4499,8 @@ __webpack_require__.r(__webpack_exports__);
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__[/* default */ "a"])(
   _TransferForm_vue_vue_type_script_lang_ts___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _TransferForm_vue_vue_type_template_id_9c536028___WEBPACK_IMPORTED_MODULE_0__[/* render */ "a"],
-  _TransferForm_vue_vue_type_template_id_9c536028___WEBPACK_IMPORTED_MODULE_0__[/* staticRenderFns */ "b"],
+  _TransferForm_vue_vue_type_template_id_17c41806___WEBPACK_IMPORTED_MODULE_0__[/* render */ "a"],
+  _TransferForm_vue_vue_type_template_id_17c41806___WEBPACK_IMPORTED_MODULE_0__[/* staticRenderFns */ "b"],
   false,
   null,
   null,
@@ -4826,11 +4870,36 @@ exports.loadPrice = loadPrice;
 
 "use strict";
 
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 function calcWalletId(wallet) {
     return wallet.blockchain + "/" + wallet.chainId + "/" + wallet.address;
 }
 exports.calcWalletId = calcWalletId;
+/**
+ * https://gist.github.com/bisubus/2da8af7e801ffd813fab7ac221aa7afc
+ *
+ * Creates an object composed of the picked object properties.
+ * @param obj The source object
+ * @param paths The property paths to pick
+ */
+function pick(obj, paths) {
+    return __assign({}, paths.reduce(function (mem, key) {
+        var _a;
+        return (__assign({}, mem, (_a = {}, _a[key] = obj[key], _a)));
+    }, {}));
+}
+exports.pick = pick;
 
 
 /***/ }),
@@ -4944,7 +5013,7 @@ var staticRenderFns = []
 /***/ }),
 /* 224 */
 /*!*************************************************************************************!*\
-  !*** ./src/pages/Wallet.vue?vue&type=template&id=7923f42d&scoped=true& + 1 modules ***!
+  !*** ./src/pages/Wallet.vue?vue&type=template&id=28c1bd26&scoped=true& + 1 modules ***!
   \*************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /*! exports used: render, staticRenderFns */
@@ -4952,12 +5021,12 @@ var staticRenderFns = []
 
 "use strict";
 
-// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./src/pages/Wallet.vue?vue&type=template&id=7923f42d&scoped=true&
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./src/pages/Wallet.vue?vue&type=template&id=28c1bd26&scoped=true&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (!_vm.wallet)?_c('div',[_vm._v("ERROR: NO ACTIVE WALLET! (should never happen)")]):_c('div',{staticClass:"column"},[(_vm.hasPopup)?_c('overlay-popup',{attrs:{"header":_vm.popupHeader},on:{"close":_vm.closePopup}},[_c('router-view')],1):_vm._e(),_vm._v(" "),_c('div',{staticClass:"row"},[_c('div',{staticClass:"column column-buttons"},[_c('router-link',{attrs:{"to":{name:'newtx', query:{ chainId: _vm.wallet.chainId }}}},[_c('button',{staticClass:"blue-button"},[_vm._v("\n\t\t\t\t\tSend "+_vm._s(_vm.blockchain.toUpperCase())+"\n\t\t\t\t")])]),_vm._v(" "),(_vm.blockchain == 'eth')?_c('router-link',{attrs:{"to":{name:'erc20', query:{ chainId: _vm.wallet.chainId }}}},[_c('button',{staticClass:"blue-button"},[_vm._v("\n\t\t\t\t\tTransfer ERC20\n\t\t\t\t")])]):_vm._e()],1),_vm._v(" "),_c('div',{staticClass:"column column-info"},[_c('h1',[_vm._v(_vm._s(_vm.blockchain)+" Wallet")]),_vm._v(" "),_c('h2',[_c('div',{staticClass:"address"},[_vm._v(_vm._s(_vm.address))])]),_vm._v(" "),_c('h3',[_vm._v("\n\t\t\t\tNetwork: "),_c('b',[_vm._v(_vm._s(_vm.networkName))])])])]),_vm._v(" "),_c('div',{staticClass:"hr"}),_vm._v(" "),_c('tx-list-hoc',{attrs:{"wallet":_vm.wallet}})],1)}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/pages/Wallet.vue?vue&type=template&id=7923f42d&scoped=true&
+// CONCATENATED MODULE: ./src/pages/Wallet.vue?vue&type=template&id=28c1bd26&scoped=true&
 /* concated harmony reexport render */__webpack_require__.d(__webpack_exports__, "a", function() { return render; });
 /* concated harmony reexport staticRenderFns */__webpack_require__.d(__webpack_exports__, "b", function() { return staticRenderFns; });
 
@@ -4965,7 +5034,7 @@ var staticRenderFns = []
 /***/ }),
 /* 225 */
 /*!***************************************************************************************************!*\
-  !*** ./src/pages/blockchain/EthTokens.vue?vue&type=template&id=7e41f49a&scoped=true& + 1 modules ***!
+  !*** ./src/pages/blockchain/EthTokens.vue?vue&type=template&id=33092699&scoped=true& + 1 modules ***!
   \***************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /*! exports used: render, staticRenderFns */
@@ -4973,12 +5042,12 @@ var staticRenderFns = []
 
 "use strict";
 
-// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./src/pages/blockchain/EthTokens.vue?vue&type=template&id=7e41f49a&scoped=true&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('input-label',[_vm._v("Token contract address:")]),_vm._v(" "),_c('vue-select',{staticClass:"select-combobox",attrs:{"data-cy":"form-token","placeholder":"Select token","maxHeight":"40vh","label":"address","taggable":"","loading":!_vm.tokensListLoaded || (_vm.isValidAddress && !_vm.tokenInfoLoaded),"options":_vm.tokenInfos},on:{"input":_vm.onTokenAddressChange,"option:created":_vm.onNewTokenCall},scopedSlots:_vm._u([{key:"option",fn:function(opt){return [(_vm.hasLoadedBalance(opt.address))?_c('span',[(isNaN(_vm.getTokenBalance(opt.address)))?_c('span',[_vm._v(_vm._s(opt.symbol))]):_c('strong',[_vm._v(_vm._s(_vm.getTokenBalance(opt.address))+" "+_vm._s(opt.symbol))]),_vm._v("\n\t\t\t\t"+_vm._s(opt.address)+"\n\t\t\t")]):_c('span',[_vm._v(_vm._s(opt.address))])]}}]),model:{value:(_vm.token),callback:function ($$v) {_vm.token=$$v},expression:"token"}},[_c('template',{slot:"no-options"},[_vm._v("\n\t\t\tNo ERC20 tokens found on this wallet.\n\t\t")])],2),_vm._v(" "),(!_vm.tokenAddress)?_c('div'):(!_vm.isValidAddress)?_c('div',[_vm._v("Incorrect token address")]):(!_vm.tokenInfoLoaded)?_c('div',[_vm._v("Loading token info...")]):(!_vm.validToken)?_c('div',[_vm._v("ERC20 token not found on contract "),_c('code',[_vm._v(_vm._s(_vm.tokenAddress))])]):_c('div',[_vm._v(_vm._s(_vm.tokenName)+" ("+_vm._s(_vm.tokenSymbol)+")\n\t\t"),(!_vm.balanceLoaded)?_c('div',[_vm._v("loading your balance...")]):_c('div',[_vm._v("Your balance: "+_vm._s(_vm.tokenBalance)+" "+_vm._s(_vm.tokenSymbol))])]),_vm._v(" "),_c('br'),_vm._v(" "),(_vm.validToken)?_c('transfer-form',{ref:"txform",attrs:{"form":_vm.form,"inputs":_vm.inputs,"loading":_vm.loading,"tx-json":_vm.txJson,"method":"signContractCall"},on:{"sign":_vm.sign,"cancel":_vm.cancel,"change":_vm.onFormChange}},[_c('template',{slot:"additional-inputs"},[_c('eth-gas-price',{attrs:{"gas":300000,"monetary":true},model:{value:(_vm.gasPrice),callback:function ($$v) {_vm.gasPrice=$$v},expression:"gasPrice"}})],1)],2):_vm._e()],1)}
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./src/pages/blockchain/EthTokens.vue?vue&type=template&id=33092699&scoped=true&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('input-label',[_vm._v("Token contract address:")]),_vm._v(" "),_c('vue-select',{staticClass:"select-combobox",attrs:{"data-cy":"form-token","placeholder":"Select token","maxHeight":"40vh","label":"address","taggable":"","loading":!_vm.tokensListLoaded || (_vm.isValidAddress && !_vm.tokenInfoLoaded),"options":_vm.tokenInfos},on:{"input":_vm.onTokenAddressChange,"option:created":_vm.onNewTokenCall},scopedSlots:_vm._u([{key:"option",fn:function(opt){return [(_vm.hasLoadedBalance(opt.address))?_c('span',[(isNaN(_vm.getTokenBalance(opt.address)))?_c('span',[_vm._v(_vm._s(opt.symbol))]):_c('strong',[_vm._v(_vm._s(_vm.getTokenBalance(opt.address))+" "+_vm._s(opt.symbol))]),_vm._v("\n\t\t\t\t"+_vm._s(opt.address)+"\n\t\t\t")]):_c('span',[_vm._v(_vm._s(opt.address))])]}}]),model:{value:(_vm.token),callback:function ($$v) {_vm.token=$$v},expression:"token"}},[_c('template',{slot:"no-options"},[_vm._v("\n\t\t\tNo ERC20 tokens found on this wallet.\n\t\t")])],2),_vm._v(" "),(!_vm.tokenAddress)?_c('div'):(!_vm.isValidAddress)?_c('div',[_vm._v("Incorrect token address")]):(!_vm.tokenInfoLoaded)?_c('div',[_vm._v("Loading token info...")]):(!_vm.validToken)?_c('div',[_vm._v("ERC20 token not found on contract "),_c('code',[_vm._v(_vm._s(_vm.tokenAddress))])]):_c('div',[_vm._v(_vm._s(_vm.tokenName)+" ("+_vm._s(_vm.tokenSymbol)+")\n\t\t"),(!_vm.balanceLoaded)?_c('div',[_vm._v("loading your balance...")]):_c('div',[_vm._v("Your balance: "+_vm._s(_vm.tokenBalance)+" "+_vm._s(_vm.tokenSymbol))])]),_vm._v(" "),_c('br'),_vm._v(" "),(_vm.validToken)?_c('transfer-form',{ref:"txform",attrs:{"form":_vm.form,"inputs":_vm.inputs,"loading":_vm.loading,"tx-json":_vm.txJson,"method":"signContractCall"},on:{"sign":_vm.sign,"cancel":_vm.cancel,"change":_vm.onFormChange},model:{value:(_vm.formValues),callback:function ($$v) {_vm.formValues=$$v},expression:"formValues"}},[_c('template',{slot:"additional-inputs"},[_c('eth-gas-price',{attrs:{"gas":300000,"monetary":true},model:{value:(_vm.gasPrice),callback:function ($$v) {_vm.gasPrice=$$v},expression:"gasPrice"}})],1)],2):_vm._e()],1)}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/pages/blockchain/EthTokens.vue?vue&type=template&id=7e41f49a&scoped=true&
+// CONCATENATED MODULE: ./src/pages/blockchain/EthTokens.vue?vue&type=template&id=33092699&scoped=true&
 /* concated harmony reexport render */__webpack_require__.d(__webpack_exports__, "a", function() { return render; });
 /* concated harmony reexport staticRenderFns */__webpack_require__.d(__webpack_exports__, "b", function() { return staticRenderFns; });
 
@@ -5175,7 +5244,7 @@ var staticRenderFns = []
 /***/ }),
 /* 235 */
 /*!*****************************************************************************************!*\
-  !*** ./src/pages/blockchain/EthTransfer.vue?vue&type=template&id=0a7830eb& + 1 modules ***!
+  !*** ./src/pages/blockchain/EthTransfer.vue?vue&type=template&id=b02915bc& + 1 modules ***!
   \*****************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /*! exports used: render, staticRenderFns */
@@ -5183,12 +5252,12 @@ var staticRenderFns = []
 
 "use strict";
 
-// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./src/pages/blockchain/EthTransfer.vue?vue&type=template&id=0a7830eb&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('transfer-form',{ref:"txform",attrs:{"form":_vm.form,"inputs":_vm.inputs,"loading":_vm.loading,"tx-json":_vm.txJson},on:{"sign":_vm.sign,"cancel":_vm.cancel,"change":_vm.onFormChange}},[_c('template',{slot:"additional-inputs"},[_c('eth-gas-price',{attrs:{"gas":21000,"monetary":true},model:{value:(_vm.gasPrice),callback:function ($$v) {_vm.gasPrice=$$v},expression:"gasPrice"}})],1)],2)],1)}
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./src/pages/blockchain/EthTransfer.vue?vue&type=template&id=b02915bc&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('transfer-form',{ref:"txform",attrs:{"form":_vm.form,"inputs":_vm.inputs,"loading":_vm.loading,"tx-json":_vm.txJson},on:{"sign":_vm.sign,"cancel":_vm.cancel,"change":_vm.onFormChange},model:{value:(_vm.values),callback:function ($$v) {_vm.values=$$v},expression:"values"}},[_c('template',{slot:"additional-inputs"},[_c('eth-gas-price',{attrs:{"gas":21000,"monetary":true},model:{value:(_vm.gasPrice),callback:function ($$v) {_vm.gasPrice=$$v},expression:"gasPrice"}})],1)],2)],1)}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/pages/blockchain/EthTransfer.vue?vue&type=template&id=0a7830eb&
+// CONCATENATED MODULE: ./src/pages/blockchain/EthTransfer.vue?vue&type=template&id=b02915bc&
 /* concated harmony reexport render */__webpack_require__.d(__webpack_exports__, "a", function() { return render; });
 /* concated harmony reexport staticRenderFns */__webpack_require__.d(__webpack_exports__, "b", function() { return staticRenderFns; });
 
@@ -5196,7 +5265,7 @@ var staticRenderFns = []
 /***/ }),
 /* 236 */
 /*!************************************************************************************!*\
-  !*** ./src/components/TransferForm.vue?vue&type=template&id=9c536028& + 1 modules ***!
+  !*** ./src/components/TransferForm.vue?vue&type=template&id=17c41806& + 1 modules ***!
   \************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /*! exports used: render, staticRenderFns */
@@ -5204,12 +5273,12 @@ var staticRenderFns = []
 
 "use strict";
 
-// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./src/components/TransferForm.vue?vue&type=template&id=9c536028&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[(!_vm.signing || _vm.loading)?_c('div',[_vm._l((_vm.inputs),function(name){return _c('span',{key:name},[_c('input-label',[_vm._v(_vm._s(_vm.form[name].label))]),_vm._v(" "),_c('form-input',{attrs:{"cy":_vm.form[name].cy,"enabled":!_vm.signing,"placeholder":_vm.form[name].placeholder},on:{"input":function($event){_vm.onInput(name)}},model:{value:(_vm.values[name]),callback:function ($$v) {_vm.$set(_vm.values, name, $$v)},expression:"values[name]"}})],1)}),_vm._v(" "),_vm._t("additional-inputs")],2):_vm._e(),_vm._v(" "),_c('remote-sign',{attrs:{"loading":_vm.loading,"tx-json":_vm.txJson,"method":_vm.method,"can-sign":_vm.canSign},on:{"sign":_vm.onSign,"cancel":_vm.onCancel}})],1)}
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./src/components/TransferForm.vue?vue&type=template&id=17c41806&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[(!_vm.signing || _vm.loading)?_c('div',[_vm._l((_vm.inputs),function(name){return _c('span',{key:name},[_c('input-label',[_vm._v(_vm._s(_vm.form[name].label))]),_vm._v(" "),_c('form-input',{attrs:{"cy":_vm.form[name].cy,"enabled":!_vm.signing,"placeholder":_vm.form[name].placeholder},on:{"input":function($event){_vm.onInput(name)}},model:{value:(_vm.value[name]),callback:function ($$v) {_vm.$set(_vm.value, name, $$v)},expression:"value[name]"}})],1)}),_vm._v(" "),_vm._t("additional-inputs")],2):_vm._e(),_vm._v(" "),_c('remote-sign',{attrs:{"loading":_vm.loading,"tx-json":_vm.txJson,"method":_vm.method,"can-sign":_vm.canSign},on:{"sign":_vm.onSign,"cancel":_vm.onCancel}})],1)}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/TransferForm.vue?vue&type=template&id=9c536028&
+// CONCATENATED MODULE: ./src/components/TransferForm.vue?vue&type=template&id=17c41806&
 /* concated harmony reexport render */__webpack_require__.d(__webpack_exports__, "a", function() { return render; });
 /* concated harmony reexport staticRenderFns */__webpack_require__.d(__webpack_exports__, "b", function() { return staticRenderFns; });
 
@@ -5238,7 +5307,7 @@ var staticRenderFns = []
 /***/ }),
 /* 238 */
 /*!****************************************************************************************************!*\
-  !*** ./src/components/form/EthGasPrice.vue?vue&type=template&id=699b749e&scoped=true& + 1 modules ***!
+  !*** ./src/components/form/EthGasPrice.vue?vue&type=template&id=378b7646&scoped=true& + 1 modules ***!
   \****************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /*! exports used: render, staticRenderFns */
@@ -5246,12 +5315,12 @@ var staticRenderFns = []
 
 "use strict";
 
-// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./src/components/form/EthGasPrice.vue?vue&type=template&id=699b749e&scoped=true&
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./src/components/form/EthGasPrice.vue?vue&type=template&id=378b7646&scoped=true&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[(_vm.gweiValues.length)?_c('div',{staticClass:"slider-container",attrs:{"data-cy":"gas-slider"}},[_c('input-label',{staticClass:"slider-label"},[_vm._v("Gas price:")]),_vm._v(" "),_c('vue-slider',{staticStyle:{"width":"50vw","display":"inline-block"},attrs:{"value":_vm.value,"data":_vm.gweiValues,"piecewise":true},on:{"input":_vm.onSlide}})],1):_c('div',{staticClass:"loading"},[_vm._v("\n\t\tLoading optimal gas prices...\n\t")]),_vm._v(" "),(_vm.gas)?_c('div',{staticClass:"total-gas"},[_vm._v("Total TX cost: "),_c('span',{attrs:{"data-cy":"total-gas"}},[_vm._v(_vm._s(_vm.totalGasEth)+" ETH")]),_vm._v(" "),(_vm.monetary)?_c('span',{staticClass:"usd-price"},[_vm._v("(approx. $"+_vm._s(_vm.totalCost.toFixed(2))+")")]):_vm._e()]):_vm._e()])}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/form/EthGasPrice.vue?vue&type=template&id=699b749e&scoped=true&
+// CONCATENATED MODULE: ./src/components/form/EthGasPrice.vue?vue&type=template&id=378b7646&scoped=true&
 /* concated harmony reexport render */__webpack_require__.d(__webpack_exports__, "a", function() { return render; });
 /* concated harmony reexport staticRenderFns */__webpack_require__.d(__webpack_exports__, "b", function() { return staticRenderFns; });
 
@@ -5259,7 +5328,7 @@ var staticRenderFns = []
 /***/ }),
 /* 239 */
 /*!*****************************************************************************************!*\
-  !*** ./src/pages/blockchain/EosTransfer.vue?vue&type=template&id=0866a0a2& + 1 modules ***!
+  !*** ./src/pages/blockchain/EosTransfer.vue?vue&type=template&id=ee161326& + 1 modules ***!
   \*****************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /*! exports used: render, staticRenderFns */
@@ -5267,12 +5336,12 @@ var staticRenderFns = []
 
 "use strict";
 
-// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./src/pages/blockchain/EosTransfer.vue?vue&type=template&id=0866a0a2&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('transfer-form',{ref:"txform",attrs:{"form":_vm.form,"inputs":_vm.inputs,"loading":_vm.loading,"tx-json":_vm.txJson},on:{"sign":_vm.sign,"cancel":_vm.cancel,"change":_vm.onFormChange}})],1)}
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./src/pages/blockchain/EosTransfer.vue?vue&type=template&id=ee161326&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('transfer-form',{ref:"txform",attrs:{"form":_vm.form,"inputs":_vm.inputs,"loading":_vm.loading,"tx-json":_vm.txJson},on:{"sign":_vm.sign,"cancel":_vm.cancel,"change":_vm.onFormChange},model:{value:(_vm.values),callback:function ($$v) {_vm.values=$$v},expression:"values"}})],1)}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/pages/blockchain/EosTransfer.vue?vue&type=template&id=0866a0a2&
+// CONCATENATED MODULE: ./src/pages/blockchain/EosTransfer.vue?vue&type=template&id=ee161326&
 /* concated harmony reexport render */__webpack_require__.d(__webpack_exports__, "a", function() { return render; });
 /* concated harmony reexport staticRenderFns */__webpack_require__.d(__webpack_exports__, "b", function() { return staticRenderFns; });
 
@@ -5427,7 +5496,7 @@ var staticRenderFns = []
 /***/ }),
 /* 247 */
 /*!**********************************************************************************************!*\
-  !*** ./src/components/RemoteSign.vue?vue&type=template&id=d6f847b8&scoped=true& + 1 modules ***!
+  !*** ./src/components/RemoteSign.vue?vue&type=template&id=078d047a&scoped=true& + 1 modules ***!
   \**********************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /*! exports used: render, staticRenderFns */
@@ -5435,12 +5504,12 @@ var staticRenderFns = []
 
 "use strict";
 
-// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./src/components/RemoteSign.vue?vue&type=template&id=d6f847b8&scoped=true&
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./src/components/RemoteSign.vue?vue&type=template&id=078d047a&scoped=true&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[(_vm.signing && !_vm.loading)?_c('a',{staticClass:"back-link",attrs:{"href":"."},on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.onCancel($event)}}},[_vm._v(_vm._s(_vm.cancelCaption))]):_vm._e(),_vm._v(" "),(!_vm.signing || _vm.loading)?_c('button',{staticClass:"blue-button",attrs:{"type":"submit","disabled":_vm.signing || !_vm.canSign},on:{"click":_vm.onButton}},[_vm._v(_vm._s(_vm.signCaption))]):_vm._e(),_vm._v(" "),(_vm.loading)?_c('span',[_vm._v("loading...")]):_vm._e(),_vm._v(" "),(_vm.signing && !_vm.loading)?_c('remote-call',{attrs:{"qr-width":"70%","method":_vm.method,"params":_vm.txJson},on:{"result":_vm.onResult}}):_vm._e()],1)}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/RemoteSign.vue?vue&type=template&id=d6f847b8&scoped=true&
+// CONCATENATED MODULE: ./src/components/RemoteSign.vue?vue&type=template&id=078d047a&scoped=true&
 /* concated harmony reexport render */__webpack_require__.d(__webpack_exports__, "a", function() { return render; });
 /* concated harmony reexport staticRenderFns */__webpack_require__.d(__webpack_exports__, "b", function() { return staticRenderFns; });
 
@@ -5769,10 +5838,10 @@ exports.isError = isError;
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _EthGasPrice_vue_vue_type_template_id_699b749e_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EthGasPrice.vue?vue&type=template&id=699b749e&scoped=true& */ 238);
+/* harmony import */ var _EthGasPrice_vue_vue_type_template_id_378b7646_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EthGasPrice.vue?vue&type=template&id=378b7646&scoped=true& */ 238);
 /* harmony import */ var _EthGasPrice_vue_vue_type_script_lang_ts___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./EthGasPrice.vue?vue&type=script&lang=ts& */ 159);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _EthGasPrice_vue_vue_type_script_lang_ts___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _EthGasPrice_vue_vue_type_script_lang_ts___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _EthGasPrice_vue_vue_type_style_index_0_id_699b749e_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./EthGasPrice.vue?vue&type=style&index=0&id=699b749e&lang=scss&scoped=true& */ 596);
+/* harmony import */ var _EthGasPrice_vue_vue_type_style_index_0_id_378b7646_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./EthGasPrice.vue?vue&type=style&index=0&id=378b7646&lang=scss&scoped=true& */ 596);
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ 0);
 
 
@@ -5784,11 +5853,11 @@ __webpack_require__.r(__webpack_exports__);
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
   _EthGasPrice_vue_vue_type_script_lang_ts___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _EthGasPrice_vue_vue_type_template_id_699b749e_scoped_true___WEBPACK_IMPORTED_MODULE_0__[/* render */ "a"],
-  _EthGasPrice_vue_vue_type_template_id_699b749e_scoped_true___WEBPACK_IMPORTED_MODULE_0__[/* staticRenderFns */ "b"],
+  _EthGasPrice_vue_vue_type_template_id_378b7646_scoped_true___WEBPACK_IMPORTED_MODULE_0__[/* render */ "a"],
+  _EthGasPrice_vue_vue_type_template_id_378b7646_scoped_true___WEBPACK_IMPORTED_MODULE_0__[/* staticRenderFns */ "b"],
   false,
   null,
-  "699b749e",
+  "378b7646",
   null
   
 )
@@ -7008,10 +7077,10 @@ component.options.__file = "Wallets.vue"
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Wallet_vue_vue_type_template_id_7923f42d_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Wallet.vue?vue&type=template&id=7923f42d&scoped=true& */ 224);
+/* harmony import */ var _Wallet_vue_vue_type_template_id_28c1bd26_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Wallet.vue?vue&type=template&id=28c1bd26&scoped=true& */ 224);
 /* harmony import */ var _Wallet_vue_vue_type_script_lang_ts___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Wallet.vue?vue&type=script&lang=ts& */ 122);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _Wallet_vue_vue_type_script_lang_ts___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _Wallet_vue_vue_type_script_lang_ts___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _Wallet_vue_vue_type_style_index_0_id_7923f42d_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Wallet.vue?vue&type=style&index=0&id=7923f42d&lang=scss&scoped=true& */ 414);
+/* harmony import */ var _Wallet_vue_vue_type_style_index_0_id_28c1bd26_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Wallet.vue?vue&type=style&index=0&id=28c1bd26&lang=scss&scoped=true& */ 414);
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ 0);
 
 
@@ -7023,11 +7092,11 @@ __webpack_require__.r(__webpack_exports__);
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
   _Wallet_vue_vue_type_script_lang_ts___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _Wallet_vue_vue_type_template_id_7923f42d_scoped_true___WEBPACK_IMPORTED_MODULE_0__[/* render */ "a"],
-  _Wallet_vue_vue_type_template_id_7923f42d_scoped_true___WEBPACK_IMPORTED_MODULE_0__[/* staticRenderFns */ "b"],
+  _Wallet_vue_vue_type_template_id_28c1bd26_scoped_true___WEBPACK_IMPORTED_MODULE_0__[/* render */ "a"],
+  _Wallet_vue_vue_type_template_id_28c1bd26_scoped_true___WEBPACK_IMPORTED_MODULE_0__[/* staticRenderFns */ "b"],
   false,
   null,
-  "7923f42d",
+  "28c1bd26",
   null
   
 )
@@ -7374,17 +7443,17 @@ component.options.__file = "WhiteRect.vue"
 /***/ }),
 /* 414 */
 /*!****************************************************************************************!*\
-  !*** ./src/pages/Wallet.vue?vue&type=style&index=0&id=7923f42d&lang=scss&scoped=true& ***!
+  !*** ./src/pages/Wallet.vue?vue&type=style&index=0&id=28c1bd26&lang=scss&scoped=true& ***!
   \****************************************************************************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module exports are unknown */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Wallet_vue_vue_type_style_index_0_id_7923f42d_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/mini-css-extract-plugin/dist/loader.js!../../node_modules/css-loader??ref--1-oneOf-2-1!../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../node_modules/sass-loader/lib/loader.js??ref--1-oneOf-2-2!../../node_modules/vue-loader/lib??vue-loader-options!./Wallet.vue?vue&type=style&index=0&id=7923f42d&lang=scss&scoped=true& */ 143);
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Wallet_vue_vue_type_style_index_0_id_7923f42d_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Wallet_vue_vue_type_style_index_0_id_7923f42d_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Wallet_vue_vue_type_style_index_0_id_28c1bd26_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/mini-css-extract-plugin/dist/loader.js!../../node_modules/css-loader??ref--1-oneOf-2-1!../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../node_modules/sass-loader/lib/loader.js??ref--1-oneOf-2-2!../../node_modules/vue-loader/lib??vue-loader-options!./Wallet.vue?vue&type=style&index=0&id=28c1bd26&lang=scss&scoped=true& */ 143);
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Wallet_vue_vue_type_style_index_0_id_28c1bd26_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Wallet_vue_vue_type_style_index_0_id_28c1bd26_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__);
 /* unused harmony reexport * */
- /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Wallet_vue_vue_type_style_index_0_id_7923f42d_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default.a); 
+ /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Wallet_vue_vue_type_style_index_0_id_28c1bd26_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 /* 415 */
@@ -7434,7 +7503,7 @@ component.options.__file = "TransferHoc.vue"
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _EthTransfer_vue_vue_type_template_id_0a7830eb___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EthTransfer.vue?vue&type=template&id=0a7830eb& */ 235);
+/* harmony import */ var _EthTransfer_vue_vue_type_template_id_b02915bc___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EthTransfer.vue?vue&type=template&id=b02915bc& */ 235);
 /* harmony import */ var _EthTransfer_vue_vue_type_script_lang_ts___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./EthTransfer.vue?vue&type=script&lang=ts& */ 146);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _EthTransfer_vue_vue_type_script_lang_ts___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _EthTransfer_vue_vue_type_script_lang_ts___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ 0);
@@ -7447,8 +7516,8 @@ __webpack_require__.r(__webpack_exports__);
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__[/* default */ "a"])(
   _EthTransfer_vue_vue_type_script_lang_ts___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _EthTransfer_vue_vue_type_template_id_0a7830eb___WEBPACK_IMPORTED_MODULE_0__[/* render */ "a"],
-  _EthTransfer_vue_vue_type_template_id_0a7830eb___WEBPACK_IMPORTED_MODULE_0__[/* staticRenderFns */ "b"],
+  _EthTransfer_vue_vue_type_template_id_b02915bc___WEBPACK_IMPORTED_MODULE_0__[/* render */ "a"],
+  _EthTransfer_vue_vue_type_template_id_b02915bc___WEBPACK_IMPORTED_MODULE_0__[/* staticRenderFns */ "b"],
   false,
   null,
   null,
@@ -7471,10 +7540,10 @@ component.options.__file = "EthTransfer.vue"
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _RemoteSign_vue_vue_type_template_id_d6f847b8_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./RemoteSign.vue?vue&type=template&id=d6f847b8&scoped=true& */ 247);
+/* harmony import */ var _RemoteSign_vue_vue_type_template_id_078d047a_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./RemoteSign.vue?vue&type=template&id=078d047a&scoped=true& */ 247);
 /* harmony import */ var _RemoteSign_vue_vue_type_script_lang_ts___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./RemoteSign.vue?vue&type=script&lang=ts& */ 150);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _RemoteSign_vue_vue_type_script_lang_ts___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _RemoteSign_vue_vue_type_script_lang_ts___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _RemoteSign_vue_vue_type_style_index_0_id_d6f847b8_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./RemoteSign.vue?vue&type=style&index=0&id=d6f847b8&lang=scss&scoped=true& */ 418);
+/* harmony import */ var _RemoteSign_vue_vue_type_style_index_0_id_078d047a_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./RemoteSign.vue?vue&type=style&index=0&id=078d047a&lang=scss&scoped=true& */ 418);
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ 0);
 
 
@@ -7486,11 +7555,11 @@ __webpack_require__.r(__webpack_exports__);
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
   _RemoteSign_vue_vue_type_script_lang_ts___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _RemoteSign_vue_vue_type_template_id_d6f847b8_scoped_true___WEBPACK_IMPORTED_MODULE_0__[/* render */ "a"],
-  _RemoteSign_vue_vue_type_template_id_d6f847b8_scoped_true___WEBPACK_IMPORTED_MODULE_0__[/* staticRenderFns */ "b"],
+  _RemoteSign_vue_vue_type_template_id_078d047a_scoped_true___WEBPACK_IMPORTED_MODULE_0__[/* render */ "a"],
+  _RemoteSign_vue_vue_type_template_id_078d047a_scoped_true___WEBPACK_IMPORTED_MODULE_0__[/* staticRenderFns */ "b"],
   false,
   null,
-  "d6f847b8",
+  "078d047a",
   null
   
 )
@@ -7501,17 +7570,17 @@ component.options.__file = "RemoteSign.vue"
 /***/ }),
 /* 418 */
 /*!*************************************************************************************************!*\
-  !*** ./src/components/RemoteSign.vue?vue&type=style&index=0&id=d6f847b8&lang=scss&scoped=true& ***!
+  !*** ./src/components/RemoteSign.vue?vue&type=style&index=0&id=078d047a&lang=scss&scoped=true& ***!
   \*************************************************************************************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module exports are unknown */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_RemoteSign_vue_vue_type_style_index_0_id_d6f847b8_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/mini-css-extract-plugin/dist/loader.js!../../node_modules/css-loader??ref--1-oneOf-2-1!../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../node_modules/sass-loader/lib/loader.js??ref--1-oneOf-2-2!../../node_modules/vue-loader/lib??vue-loader-options!./RemoteSign.vue?vue&type=style&index=0&id=d6f847b8&lang=scss&scoped=true& */ 152);
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_RemoteSign_vue_vue_type_style_index_0_id_d6f847b8_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_RemoteSign_vue_vue_type_style_index_0_id_d6f847b8_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_RemoteSign_vue_vue_type_style_index_0_id_078d047a_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/mini-css-extract-plugin/dist/loader.js!../../node_modules/css-loader??ref--1-oneOf-2-1!../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../node_modules/sass-loader/lib/loader.js??ref--1-oneOf-2-2!../../node_modules/vue-loader/lib??vue-loader-options!./RemoteSign.vue?vue&type=style&index=0&id=078d047a&lang=scss&scoped=true& */ 152);
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_RemoteSign_vue_vue_type_style_index_0_id_078d047a_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_RemoteSign_vue_vue_type_style_index_0_id_078d047a_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__);
 /* unused harmony reexport * */
- /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_RemoteSign_vue_vue_type_style_index_0_id_d6f847b8_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default.a); 
+ /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_RemoteSign_vue_vue_type_style_index_0_id_078d047a_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 /* 419 */
@@ -7825,17 +7894,17 @@ module.exports = [{"symbol":"$FFC","name":"$Fluzcoin","type":"ERC20","address":"
 /***/ }),
 /* 596 */
 /*!*******************************************************************************************************!*\
-  !*** ./src/components/form/EthGasPrice.vue?vue&type=style&index=0&id=699b749e&lang=scss&scoped=true& ***!
+  !*** ./src/components/form/EthGasPrice.vue?vue&type=style&index=0&id=378b7646&lang=scss&scoped=true& ***!
   \*******************************************************************************************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module exports are unknown */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EthGasPrice_vue_vue_type_style_index_0_id_699b749e_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader??ref--1-oneOf-2-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/sass-loader/lib/loader.js??ref--1-oneOf-2-2!../../../node_modules/vue-loader/lib??vue-loader-options!./EthGasPrice.vue?vue&type=style&index=0&id=699b749e&lang=scss&scoped=true& */ 161);
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EthGasPrice_vue_vue_type_style_index_0_id_699b749e_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EthGasPrice_vue_vue_type_style_index_0_id_699b749e_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EthGasPrice_vue_vue_type_style_index_0_id_378b7646_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader??ref--1-oneOf-2-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/sass-loader/lib/loader.js??ref--1-oneOf-2-2!../../../node_modules/vue-loader/lib??vue-loader-options!./EthGasPrice.vue?vue&type=style&index=0&id=378b7646&lang=scss&scoped=true& */ 161);
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EthGasPrice_vue_vue_type_style_index_0_id_378b7646_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EthGasPrice_vue_vue_type_style_index_0_id_378b7646_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__);
 /* unused harmony reexport * */
- /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EthGasPrice_vue_vue_type_style_index_0_id_699b749e_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default.a); 
+ /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EthGasPrice_vue_vue_type_style_index_0_id_378b7646_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 /* 597 */
@@ -7849,7 +7918,7 @@ module.exports = [{"symbol":"$FFC","name":"$Fluzcoin","type":"ERC20","address":"
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _EosTransfer_vue_vue_type_template_id_0866a0a2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EosTransfer.vue?vue&type=template&id=0866a0a2& */ 239);
+/* harmony import */ var _EosTransfer_vue_vue_type_template_id_ee161326___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EosTransfer.vue?vue&type=template&id=ee161326& */ 239);
 /* harmony import */ var _EosTransfer_vue_vue_type_script_lang_ts___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./EosTransfer.vue?vue&type=script&lang=ts& */ 162);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _EosTransfer_vue_vue_type_script_lang_ts___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _EosTransfer_vue_vue_type_script_lang_ts___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ 0);
@@ -7862,8 +7931,8 @@ __webpack_require__.r(__webpack_exports__);
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__[/* default */ "a"])(
   _EosTransfer_vue_vue_type_script_lang_ts___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _EosTransfer_vue_vue_type_template_id_0866a0a2___WEBPACK_IMPORTED_MODULE_0__[/* render */ "a"],
-  _EosTransfer_vue_vue_type_template_id_0866a0a2___WEBPACK_IMPORTED_MODULE_0__[/* staticRenderFns */ "b"],
+  _EosTransfer_vue_vue_type_template_id_ee161326___WEBPACK_IMPORTED_MODULE_0__[/* render */ "a"],
+  _EosTransfer_vue_vue_type_template_id_ee161326___WEBPACK_IMPORTED_MODULE_0__[/* staticRenderFns */ "b"],
   false,
   null,
   null,
@@ -7886,10 +7955,10 @@ component.options.__file = "EosTransfer.vue"
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _EthTokens_vue_vue_type_template_id_7e41f49a_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EthTokens.vue?vue&type=template&id=7e41f49a&scoped=true& */ 225);
+/* harmony import */ var _EthTokens_vue_vue_type_template_id_33092699_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EthTokens.vue?vue&type=template&id=33092699&scoped=true& */ 225);
 /* harmony import */ var _EthTokens_vue_vue_type_script_lang_ts___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./EthTokens.vue?vue&type=script&lang=ts& */ 164);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _EthTokens_vue_vue_type_script_lang_ts___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _EthTokens_vue_vue_type_script_lang_ts___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _EthTokens_vue_vue_type_style_index_0_id_7e41f49a_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./EthTokens.vue?vue&type=style&index=0&id=7e41f49a&lang=scss&scoped=true& */ 599);
+/* harmony import */ var _EthTokens_vue_vue_type_style_index_0_id_33092699_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./EthTokens.vue?vue&type=style&index=0&id=33092699&lang=scss&scoped=true& */ 599);
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ 0);
 
 
@@ -7901,11 +7970,11 @@ __webpack_require__.r(__webpack_exports__);
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
   _EthTokens_vue_vue_type_script_lang_ts___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _EthTokens_vue_vue_type_template_id_7e41f49a_scoped_true___WEBPACK_IMPORTED_MODULE_0__[/* render */ "a"],
-  _EthTokens_vue_vue_type_template_id_7e41f49a_scoped_true___WEBPACK_IMPORTED_MODULE_0__[/* staticRenderFns */ "b"],
+  _EthTokens_vue_vue_type_template_id_33092699_scoped_true___WEBPACK_IMPORTED_MODULE_0__[/* render */ "a"],
+  _EthTokens_vue_vue_type_template_id_33092699_scoped_true___WEBPACK_IMPORTED_MODULE_0__[/* staticRenderFns */ "b"],
   false,
   null,
-  "7e41f49a",
+  "33092699",
   null
   
 )
@@ -7916,17 +7985,17 @@ component.options.__file = "EthTokens.vue"
 /***/ }),
 /* 599 */
 /*!******************************************************************************************************!*\
-  !*** ./src/pages/blockchain/EthTokens.vue?vue&type=style&index=0&id=7e41f49a&lang=scss&scoped=true& ***!
+  !*** ./src/pages/blockchain/EthTokens.vue?vue&type=style&index=0&id=33092699&lang=scss&scoped=true& ***!
   \******************************************************************************************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module exports are unknown */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EthTokens_vue_vue_type_style_index_0_id_7e41f49a_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader??ref--1-oneOf-2-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/sass-loader/lib/loader.js??ref--1-oneOf-2-2!../../../node_modules/vue-loader/lib??vue-loader-options!./EthTokens.vue?vue&type=style&index=0&id=7e41f49a&lang=scss&scoped=true& */ 166);
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EthTokens_vue_vue_type_style_index_0_id_7e41f49a_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EthTokens_vue_vue_type_style_index_0_id_7e41f49a_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EthTokens_vue_vue_type_style_index_0_id_33092699_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader??ref--1-oneOf-2-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/sass-loader/lib/loader.js??ref--1-oneOf-2-2!../../../node_modules/vue-loader/lib??vue-loader-options!./EthTokens.vue?vue&type=style&index=0&id=33092699&lang=scss&scoped=true& */ 166);
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EthTokens_vue_vue_type_style_index_0_id_33092699_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EthTokens_vue_vue_type_style_index_0_id_33092699_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__);
 /* unused harmony reexport * */
- /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EthTokens_vue_vue_type_style_index_0_id_7e41f49a_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default.a); 
+ /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EthTokens_vue_vue_type_style_index_0_id_33092699_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 /* 600 */
@@ -8707,6 +8776,7 @@ exports.options = {
     state: {
         wallets: [],
         currentWallet: null,
+        currentChain: null,
         txToPush: null,
         webrtc: {
             outgoingId: 1,
@@ -8715,17 +8785,19 @@ exports.options = {
     },
     getters: {
         calcWalletId: function (state, getters) { return function (wallet) { return utils_1.calcWalletId(wallet); }; },
-        txHash: function (state, getters) { return function (tx, bc) {
-            return getters.blockchains[bc](state.currentWallet.chainId).getTxHash(tx);
+        txHash: function (state, getters) { return function (tx, bc, chainId) {
+            if (typeof chainId === 'undefined')
+                chainId = (state.currentChain && state.currentChain.blockchain == bc) ? state.currentChain.chainId : blockchains_1.defaultChainIds[bc];
+            return getters.blockchains[bc](chainId).getTxHash(tx);
         }; },
         txToPushHash: function (state, getters) {
             var tx = state.txToPush;
             if (!tx)
                 return undefined;
-            return getters.txHash(tx.tx, tx.wallet.blockchain);
+            return getters.txHash(tx.tx, tx.wallet.blockchain, tx.wallet.chainId);
         },
         blockchains: function (state, getters) { return blockchains_1.typedBlockchains; },
-        currentBlockchain: function (state, getters) { return getters.blockchains[state.currentWallet.blockchain](state.currentWallet.chainId); }
+        currentBlockchain: function (state, getters) { return state.currentChain ? getters.blockchains[state.currentChain.blockchain](state.currentChain.chainId) : null; },
     },
     mutations: {
         setWalletList: function (state, payload) {
@@ -8734,8 +8806,11 @@ exports.options = {
         },
         setCurrentWallet: function (state, payload) {
             state.currentWallet = payload.wallet;
+            if (!payload.wallet)
+                return state.currentChain = null;
             if (!payload.wallet.chainId)
                 state.currentWallet.chainId = blockchains_1.defaultChainIds[payload.wallet.blockchain];
+            state.currentChain = utils_1.pick(state.currentWallet, ['blockchain', 'chainId']);
         },
         setTxToPush: function (state, payload) { return state.txToPush = payload; },
         resetTxToPush: function (state) { return state.txToPush = null; },
@@ -10158,4 +10233,4 @@ component.options.__file = "BigX.vue"
 
 /***/ })
 /******/ ]);
-//# sourceMappingURL=main.50eb1ffb.js.map
+//# sourceMappingURL=main.86434895.js.map
