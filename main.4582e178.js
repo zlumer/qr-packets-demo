@@ -4273,12 +4273,12 @@ exports.generate = generate;
 // webpack env variables
 Object.defineProperty(exports, "__esModule", { value: true });
 console.log("ROOT_PATH: " + "/qr-packets-demo");
-console.assert("74959ac8d7724641517bcb9c52624c40de968825", "GIT_VERSION is not defined!");
+console.assert("af708c461687fba874ac6e4512b5cd9469b69bc2", "GIT_VERSION is not defined!");
 console.assert("https://github.com/zlumer/qr-packets-demo.git", "GIT_REMOTE is not defined!");
 exports.default = {
     blockchains: ["eth"],
     basePath: "/qr-packets-demo",
-    gitVersion: "74959ac8d7724641517bcb9c52624c40de968825",
+    gitVersion: "af708c461687fba874ac6e4512b5cd9469b69bc2",
     gitRemote: "https://github.com/zlumer/qr-packets-demo.git",
 };
 
@@ -9863,16 +9863,10 @@ exports.options = {
     actions: {
         ethGas_updatePrices: function (store) {
             return __awaiter(this, void 0, void 0, function () {
-                var _a, ec, egs;
-                return __generator(this, function (_b) {
-                    switch (_b.label) {
-                        case 0: return [4 /*yield*/, Promise.all([etherchain_1.loadGasPrice(), ethgasstation_1.loadGasPrice()])];
-                        case 1:
-                            _a = _b.sent(), ec = _a[0], egs = _a[1];
-                            store.commit('ethGas_setEc', { info: ec });
-                            store.commit('ethGas_setEgs', { info: egs });
-                            return [2 /*return*/];
-                    }
+                return __generator(this, function (_a) {
+                    etherchain_1.loadGasPrice().then(function (ec) { return store.commit('ethGas_setEc', { info: ec }); }).catch(function (err) { return console.error(err); });
+                    ethgasstation_1.loadGasPrice().then(function (egs) { return store.commit('ethGas_setEgs', { info: egs }); }).catch(function (err) { return console.error(err); });
+                    return [2 /*return*/];
                 });
             });
         }
@@ -10233,4 +10227,4 @@ component.options.__file = "BigX.vue"
 
 /***/ })
 /******/ ]);
-//# sourceMappingURL=main.dc8fcbf4.js.map
+//# sourceMappingURL=main.4582e178.js.map
