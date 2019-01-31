@@ -38,9 +38,8 @@ export const options: SOptions = {
 	actions: {
 		async ethGas_updatePrices(store)
 		{
-			let [ec, egs] = await Promise.all([loadEc(), loadEgs()])
-			store.commit('ethGas_setEc', { info: ec })
-			store.commit('ethGas_setEgs', { info: egs })
+			loadEc().then(ec => store.commit('ethGas_setEc', { info: ec })).catch(err => console.error(err))
+			loadEgs().then(egs => store.commit('ethGas_setEgs', { info: egs })).catch(err => console.error(err))
 		}
 	},
 }
