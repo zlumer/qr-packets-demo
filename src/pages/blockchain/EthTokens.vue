@@ -46,6 +46,7 @@
 		<br/>
 		<transfer-form v-if="validToken"
 			ref="txform"
+			v-model="formValues"
 			:form="form"
 			:inputs="inputs"
 			:loading="loading"
@@ -105,6 +106,10 @@ export default Vue.extend({
 			form: {
 				to: { label: "To:", cy: "form-to", validate: validateAddress },
 				amount: { label: "Amount:", cy: "form-amount", type: 'number', validate: validateNumber },
+			},
+			formValues: {
+				to: '',
+				amount: '',
 			},
 			tx: {
 				from: '',

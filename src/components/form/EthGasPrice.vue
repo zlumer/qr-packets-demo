@@ -79,7 +79,7 @@ export default Vue.extend({
 			if (isNaN(this.totalGas))
 				return NaN
 			
-			return eth.utils.fromWei(eth.utils.toWei(this.totalGas + "", 'gwei'))
+			return eth.utils.fromWei(eth.utils.toWei(this.totalGas.toFixed(9), 'gwei'))
 		},
 		totalCost: function()
 		{

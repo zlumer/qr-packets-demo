@@ -4,7 +4,7 @@
 			<span v-for="name in inputs" :key="name">
 				<input-label>{{ form[name].label }}</input-label>
 				<form-input
-					v-model="values[name]"
+					v-model="value[name]"
 					:cy="form[name].cy"
 					:enabled="!signing"
 					:placeholder="form[name].placeholder"
@@ -44,10 +44,13 @@ export default Vue.extend({
 	{
 		return {
 			signing: false,
-			values: { } as { [key: string]: unknown }
 		}
 	},
 	props: {
+		value: {
+			type: Object as () => { [key: string]: unknown },
+			required: true
+		},
 		form: {
 			type: Object as () => IFormInputs,
 			required: true
@@ -80,7 +83,7 @@ export default Vue.extend({
 		inputsValid()
 		{
 			return !this.inputs
-				.map(n => ({ ...this.form[n], value: this.values[n] }))
+				.map(n => ({ ...this.form[n], value: this.value[n] }))
 				.map(x => x.validate ? x.validate(x.value) : true)
 				.some(x => !x)
 		},
@@ -93,7 +96,7 @@ export default Vue.extend({
 		async onSign()
 		{
 			this.signing = true
-			this.$emit('sign', this.values)
+			this.$emit('sign', this.value)
 		},
 		async onCancel()
 		{
@@ -102,11 +105,8 @@ export default Vue.extend({
 		},
 		onInput(field: string)
 		{
-			this.$emit('change', { field, value: this.values[field] })
-		},
-		setValue(field: string, value: unknown)
-		{
-			this.values[field] = value
+			this.$emit('input', this.value)
+			this.$emit('change', { field, value: this.value[field] })
 		},
 	},
 	components: {

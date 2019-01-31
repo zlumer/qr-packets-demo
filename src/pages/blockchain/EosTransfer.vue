@@ -2,6 +2,7 @@
 	<div>
 		<transfer-form
 			ref="txform"
+			v-model="values"
 			:form="form"
 			:inputs="inputs"
 			:loading="loading"
@@ -50,6 +51,12 @@ export default (Vue as VueWithProps<{ $refs: TRefs }>).extend({
 				amount: { label: "Amount:", cy: "form-amount", type: 'number', validate: validateNumber },
 				usd: { label: "USD value:", cy: "form-usd", type: 'number' },
 				memo: { label: "Memo:", cy: "form-memo", type: '' },
+			},
+			values: {
+				to: '',
+				memo: '',
+				usd: '',
+				amount: '',
 			},
 			tx: {
 				to: '',
@@ -116,10 +123,24 @@ export default (Vue as VueWithProps<{ $refs: TRefs }>).extend({
 	{
 		this.$store.dispatch('updateTokenPrice', { blockchain: 'eos' }).then(() =>
 		{
-			let amount = parseFloat(this.$refs.txform.values['amount'] + "")
+			let amount = parseFloat(this.values.amount + "")
+			let usd = parseFloat(this.values.usd + "")
 			console.log(`EOS updating amount: ${amount} (${this.eosPrice})[${this.$store.getters.eosPrice}]`, this.$store.state.tokenPrices)
 			if (!isNaN(amount))
-				this.$refs.txform.setValue('usd', amount * this.eosPrice)
+				this.values.usd = amount * this.eosPrice + ""
+			else if (!isNaN(usd))
+				this.values.amount = usd / this.eosPrice + ""
+		})
+		
+		Object.keys(this.values).map(x => `form-${x}`).forEach(key =>
+		{
+			let param = this.$route.query[key]
+			if (typeof param !== 'undefined')
+			{
+				let v = this.values
+				let field = key.split('-')[1] as keyof typeof v
+				this.values[field] = param + ""
+			}
 		})
 	},
 	methods: {
@@ -147,13 +168,13 @@ export default (Vue as VueWithProps<{ $refs: TRefs }>).extend({
 			{
 				let val = parseFloat(value + "")
 				if (!isNaN(val))
-					this.$refs.txform.setValue('usd', val * this.eosPrice)
+					this.values.usd = val * this.eosPrice + ""
 			}
 			if (field == 'usd')
 			{
 				let val = parseFloat(value + "")
 				if (!isNaN(val))
-					this.$refs.txform.setValue('amount', val / this.eosPrice)
+					this.values.amount = val / this.eosPrice + ""
 			}
 		},
 		cancel()

@@ -2,6 +2,7 @@
 	<div>
 		<transfer-form
 			ref="txform"
+			v-model="values"
 			:form="form"
 			:inputs="inputs"
 			:loading="loading"
@@ -59,6 +60,11 @@ export default (Vue as VueWithProps<{ $refs: TRefs }>).extend({
 				amount: { label: "Amount:", placeholder: "0", cy: "form-amount", type: 'number', validate: validateNumber },
 				usd: { label: "USD value:", cy: "form-usd", type: 'number' },
 			},
+			values: {
+				to: '',
+				amount: '',
+				usd: '',
+			},
 			tx: {
 				from: '',
 				to: '',
@@ -96,9 +102,24 @@ export default (Vue as VueWithProps<{ $refs: TRefs }>).extend({
 	{
 		this.$store.dispatch('updateTokenPrice', { blockchain: 'eth' }).then(() =>
 		{
-			let amount = parseFloat(this.$refs.txform.values['amount'] + "")
+			let amount = parseFloat(this.values.amount + "")
+			let usd = parseFloat(this.values.usd + "")
+			
 			if (!isNaN(amount))
-				this.$refs.txform.setValue('usd', amount * this.$store.getters.ethPrice)
+				this.values.usd = this.ethToUsd(amount) + ""
+			else if (!isNaN(usd))
+				this.values.amount = this.usdToEth(usd) + ""
+		})
+		
+		Object.keys(this.values).map(x => `form-${x}`).forEach(key =>
+		{
+			let param = this.$route.query[key]
+			if (typeof param !== 'undefined')
+			{
+				let v = this.values
+				let field = key.split('-')[1] as keyof typeof v
+				this.values[field] = param + ""
+			}
 		})
 	},
 	methods: {
@@ -111,9 +132,17 @@ export default (Vue as VueWithProps<{ $refs: TRefs }>).extend({
 				to: form.to,
 				nonce: this.nonce,
 				gasPrice: eth.utils.toWei(this.gasPrice + "", 'gwei'),
-				value: eth.utils.toWei(form.amount),
+				value: eth.utils.toWei(form.amount + ""),
 			}
 			this.loading = false
+		},
+		ethToUsd(eth: number)
+		{
+			return eth * this.ethPrice
+		},
+		usdToEth(usd: number)
+		{
+			return usd / this.ethPrice
 		},
 		onFormChange({ field, value }: { field: string, value: unknown })
 		{
@@ -126,13 +155,13 @@ export default (Vue as VueWithProps<{ $refs: TRefs }>).extend({
 			{
 				let val = parseFloat(value + "")
 				if (!isNaN(val))
-					this.$refs.txform.setValue('usd', val * this.ethPrice)
+					this.values.usd = this.ethToUsd(val) + ""
 			}
 			if (field == 'usd')
 			{
 				let val = parseFloat(value + "")
 				if (!isNaN(val))
-					this.$refs.txform.setValue('amount', val / this.ethPrice)
+					this.values.amount = this.usdToEth(val) + ""
 			}
 		},
 		cancel()
