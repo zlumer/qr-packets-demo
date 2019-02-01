@@ -116,6 +116,7 @@ export type Store<TState = unknown, TMutationPayloadMap = unknown, TActionPayloa
 		readonly state: ReadonlyCascade<TState>
 		readonly getters: TGettersReturnMap
 	}
+	& { readonly __TActionPayloadMap__: TActionPayloadMap }
 /**
  * Type for options passed to new Vuex.Store()
  */
