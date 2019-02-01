@@ -10,6 +10,7 @@
 			:id="2"
 			v-on:result="onResult"
 		></remote-call>
+		<div v-if="loginError">{{ loginError }}</div>
 	</white-popup>
 </template>
 
@@ -25,6 +26,7 @@ export default Vue.extend({
 	data()
 	{
 		return {
+			loginError: ''
 		}
 	},
 	computed: {
@@ -34,15 +36,22 @@ export default Vue.extend({
 		{
 			return this.$store.state.webrtc.outgoingId
 		},
+		blockchains: function()
+		{
+			return this.queryBcs ? this.queryBcs.split(',') : config.blockchains
+		},
 		bcs: function()
 		{
-			let blockchains = this.queryBcs ? this.queryBcs.split(',') : config.blockchains
+			let blockchains = this.blockchains
 			return JSON.stringify({ blockchains })
 		}
 	},
 	methods: {
 		onResult(wallets: IWallet[])
 		{
+			if (!wallets.some(x => this.blockchains.indexOf(x.blockchain) >= 0))
+				return this.loginError = `incorrect blockchain wallets! try again with wallet of: ${this.blockchains}`
+			
 			this.$store.commit('setWalletList', { wallets })
 			let path = this.redirect || "/wallets"
 			this.$router.push({ path })
