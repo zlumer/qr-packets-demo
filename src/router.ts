@@ -4,6 +4,7 @@ import Index from "./pages/Index.vue"
 import Login from "./pages/Login.vue"
 import Wallets from "./pages/Wallets.vue"
 import Wallet from "./pages/Wallet.vue"
+import Pay from "./pages/Pay.vue"
 import TransferHoc from "./pages/blockchain/TransferHoc.vue"
 import EthTokens from "./pages/blockchain/EthTokens.vue"
 import PushTxVue from "./pages/PushTx.vue"
@@ -13,6 +14,7 @@ import { Store } from "./store"
 import { ILayoutName } from "./layouts"
 import { IBlockchainSymbol } from "./store/interop"
 import config from "./config"
+import { getQueryString } from "./router-tools"
 
 const BASE_PATH = config.basePath
 
@@ -29,6 +31,7 @@ export function createRouter(store: Store)
 	}
 	const beforeEach: NavigationGuard = (to, from, next) =>
 	{
+		// console.log(to)
 		if (to.name == 'wallet')
 			return updateWallet(to, from, next)
 		if (to.matched.some(x => x.name == 'wallet'))
@@ -50,6 +53,36 @@ export function createRouter(store: Store)
 			{ path: '/login', component: Login, meta: metaLayout('home') },
 			{ path: '/webrtc', component: WebrtcVue, meta: metaLayout('home') },
 			{ path: '/wallets', component: Wallets, meta: metaLayout('default') },
+			{
+				path: '/pay/:blockchain',
+				component: Pay,
+				meta: metaLayout('home'),
+				beforeEnter: updateWallet,
+			},
+			{
+				path: '/subw/:action',
+				beforeEnter: (to, from, next) =>
+				{
+					let w = store.state.currentWallet || store.state.wallets[0]
+					// console.log(`current wallet: `, store.state.currentWallet)
+					// console.log(`wallets: `, store.state.wallets)
+					if (!w.address)
+						/* console.log('no address wallet'), */ w = store.state.wallets.filter(x => x.blockchain == w.blockchain)[0]
+					
+					// console.log(`ENTERING /subw:`, to, w)
+					if (!w)
+						return next({
+							path: '/login',
+							query: {
+								redirect: `/subw/${to.params.action}${getQueryString(to)}`
+							}
+						})
+					
+					next({
+						path: `/wallet/${w.blockchain}/${w.address}/${to.params.action}${getQueryString(to)}`
+					})
+				}
+			},
 			{
 				path: '/wallet/:blockchain/:address',
 				name: 'wallet',
