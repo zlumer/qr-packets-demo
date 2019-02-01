@@ -8,9 +8,11 @@ import { options as ethTxs, Store as StoreEthTxs, IState as StateEthTxs } from "
 import { options as ethTokens, Store as StoreEthTokens, IState as StateEthTokens } from "./ethTokens"
 import { options as ethGasPrice, Store as StoreEthGasPrice, IState as StateEthGasPrice } from "./ethGasPrice"
 
+export const storeOptions = mergeOptions(cmc, main, ethTxs, ethTokens, ethGasPrice)
+
 export function createStore()
 {
-	return new Vuex.Store<IState>(mergeOptions(cmc, main, ethTxs, ethTokens, ethGasPrice))
+	return new Vuex.Store<IState>(storeOptions)
 }
 
 export type Store = MergeMultiple<StoreCMC, StoreMain, StoreEthTxs, StoreEthTokens, StoreEthGasPrice>
