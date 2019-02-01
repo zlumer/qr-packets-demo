@@ -15,7 +15,7 @@ Vue.component('vue-select', VueSelect as any)
 registerLayouts()
 
 let store = createStore()
-let router = createRouter(store)
+let router = createRouter(store as any)
 
 declare global
 {

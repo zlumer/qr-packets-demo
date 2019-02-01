@@ -4,7 +4,7 @@ type Vue = InstanceType<typeof Vue>
 type Store = Vue["$store"]
 type Getters = Store["getters"]
 type State = Store["state"]
-type Actions = Store["__TActionPayloadMap__"]
+type Actions = NonNullable<Store["__TActionPayloadMap__"]>
 
 export const mapGetters = <T extends keyof Getters>(getter: T) => function(this: Vue): Getters[T]
 {

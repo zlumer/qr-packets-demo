@@ -12,7 +12,8 @@ export const storeOptions = mergeOptions(cmc, main, ethTxs, ethTokens, ethGasPri
 
 export function createStore()
 {
-	return new Vuex.Store<IState>(storeOptions)
+	let store = new Vuex.Store<IState>(storeOptions)
+	return store
 }
 
 export type Store = MergeMultiple<StoreCMC, StoreMain, StoreEthTxs, StoreEthTokens, StoreEthGasPrice>
