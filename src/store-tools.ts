@@ -11,7 +11,7 @@ export const mapGetters = <T extends keyof Getters>(getter: T) => function(this:
 	let x = this.$store.getters[getter]
 	return x
 }
-export const mapState = (field: keyof State) => function(this: Vue)
+export const mapState = <T extends keyof State>(field: T) => function(this: Vue): State[T]
 {
 	return this.$store.state[field]
 }
