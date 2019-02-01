@@ -19,6 +19,7 @@ import RemoteCall from "src/components/RemoteCall.vue"
 import WhitePopup from 'src/components/WhitePopup.vue'
 import config from "src/config"
 import { IWallet } from 'src/store/interop'
+import { fromQuery } from 'src/router-tools'
 
 export default Vue.extend({
 	data()
@@ -27,20 +28,24 @@ export default Vue.extend({
 		}
 	},
 	computed: {
+		redirect: fromQuery('redirect'),
+		queryBcs: fromQuery('bcs'),
 		msgId()
 		{
 			return this.$store.state.webrtc.outgoingId
 		},
 		bcs: function()
 		{
-			return JSON.stringify({ blockchains: config.blockchains })
+			let blockchains = this.queryBcs ? this.queryBcs.split(',') : config.blockchains
+			return JSON.stringify({ blockchains })
 		}
 	},
 	methods: {
 		onResult(wallets: IWallet[])
 		{
 			this.$store.commit('setWalletList', { wallets })
-			this.$router.push({ path: "/wallets" })
+			let path = this.redirect || "/wallets"
+			this.$router.push({ path })
 		}
 	},
 	components: {

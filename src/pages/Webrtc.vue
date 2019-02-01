@@ -20,6 +20,8 @@ import { JsonRpcWebsocket } from "../network/jrpcws"
 import { JsonRpcWebRtc } from "../network/jrpcrtc"
 import { JsonRpcFallback } from "../network/jrpcfb"
 import { WebrtcHSInitiator } from "../network/wrtchs"
+import { fromQuery } from 'src/router-tools'
+import config from 'src/config'
 
 type TRefs = {
 	wrapper: HTMLDivElement
@@ -42,6 +44,13 @@ export default (Vue as VueWithProps<{$refs: TRefs}>).extend({
 			await this.connect()
 	},
 	computed: {
+		redirect: fromQuery('redirect'),
+		queryBcs: fromQuery('bcs'),
+		blockchains: function()
+		{
+			let blockchains = this.queryBcs ? this.queryBcs.split(',') : config.blockchains
+			return blockchains
+		},
 		forceFallback(): boolean
 		{
 			let wrapper = this.$refs.wrapper
@@ -129,10 +138,11 @@ export default (Vue as VueWithProps<{$refs: TRefs}>).extend({
 		},
 		async getWalletsOld()
 		{
-			let wallets = await getSingleton().jrpc.callRaw(`getWalletList`, {blockchains:["eth"]}, !getSingleton().full)
+			let wallets = await getSingleton().jrpc.callRaw(`getWalletList`, {blockchains: this.blockchains}, !getSingleton().full)
 			
 			this.$store.commit('setWalletList', { wallets })
-			this.$router.push({ path: "/wallets" })
+			let path = this.redirect || "/wallets"
+			this.$router.push({ path })
 		}
 	},
 	components: {
