@@ -8,6 +8,7 @@
 			<span v-if="status">{{ status }}</span>
 			<qr-gif :qrs="[qr]" v-if="sid"></qr-gif>
 		</div>
+		<div v-if="loginError" data-cy="login-error">{{ loginError }}</div>
 	</white-popup>
 </template>
 
@@ -22,6 +23,7 @@ import { JsonRpcFallback } from "../network/jrpcfb"
 import { WebrtcHSInitiator } from "../network/wrtchs"
 import { fromQuery } from 'src/router-tools'
 import config from 'src/config'
+import { IWallet } from 'src/store/interop'
 
 type TRefs = {
 	wrapper: HTMLDivElement
@@ -31,6 +33,7 @@ export default (Vue as VueWithProps<{$refs: TRefs}>).extend({
 	data()
 	{
 		return {
+			loginError: '',
 			status: 'not started',
 			url: "wss://duxi.io/shake",
 			sid: '',
@@ -138,7 +141,29 @@ export default (Vue as VueWithProps<{$refs: TRefs}>).extend({
 		},
 		async getWalletsOld()
 		{
-			let wallets = await getSingleton().jrpc.callRaw(`getWalletList`, {blockchains: this.blockchains}, !getSingleton().full)
+			const getWalletList = () => getSingleton().jrpc.callRaw(`getWalletList`, {blockchains: this.blockchains}, !getSingleton().full)
+			const hasGoodWallets = (w: IWallet[]) => w.some(x => this.blockchains.indexOf(x.blockchain) >= 0)
+			let t = this
+			async function check(): Promise<IWallet[]>
+			{
+				let wallets: IWallet[] = await getWalletList()
+				if (!hasGoodWallets(wallets))
+				{
+					t.loginError = `incorrect blockchain wallets! try again with wallet of: ${t.blockchains}`
+					return new Promise((res) =>
+					{
+						setTimeout(() =>
+						{
+							res(check())
+						}, 1000)
+					})
+				}
+				
+				return wallets
+			}
+			let wallets = await check()
+
+			this.loginError = ''
 			
 			this.$store.commit('setWalletList', { wallets })
 			let path = this.redirect || "/wallets"
