@@ -39,6 +39,7 @@ export const options: SOptions = {
 		setWalletList: (state, payload) =>
 		{
 			console.log(`SET_WALLET_LIST: `, payload)
+			console.assert(Array.isArray(payload.wallets), `vuex store: setWalletList() Wallets should be array! got: ${JSON.stringify(payload.wallets)}`)
 			state.wallets = payload.wallets
 		},
 		setCurrentWallet: (state, payload) =>
