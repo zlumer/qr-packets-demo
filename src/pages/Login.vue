@@ -10,7 +10,7 @@
 			:id="2"
 			v-on:result="onResult"
 		></remote-call>
-		<div v-if="loginError">{{ loginError }}</div>
+		<div v-if="loginError" data-cy="login-error">{{ loginError }}</div>
 	</white-popup>
 </template>
 
@@ -51,6 +51,8 @@ export default Vue.extend({
 		{
 			if (!wallets.some(x => this.blockchains.indexOf(x.blockchain) >= 0))
 				return this.loginError = `incorrect blockchain wallets! try again with wallet of: ${this.blockchains}`
+			
+			this.loginError = ''
 			
 			this.$store.commit('setWalletList', { wallets })
 			let path = this.redirect || "/wallets"
