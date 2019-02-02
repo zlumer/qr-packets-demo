@@ -589,12 +589,12 @@ exports.generate = generate;
 // webpack env variables
 Object.defineProperty(exports, "__esModule", { value: true });
 console.log("ROOT_PATH: " + "/cold");
-console.assert("6f1611fd3b529baae7ebaef917e57dbadcaf02ea", "GIT_VERSION is not defined!");
+console.assert("2bb6d2694de29a84c05b8092dcfcfe60fce09270", "GIT_VERSION is not defined!");
 console.assert("https://github.com/zlumer/qr-packets-demo.git", "GIT_REMOTE is not defined!");
 exports.default = {
-    blockchains: ["eth"],
+    blockchains: ["eth", "eos"],
     basePath: "/cold",
-    gitVersion: "6f1611fd3b529baae7ebaef917e57dbadcaf02ea",
+    gitVersion: "2bb6d2694de29a84c05b8092dcfcfe60fce09270",
     gitRemote: "https://github.com/zlumer/qr-packets-demo.git",
 };
 
@@ -1427,6 +1427,7 @@ exports.default = vue_ts_1.default.extend({
             var _this = this;
             if (!wallets.some(function (x) { return _this.blockchains.indexOf(x.blockchain) >= 0; }))
                 return this.loginError = "incorrect blockchain wallets! try again with wallet of: " + this.blockchains;
+            this.loginError = '';
             this.$store.commit('setWalletList', { wallets: wallets });
             var path = this.redirect || "/wallets";
             this.$router.push({ path: path });
@@ -1965,14 +1966,7 @@ exports.default = vue_ts_1.default.extend({
             default: true,
         },
     },
-    computed: {
-        fakeQrCode: function () {
-            var video = this.$refs.video;
-            if (video && video.hasAttribute('data-fake-qr'))
-                return video.getAttribute('data-fake-qr') || null;
-            return null;
-        }
-    },
+    computed: {},
     beforeDestroy: function () {
         this.pollQrStop();
         var video = this.$refs.video;
@@ -1987,6 +1981,12 @@ exports.default = vue_ts_1.default.extend({
             this.startCamera();
     },
     methods: {
+        getFakeQrCode: function () {
+            var video = this.$refs.video;
+            if (video && video.hasAttribute('data-fake-qr'))
+                return video.getAttribute('data-fake-qr') || null;
+            return null;
+        },
         startCamera: function () {
             return __awaiter(this, void 0, void 0, function () {
                 var stream, video;
@@ -2025,7 +2025,7 @@ exports.default = vue_ts_1.default.extend({
                 clearTimeout(this.readTimer), this.readTimer = 0;
         },
         readQr: function () {
-            var fakeQr = this.fakeQrCode;
+            var fakeQr = this.getFakeQrCode();
             if (fakeQr)
                 return this.$emit("qr", { data: fakeQr });
             var _a = this.$refs, video = _a.video, canvas = _a.canvas;
@@ -2047,7 +2047,7 @@ exports.default = vue_ts_1.default.extend({
 /***/ }),
 /* 123 */
 /*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader??ref--1-oneOf-2-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/sass-loader/lib/loader.js??ref--1-oneOf-2-2!./node_modules/vue-loader/lib??vue-loader-options!./src/components/QrReader.vue?vue&type=style&index=0&id=c0fc5292&lang=scss&scoped=true& ***!
+  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader??ref--1-oneOf-2-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/sass-loader/lib/loader.js??ref--1-oneOf-2-2!./node_modules/vue-loader/lib??vue-loader-options!./src/components/QrReader.vue?vue&type=style&index=0&id=60713462&lang=scss&scoped=true& ***!
   \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /*! exports used: default */
@@ -3025,7 +3025,7 @@ exports.default = vue_ts_1.default.extend({});
 /***/ }),
 /* 158 */
 /*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader??ref--1-oneOf-2-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/sass-loader/lib/loader.js??ref--1-oneOf-2-2!./node_modules/vue-loader/lib??vue-loader-options!./src/pages/blockchain/EthPay.vue?vue&type=style&index=0&id=82d8ce04&lang=scss&scoped=true& ***!
+  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader??ref--1-oneOf-2-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/sass-loader/lib/loader.js??ref--1-oneOf-2-2!./node_modules/vue-loader/lib??vue-loader-options!./src/pages/blockchain/EthPay.vue?vue&type=style&index=0&id=76bf3801&lang=scss&scoped=true& ***!
   \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /*! exports used: default */
@@ -3158,7 +3158,7 @@ exports.default = vue_ts_1.default.extend({
 /***/ }),
 /* 161 */
 /*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader??ref--1-oneOf-2-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/sass-loader/lib/loader.js??ref--1-oneOf-2-2!./node_modules/vue-loader/lib??vue-loader-options!./src/pages/blockchain/EosPay.vue?vue&type=style&index=0&id=3dfb1bce&lang=scss&scoped=true& ***!
+  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader??ref--1-oneOf-2-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/sass-loader/lib/loader.js??ref--1-oneOf-2-2!./node_modules/vue-loader/lib??vue-loader-options!./src/pages/blockchain/EosPay.vue?vue&type=style&index=0&id=8b6e0bf4&lang=scss&scoped=true& ***!
   \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /*! exports used: default */
@@ -4678,6 +4678,7 @@ var config_1 = __importDefault(__webpack_require__(/*! src/config */ 57));
 exports.default = vue_ts_1.default.extend({
     data: function () {
         return {
+            loginError: '',
             status: 'not started',
             url: "wss://duxi.io/shake",
             sid: '',
@@ -4777,12 +4778,39 @@ exports.default = vue_ts_1.default.extend({
         },
         getWalletsOld: function () {
             return __awaiter(this, void 0, void 0, function () {
-                var wallets, path;
+                function check() {
+                    return __awaiter(this, void 0, Promise, function () {
+                        var wallets;
+                        return __generator(this, function (_a) {
+                            switch (_a.label) {
+                                case 0: return [4 /*yield*/, getWalletList()];
+                                case 1:
+                                    wallets = _a.sent();
+                                    if (!hasGoodWallets(wallets)) {
+                                        t.loginError = "incorrect blockchain wallets! try again with wallet of: " + t.blockchains;
+                                        return [2 /*return*/, new Promise(function (res) {
+                                                setTimeout(function () {
+                                                    res(check());
+                                                }, 1000);
+                                            })];
+                                    }
+                                    return [2 /*return*/, wallets];
+                            }
+                        });
+                    });
+                }
+                var getWalletList, hasGoodWallets, t, wallets, path;
+                var _this = this;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
-                        case 0: return [4 /*yield*/, webrtcsingleton_1.getSingleton().jrpc.callRaw("getWalletList", { blockchains: this.blockchains }, !webrtcsingleton_1.getSingleton().full)];
+                        case 0:
+                            getWalletList = function () { return webrtcsingleton_1.getSingleton().jrpc.callRaw("getWalletList", { blockchains: _this.blockchains }, !webrtcsingleton_1.getSingleton().full); };
+                            hasGoodWallets = function (w) { return w.some(function (x) { return _this.blockchains.indexOf(x.blockchain) >= 0; }); };
+                            t = this;
+                            return [4 /*yield*/, check()];
                         case 1:
                             wallets = _a.sent();
+                            this.loginError = '';
                             this.$store.commit('setWalletList', { wallets: wallets });
                             path = this.redirect || "/wallets";
                             this.$router.push({ path: path });
@@ -5434,7 +5462,7 @@ var staticRenderFns = []
 /***/ }),
 /* 235 */
 /*!************************************************************************!*\
-  !*** ./src/pages/Login.vue?vue&type=template&id=1fdd324f& + 1 modules ***!
+  !*** ./src/pages/Login.vue?vue&type=template&id=59913bfe& + 1 modules ***!
   \************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /*! exports used: render, staticRenderFns */
@@ -5442,12 +5470,12 @@ var staticRenderFns = []
 
 "use strict";
 
-// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./src/pages/Login.vue?vue&type=template&id=1fdd324f&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('white-popup',{attrs:{"header":"Airgapped Login","subheader":"Scan QR code with Cold Crypto mobile app to login"}},[_c('remote-call',{attrs:{"intro":"","method":"getWalletList","params":_vm.bcs,"id":2},on:{"result":_vm.onResult}}),_vm._v(" "),(_vm.loginError)?_c('div',[_vm._v(_vm._s(_vm.loginError))]):_vm._e()],1)}
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./src/pages/Login.vue?vue&type=template&id=59913bfe&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('white-popup',{attrs:{"header":"Airgapped Login","subheader":"Scan QR code with Cold Crypto mobile app to login"}},[_c('remote-call',{attrs:{"intro":"","method":"getWalletList","params":_vm.bcs,"id":2},on:{"result":_vm.onResult}}),_vm._v(" "),(_vm.loginError)?_c('div',{attrs:{"data-cy":"login-error"}},[_vm._v(_vm._s(_vm.loginError))]):_vm._e()],1)}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/pages/Login.vue?vue&type=template&id=1fdd324f&
+// CONCATENATED MODULE: ./src/pages/Login.vue?vue&type=template&id=59913bfe&
 /* concated harmony reexport render */__webpack_require__.d(__webpack_exports__, "a", function() { return render; });
 /* concated harmony reexport staticRenderFns */__webpack_require__.d(__webpack_exports__, "b", function() { return staticRenderFns; });
 
@@ -5563,7 +5591,7 @@ var staticRenderFns = []
 /***/ }),
 /* 241 */
 /*!*************************************************************************!*\
-  !*** ./src/pages/Webrtc.vue?vue&type=template&id=4d0af9ab& + 1 modules ***!
+  !*** ./src/pages/Webrtc.vue?vue&type=template&id=2b471937& + 1 modules ***!
   \*************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /*! exports used: render, staticRenderFns */
@@ -5571,12 +5599,12 @@ var staticRenderFns = []
 
 "use strict";
 
-// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./src/pages/Webrtc.vue?vue&type=template&id=4d0af9ab&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('white-popup',{attrs:{"header":"Online Login","subheader":"Scan QR code with Cold Crypto mobile app to login"}},[(_vm.connected)?_c('h1',[_vm._v("CONNECTED")]):_c('div',{ref:"wrapper",attrs:{"data-cy":"webrtc-force"}},[(_vm.status)?_c('span',[_vm._v(_vm._s(_vm.status))]):_vm._e(),_vm._v(" "),(_vm.sid)?_c('qr-gif',{attrs:{"qrs":[_vm.qr]}}):_vm._e()],1)])}
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./src/pages/Webrtc.vue?vue&type=template&id=2b471937&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('white-popup',{attrs:{"header":"Online Login","subheader":"Scan QR code with Cold Crypto mobile app to login"}},[(_vm.connected)?_c('h1',[_vm._v("CONNECTED")]):_c('div',{ref:"wrapper",attrs:{"data-cy":"webrtc-force"}},[(_vm.status)?_c('span',[_vm._v(_vm._s(_vm.status))]):_vm._e(),_vm._v(" "),(_vm.sid)?_c('qr-gif',{attrs:{"qrs":[_vm.qr]}}):_vm._e()],1),_vm._v(" "),(_vm.loginError)?_c('div',{attrs:{"data-cy":"login-error"}},[_vm._v(_vm._s(_vm.loginError))]):_vm._e()])}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/pages/Webrtc.vue?vue&type=template&id=4d0af9ab&
+// CONCATENATED MODULE: ./src/pages/Webrtc.vue?vue&type=template&id=2b471937&
 /* concated harmony reexport render */__webpack_require__.d(__webpack_exports__, "a", function() { return render; });
 /* concated harmony reexport staticRenderFns */__webpack_require__.d(__webpack_exports__, "b", function() { return staticRenderFns; });
 
@@ -5983,7 +6011,7 @@ var staticRenderFns = []
 /***/ }),
 /* 261 */
 /*!************************************************************************************************!*\
-  !*** ./src/pages/blockchain/EthPay.vue?vue&type=template&id=82d8ce04&scoped=true& + 1 modules ***!
+  !*** ./src/pages/blockchain/EthPay.vue?vue&type=template&id=76bf3801&scoped=true& + 1 modules ***!
   \************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /*! exports used: render, staticRenderFns */
@@ -5991,12 +6019,12 @@ var staticRenderFns = []
 
 "use strict";
 
-// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./src/pages/blockchain/EthPay.vue?vue&type=template&id=82d8ce04&scoped=true&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('input-label',[_vm._v("Receiver:")]),_vm._v(" "),_c('code',[_vm._v(_vm._s(_vm.to))]),_vm._v(" "),(_vm.hasAmount)?_c('div',{staticStyle:{"margin-top":"20px"}},[_c('input-label',[_vm._v("Amount:")]),_vm._v(" "),(_vm.ethIsMain)?_c('span',[_c('code',[_vm._v(_vm._s(_vm.amountEth)+" ETH")]),_vm._v(" "),(_vm.ethPrice)?_c('span',[_vm._v("(~$"+_vm._s(_vm.calculateUsd.toFixed(2))+")")]):_vm._e()]):_c('span',[_vm._v("\n\t\t\t$"+_vm._s(_vm.amountUsd)+" "),(_vm.ethPrice)?_c('span',[_vm._v("(~"+_vm._s(_vm.calculateEth)+" ETH)")]):_vm._e()])],1):_vm._e()],1)}
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./src/pages/blockchain/EthPay.vue?vue&type=template&id=76bf3801&scoped=true&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('input-label',[_vm._v("Receiver:")]),_vm._v(" "),_c('code',{attrs:{"data-cy":"form-to"}},[_vm._v(_vm._s(_vm.to))]),_vm._v(" "),(_vm.hasAmount)?_c('div',{staticStyle:{"margin-top":"20px"}},[_c('input-label',[_vm._v("Amount:")]),_vm._v(" "),(_vm.ethIsMain)?_c('span',[_c('code',{attrs:{"data-cy":"form-amount"}},[_vm._v(_vm._s(_vm.amountEth)+" ETH")]),_vm._v(" "),(_vm.ethPrice)?_c('span',[_vm._v("(approx. $"+_vm._s(_vm.calculateUsd.toFixed(2))+")")]):_vm._e()]):_c('span',[_c('span',{attrs:{"data-cy":"form-usd"}},[_vm._v("$"+_vm._s(_vm.amountUsd))]),_vm._v(" "),(_vm.ethPrice)?_c('span',[_vm._v("(approx. "+_vm._s(_vm.calculateEth)+" ETH)")]):_vm._e()])],1):_vm._e()],1)}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/pages/blockchain/EthPay.vue?vue&type=template&id=82d8ce04&scoped=true&
+// CONCATENATED MODULE: ./src/pages/blockchain/EthPay.vue?vue&type=template&id=76bf3801&scoped=true&
 /* concated harmony reexport render */__webpack_require__.d(__webpack_exports__, "a", function() { return render; });
 /* concated harmony reexport staticRenderFns */__webpack_require__.d(__webpack_exports__, "b", function() { return staticRenderFns; });
 
@@ -6004,7 +6032,7 @@ var staticRenderFns = []
 /***/ }),
 /* 262 */
 /*!************************************************************************************************!*\
-  !*** ./src/pages/blockchain/EosPay.vue?vue&type=template&id=3dfb1bce&scoped=true& + 1 modules ***!
+  !*** ./src/pages/blockchain/EosPay.vue?vue&type=template&id=8b6e0bf4&scoped=true& + 1 modules ***!
   \************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /*! exports used: render, staticRenderFns */
@@ -6012,12 +6040,12 @@ var staticRenderFns = []
 
 "use strict";
 
-// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./src/pages/blockchain/EosPay.vue?vue&type=template&id=3dfb1bce&scoped=true&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('input-label',[_vm._v("Receiver:")]),_vm._v(" "),_c('code',[_vm._v(_vm._s(_vm.to))]),_vm._v(" "),(_vm.hasAmount)?_c('div',{staticStyle:{"margin-top":"20px"}},[_c('input-label',[_vm._v("Amount:")]),_vm._v(" "),(_vm.eosIsMain)?_c('span',[_c('code',[_vm._v(_vm._s(_vm.amountEos)+" EOS")]),_vm._v(" "),(_vm.eosPrice)?_c('span',[_vm._v("(approx. $"+_vm._s(_vm.calculateUsd.toFixed(2))+")")]):_vm._e()]):_c('span',[_vm._v("\n\t\t\t~$"+_vm._s(_vm.amountUsd)+" "),(_vm.eosPrice)?_c('span',[_vm._v("("),_c('code',[_vm._v(_vm._s(_vm.calculateEos.toFixed(4))+" EOS")]),_vm._v(")")]):_vm._e()])],1):_vm._e(),_vm._v(" "),(_vm.memo)?_c('div',{staticStyle:{"margin-top":"20px"}},[_c('input-label',[_vm._v("Memo:")]),_vm._v(" "),_c('code',[_vm._v(_vm._s(_vm.memo))])],1):_vm._e()],1)}
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./src/pages/blockchain/EosPay.vue?vue&type=template&id=8b6e0bf4&scoped=true&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('input-label',[_vm._v("Receiver:")]),_vm._v(" "),_c('code',{attrs:{"data-cy":"form-to"}},[_vm._v(_vm._s(_vm.to))]),_vm._v(" "),(_vm.hasAmount)?_c('div',{staticStyle:{"margin-top":"20px"}},[_c('input-label',[_vm._v("Amount:")]),_vm._v(" "),(_vm.eosIsMain)?_c('span',[_c('code',{attrs:{"data-cy":"form-amount"}},[_vm._v(_vm._s(_vm.amountEos)+" EOS")]),_vm._v(" "),(_vm.eosPrice)?_c('span',[_vm._v("(approx. $"+_vm._s(_vm.calculateUsd.toFixed(2))+")")]):_vm._e()]):_c('span',[_c('span',{attrs:{"data-cy":"form-usd"}},[_vm._v("approx. $"+_vm._s(_vm.amountUsd))]),_vm._v(" "),(_vm.eosPrice)?_c('span',[_vm._v("("),_c('code',[_vm._v(_vm._s(_vm.calculateEos.toFixed(4))+" EOS")]),_vm._v(")")]):_vm._e()])],1):_vm._e(),_vm._v(" "),(_vm.memo)?_c('div',{staticStyle:{"margin-top":"20px"}},[_c('input-label',[_vm._v("Memo:")]),_vm._v(" "),_c('code',{attrs:{"data-cy":"form-memo"}},[_vm._v(_vm._s(_vm.memo))])],1):_vm._e()],1)}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/pages/blockchain/EosPay.vue?vue&type=template&id=3dfb1bce&scoped=true&
+// CONCATENATED MODULE: ./src/pages/blockchain/EosPay.vue?vue&type=template&id=8b6e0bf4&scoped=true&
 /* concated harmony reexport render */__webpack_require__.d(__webpack_exports__, "a", function() { return render; });
 /* concated harmony reexport staticRenderFns */__webpack_require__.d(__webpack_exports__, "b", function() { return staticRenderFns; });
 
@@ -6151,7 +6179,7 @@ var staticRenderFns = []
 /***/ }),
 /* 269 */
 /*!********************************************************************************************!*\
-  !*** ./src/components/QrReader.vue?vue&type=template&id=c0fc5292&scoped=true& + 1 modules ***!
+  !*** ./src/components/QrReader.vue?vue&type=template&id=60713462&scoped=true& + 1 modules ***!
   \********************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /*! exports used: render, staticRenderFns */
@@ -6159,12 +6187,12 @@ var staticRenderFns = []
 
 "use strict";
 
-// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./src/components/QrReader.vue?vue&type=template&id=c0fc5292&scoped=true&
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./src/components/QrReader.vue?vue&type=template&id=60713462&scoped=true&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('section',{staticClass:"top-conatiner"},[_c('section',{staticClass:"container"},[_c('div',{staticClass:"overlay"}),_vm._v(" "),_c('video',{ref:"video",staticStyle:{"display":"none"},attrs:{"data-cy":"video-video"}},[_vm._v("Camera not available")]),_vm._v(" "),_c('canvas',{ref:"canvas",staticStyle:{"display":"none"}}),_vm._v(" "),(_vm.videoReady)?_c('div',{staticStyle:{"display":"none"},attrs:{"data-cy":"video-ready"}}):_vm._e()])])}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/QrReader.vue?vue&type=template&id=c0fc5292&scoped=true&
+// CONCATENATED MODULE: ./src/components/QrReader.vue?vue&type=template&id=60713462&scoped=true&
 /* concated harmony reexport render */__webpack_require__.d(__webpack_exports__, "a", function() { return render; });
 /* concated harmony reexport staticRenderFns */__webpack_require__.d(__webpack_exports__, "b", function() { return staticRenderFns; });
 
@@ -7377,7 +7405,7 @@ component.options.__file = "Index.vue"
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Login_vue_vue_type_template_id_1fdd324f___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Login.vue?vue&type=template&id=1fdd324f& */ 235);
+/* harmony import */ var _Login_vue_vue_type_template_id_59913bfe___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Login.vue?vue&type=template&id=59913bfe& */ 235);
 /* harmony import */ var _Login_vue_vue_type_script_lang_ts___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Login.vue?vue&type=script&lang=ts& */ 110);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _Login_vue_vue_type_script_lang_ts___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _Login_vue_vue_type_script_lang_ts___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ 0);
@@ -7390,8 +7418,8 @@ __webpack_require__.r(__webpack_exports__);
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__[/* default */ "a"])(
   _Login_vue_vue_type_script_lang_ts___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _Login_vue_vue_type_template_id_1fdd324f___WEBPACK_IMPORTED_MODULE_0__[/* render */ "a"],
-  _Login_vue_vue_type_template_id_1fdd324f___WEBPACK_IMPORTED_MODULE_0__[/* staticRenderFns */ "b"],
+  _Login_vue_vue_type_template_id_59913bfe___WEBPACK_IMPORTED_MODULE_0__[/* render */ "a"],
+  _Login_vue_vue_type_template_id_59913bfe___WEBPACK_IMPORTED_MODULE_0__[/* staticRenderFns */ "b"],
   false,
   null,
   null,
@@ -7529,10 +7557,10 @@ component.options.__file = "QrImage.vue"
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _QrReader_vue_vue_type_template_id_c0fc5292_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./QrReader.vue?vue&type=template&id=c0fc5292&scoped=true& */ 269);
+/* harmony import */ var _QrReader_vue_vue_type_template_id_60713462_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./QrReader.vue?vue&type=template&id=60713462&scoped=true& */ 269);
 /* harmony import */ var _QrReader_vue_vue_type_script_lang_ts___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./QrReader.vue?vue&type=script&lang=ts& */ 121);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _QrReader_vue_vue_type_script_lang_ts___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _QrReader_vue_vue_type_script_lang_ts___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _QrReader_vue_vue_type_style_index_0_id_c0fc5292_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./QrReader.vue?vue&type=style&index=0&id=c0fc5292&lang=scss&scoped=true& */ 413);
+/* harmony import */ var _QrReader_vue_vue_type_style_index_0_id_60713462_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./QrReader.vue?vue&type=style&index=0&id=60713462&lang=scss&scoped=true& */ 413);
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ 0);
 
 
@@ -7544,11 +7572,11 @@ __webpack_require__.r(__webpack_exports__);
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
   _QrReader_vue_vue_type_script_lang_ts___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _QrReader_vue_vue_type_template_id_c0fc5292_scoped_true___WEBPACK_IMPORTED_MODULE_0__[/* render */ "a"],
-  _QrReader_vue_vue_type_template_id_c0fc5292_scoped_true___WEBPACK_IMPORTED_MODULE_0__[/* staticRenderFns */ "b"],
+  _QrReader_vue_vue_type_template_id_60713462_scoped_true___WEBPACK_IMPORTED_MODULE_0__[/* render */ "a"],
+  _QrReader_vue_vue_type_template_id_60713462_scoped_true___WEBPACK_IMPORTED_MODULE_0__[/* staticRenderFns */ "b"],
   false,
   null,
-  "c0fc5292",
+  "60713462",
   null
   
 )
@@ -7560,17 +7588,17 @@ component.options.__file = "QrReader.vue"
 /* 412 */,
 /* 413 */
 /*!***********************************************************************************************!*\
-  !*** ./src/components/QrReader.vue?vue&type=style&index=0&id=c0fc5292&lang=scss&scoped=true& ***!
+  !*** ./src/components/QrReader.vue?vue&type=style&index=0&id=60713462&lang=scss&scoped=true& ***!
   \***********************************************************************************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module exports are unknown */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_QrReader_vue_vue_type_style_index_0_id_c0fc5292_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/mini-css-extract-plugin/dist/loader.js!../../node_modules/css-loader??ref--1-oneOf-2-1!../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../node_modules/sass-loader/lib/loader.js??ref--1-oneOf-2-2!../../node_modules/vue-loader/lib??vue-loader-options!./QrReader.vue?vue&type=style&index=0&id=c0fc5292&lang=scss&scoped=true& */ 123);
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_QrReader_vue_vue_type_style_index_0_id_c0fc5292_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_QrReader_vue_vue_type_style_index_0_id_c0fc5292_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_QrReader_vue_vue_type_style_index_0_id_60713462_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/mini-css-extract-plugin/dist/loader.js!../../node_modules/css-loader??ref--1-oneOf-2-1!../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../node_modules/sass-loader/lib/loader.js??ref--1-oneOf-2-2!../../node_modules/vue-loader/lib??vue-loader-options!./QrReader.vue?vue&type=style&index=0&id=60713462&lang=scss&scoped=true& */ 123);
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_QrReader_vue_vue_type_style_index_0_id_60713462_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_QrReader_vue_vue_type_style_index_0_id_60713462_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__);
 /* unused harmony reexport * */
- /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_QrReader_vue_vue_type_style_index_0_id_c0fc5292_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default.a); 
+ /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_QrReader_vue_vue_type_style_index_0_id_60713462_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 /* 414 */
@@ -8101,10 +8129,10 @@ component.options.__file = "PayHoc.vue"
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _EthPay_vue_vue_type_template_id_82d8ce04_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EthPay.vue?vue&type=template&id=82d8ce04&scoped=true& */ 261);
+/* harmony import */ var _EthPay_vue_vue_type_template_id_76bf3801_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EthPay.vue?vue&type=template&id=76bf3801&scoped=true& */ 261);
 /* harmony import */ var _EthPay_vue_vue_type_script_lang_ts___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./EthPay.vue?vue&type=script&lang=ts& */ 153);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _EthPay_vue_vue_type_script_lang_ts___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _EthPay_vue_vue_type_script_lang_ts___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _EthPay_vue_vue_type_style_index_0_id_82d8ce04_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./EthPay.vue?vue&type=style&index=0&id=82d8ce04&lang=scss&scoped=true& */ 435);
+/* harmony import */ var _EthPay_vue_vue_type_style_index_0_id_76bf3801_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./EthPay.vue?vue&type=style&index=0&id=76bf3801&lang=scss&scoped=true& */ 435);
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ 0);
 
 
@@ -8116,11 +8144,11 @@ __webpack_require__.r(__webpack_exports__);
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
   _EthPay_vue_vue_type_script_lang_ts___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _EthPay_vue_vue_type_template_id_82d8ce04_scoped_true___WEBPACK_IMPORTED_MODULE_0__[/* render */ "a"],
-  _EthPay_vue_vue_type_template_id_82d8ce04_scoped_true___WEBPACK_IMPORTED_MODULE_0__[/* staticRenderFns */ "b"],
+  _EthPay_vue_vue_type_template_id_76bf3801_scoped_true___WEBPACK_IMPORTED_MODULE_0__[/* render */ "a"],
+  _EthPay_vue_vue_type_template_id_76bf3801_scoped_true___WEBPACK_IMPORTED_MODULE_0__[/* staticRenderFns */ "b"],
   false,
   null,
-  "82d8ce04",
+  "76bf3801",
   null
   
 )
@@ -8146,17 +8174,17 @@ component.options.__file = "EthPay.vue"
 /***/ }),
 /* 435 */
 /*!***************************************************************************************************!*\
-  !*** ./src/pages/blockchain/EthPay.vue?vue&type=style&index=0&id=82d8ce04&lang=scss&scoped=true& ***!
+  !*** ./src/pages/blockchain/EthPay.vue?vue&type=style&index=0&id=76bf3801&lang=scss&scoped=true& ***!
   \***************************************************************************************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module exports are unknown */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EthPay_vue_vue_type_style_index_0_id_82d8ce04_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader??ref--1-oneOf-2-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/sass-loader/lib/loader.js??ref--1-oneOf-2-2!../../../node_modules/vue-loader/lib??vue-loader-options!./EthPay.vue?vue&type=style&index=0&id=82d8ce04&lang=scss&scoped=true& */ 158);
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EthPay_vue_vue_type_style_index_0_id_82d8ce04_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EthPay_vue_vue_type_style_index_0_id_82d8ce04_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EthPay_vue_vue_type_style_index_0_id_76bf3801_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader??ref--1-oneOf-2-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/sass-loader/lib/loader.js??ref--1-oneOf-2-2!../../../node_modules/vue-loader/lib??vue-loader-options!./EthPay.vue?vue&type=style&index=0&id=76bf3801&lang=scss&scoped=true& */ 158);
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EthPay_vue_vue_type_style_index_0_id_76bf3801_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EthPay_vue_vue_type_style_index_0_id_76bf3801_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__);
 /* unused harmony reexport * */
- /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EthPay_vue_vue_type_style_index_0_id_82d8ce04_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default.a); 
+ /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EthPay_vue_vue_type_style_index_0_id_76bf3801_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 /* 436 */
@@ -8170,10 +8198,10 @@ component.options.__file = "EthPay.vue"
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _EosPay_vue_vue_type_template_id_3dfb1bce_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EosPay.vue?vue&type=template&id=3dfb1bce&scoped=true& */ 262);
+/* harmony import */ var _EosPay_vue_vue_type_template_id_8b6e0bf4_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EosPay.vue?vue&type=template&id=8b6e0bf4&scoped=true& */ 262);
 /* harmony import */ var _EosPay_vue_vue_type_script_lang_ts___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./EosPay.vue?vue&type=script&lang=ts& */ 159);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _EosPay_vue_vue_type_script_lang_ts___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _EosPay_vue_vue_type_script_lang_ts___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _EosPay_vue_vue_type_style_index_0_id_3dfb1bce_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./EosPay.vue?vue&type=style&index=0&id=3dfb1bce&lang=scss&scoped=true& */ 437);
+/* harmony import */ var _EosPay_vue_vue_type_style_index_0_id_8b6e0bf4_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./EosPay.vue?vue&type=style&index=0&id=8b6e0bf4&lang=scss&scoped=true& */ 437);
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ 0);
 
 
@@ -8185,11 +8213,11 @@ __webpack_require__.r(__webpack_exports__);
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
   _EosPay_vue_vue_type_script_lang_ts___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _EosPay_vue_vue_type_template_id_3dfb1bce_scoped_true___WEBPACK_IMPORTED_MODULE_0__[/* render */ "a"],
-  _EosPay_vue_vue_type_template_id_3dfb1bce_scoped_true___WEBPACK_IMPORTED_MODULE_0__[/* staticRenderFns */ "b"],
+  _EosPay_vue_vue_type_template_id_8b6e0bf4_scoped_true___WEBPACK_IMPORTED_MODULE_0__[/* render */ "a"],
+  _EosPay_vue_vue_type_template_id_8b6e0bf4_scoped_true___WEBPACK_IMPORTED_MODULE_0__[/* staticRenderFns */ "b"],
   false,
   null,
-  "3dfb1bce",
+  "8b6e0bf4",
   null
   
 )
@@ -8200,17 +8228,17 @@ component.options.__file = "EosPay.vue"
 /***/ }),
 /* 437 */
 /*!***************************************************************************************************!*\
-  !*** ./src/pages/blockchain/EosPay.vue?vue&type=style&index=0&id=3dfb1bce&lang=scss&scoped=true& ***!
+  !*** ./src/pages/blockchain/EosPay.vue?vue&type=style&index=0&id=8b6e0bf4&lang=scss&scoped=true& ***!
   \***************************************************************************************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module exports are unknown */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EosPay_vue_vue_type_style_index_0_id_3dfb1bce_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader??ref--1-oneOf-2-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/sass-loader/lib/loader.js??ref--1-oneOf-2-2!../../../node_modules/vue-loader/lib??vue-loader-options!./EosPay.vue?vue&type=style&index=0&id=3dfb1bce&lang=scss&scoped=true& */ 161);
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EosPay_vue_vue_type_style_index_0_id_3dfb1bce_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EosPay_vue_vue_type_style_index_0_id_3dfb1bce_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EosPay_vue_vue_type_style_index_0_id_8b6e0bf4_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../node_modules/css-loader??ref--1-oneOf-2-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/sass-loader/lib/loader.js??ref--1-oneOf-2-2!../../../node_modules/vue-loader/lib??vue-loader-options!./EosPay.vue?vue&type=style&index=0&id=8b6e0bf4&lang=scss&scoped=true& */ 161);
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EosPay_vue_vue_type_style_index_0_id_8b6e0bf4_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EosPay_vue_vue_type_style_index_0_id_8b6e0bf4_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__);
 /* unused harmony reexport * */
- /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EosPay_vue_vue_type_style_index_0_id_3dfb1bce_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default.a); 
+ /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EosPay_vue_vue_type_style_index_0_id_8b6e0bf4_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 /* 438 */
@@ -8820,7 +8848,7 @@ component.options.__file = "PushTx.vue"
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Webrtc_vue_vue_type_template_id_4d0af9ab___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Webrtc.vue?vue&type=template&id=4d0af9ab& */ 241);
+/* harmony import */ var _Webrtc_vue_vue_type_template_id_2b471937___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Webrtc.vue?vue&type=template&id=2b471937& */ 241);
 /* harmony import */ var _Webrtc_vue_vue_type_script_lang_ts___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Webrtc.vue?vue&type=script&lang=ts& */ 186);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _Webrtc_vue_vue_type_script_lang_ts___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _Webrtc_vue_vue_type_script_lang_ts___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ 0);
@@ -8833,8 +8861,8 @@ __webpack_require__.r(__webpack_exports__);
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__[/* default */ "a"])(
   _Webrtc_vue_vue_type_script_lang_ts___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _Webrtc_vue_vue_type_template_id_4d0af9ab___WEBPACK_IMPORTED_MODULE_0__[/* render */ "a"],
-  _Webrtc_vue_vue_type_template_id_4d0af9ab___WEBPACK_IMPORTED_MODULE_0__[/* staticRenderFns */ "b"],
+  _Webrtc_vue_vue_type_template_id_2b471937___WEBPACK_IMPORTED_MODULE_0__[/* render */ "a"],
+  _Webrtc_vue_vue_type_template_id_2b471937___WEBPACK_IMPORTED_MODULE_0__[/* staticRenderFns */ "b"],
   false,
   null,
   null,
@@ -9561,6 +9589,7 @@ exports.options = {
     mutations: {
         setWalletList: function (state, payload) {
             console.log("SET_WALLET_LIST: ", payload);
+            console.assert(Array.isArray(payload.wallets), "vuex store: setWalletList() Wallets should be array! got: " + JSON.stringify(payload.wallets));
             state.wallets = payload.wallets;
         },
         setCurrentWallet: function (state, payload) {
@@ -10986,4 +11015,4 @@ component.options.__file = "BigX.vue"
 
 /***/ })
 /******/ ]);
-//# sourceMappingURL=main.8baa8ec4.js.map
+//# sourceMappingURL=main.5deceace.js.map
