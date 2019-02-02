@@ -46,14 +46,6 @@ export default (Vue as VueWithProps<{$refs: TRefs}>).extend({
 		},
 	},
 	computed: {
-		fakeQrCode(): string | null
-		{
-			let video = this.$refs.video
-			if (video && video.hasAttribute('data-fake-qr'))
-				return video.getAttribute('data-fake-qr') || null
-			
-			return null
-		}
 	},
 	beforeDestroy()
 	{
@@ -72,6 +64,14 @@ export default (Vue as VueWithProps<{$refs: TRefs}>).extend({
 			this.startCamera()
 	},
 	methods: {
+		getFakeQrCode()
+		{
+			let video = this.$refs.video
+			if (video && video.hasAttribute('data-fake-qr'))
+				return video.getAttribute('data-fake-qr') || null
+			
+			return null
+		},
 		async startCamera()
 		{
 			const stream = await navigator.mediaDevices.getUserMedia({ video: true })
@@ -104,7 +104,7 @@ export default (Vue as VueWithProps<{$refs: TRefs}>).extend({
 		},
 		readQr()
 		{
-			let fakeQr = this.fakeQrCode
+			let fakeQr = this.getFakeQrCode()
 			if (fakeQr)
 				return this.$emit("qr", { data: fakeQr })
 			
