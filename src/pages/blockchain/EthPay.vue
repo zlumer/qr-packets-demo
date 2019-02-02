@@ -1,14 +1,16 @@
 <template>
 	<div>
 		<input-label>Receiver:</input-label>
-		<code>{{ to }}</code>
+		<code data-cy="form-to">{{ to }}</code>
 		<div v-if="hasAmount" style="margin-top: 20px;">
 			<input-label>Amount:</input-label>
 			<span v-if="ethIsMain">
-				<code>{{ amountEth }} ETH</code> <span v-if="ethPrice">(~${{ calculateUsd.toFixed(2) }})</span>
+				<code data-cy="form-amount">{{ amountEth }} ETH</code>
+				<span v-if="ethPrice">(approx. ${{ calculateUsd.toFixed(2) }})</span>
 			</span>
 			<span v-else>
-				${{ amountUsd }} <span v-if="ethPrice">(~{{ calculateEth }} ETH)</span>
+				<span data-cy="form-usd">${{ amountUsd }}</span>
+				<span v-if="ethPrice">(approx. {{ calculateEth }} ETH)</span>
 			</span>
 		</div>
 	</div>

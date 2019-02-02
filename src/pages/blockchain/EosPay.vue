@@ -1,19 +1,21 @@
 <template>
 	<div>
 		<input-label>Receiver:</input-label>
-		<code>{{ to }}</code>
+		<code data-cy="form-to">{{ to }}</code>
 		<div v-if="hasAmount" style="margin-top: 20px;">
 			<input-label>Amount:</input-label>
 			<span v-if="eosIsMain">
-				<code>{{ amountEos }} EOS</code> <span v-if="eosPrice">(approx. ${{ calculateUsd.toFixed(2) }})</span>
+				<code data-cy="form-amount">{{ amountEos }} EOS</code>
+				<span v-if="eosPrice">(approx. ${{ calculateUsd.toFixed(2) }})</span>
 			</span>
 			<span v-else>
-				~${{ amountUsd }} <span v-if="eosPrice">(<code>{{ calculateEos.toFixed(4) }} EOS</code>)</span>
+				<span data-cy="form-usd">approx. ${{ amountUsd }}</span>
+				<span v-if="eosPrice">(<code>{{ calculateEos.toFixed(4) }} EOS</code>)</span>
 			</span>
 		</div>
 		<div v-if="memo" style="margin-top: 20px;">
 			<input-label>Memo:</input-label>
-			<code>{{ memo }}</code>
+			<code data-cy="form-memo">{{ memo }}</code>
 		</div>
 	</div>
 </template>
