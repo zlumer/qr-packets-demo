@@ -10,7 +10,7 @@ declare let GIT_REMOTE: string
 console.assert(GIT_REMOTE, "GIT_REMOTE is not defined!")
 
 export default {
-	blockchains: ["eth"],
+	blockchains: ["eth", "eos"],
 	basePath: ROOT_PATH,
 	gitVersion: GIT_VERSION,
 	gitRemote: GIT_REMOTE,
