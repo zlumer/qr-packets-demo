@@ -589,12 +589,12 @@ exports.generate = generate;
 // webpack env variables
 Object.defineProperty(exports, "__esModule", { value: true });
 console.log("ROOT_PATH: " + "/qr-packets-demo");
-console.assert("2bb6d2694de29a84c05b8092dcfcfe60fce09270", "GIT_VERSION is not defined!");
+console.assert("16a8589ef68cf20474168fa57224217b2dc7c348", "GIT_VERSION is not defined!");
 console.assert("https://github.com/zlumer/qr-packets-demo.git", "GIT_REMOTE is not defined!");
 exports.default = {
     blockchains: ["eth", "eos"],
     basePath: "/qr-packets-demo",
-    gitVersion: "2bb6d2694de29a84c05b8092dcfcfe60fce09270",
+    gitVersion: "16a8589ef68cf20474168fa57224217b2dc7c348",
     gitRemote: "https://github.com/zlumer/qr-packets-demo.git",
 };
 
@@ -9516,16 +9516,30 @@ exports.options = {
     actions: {
         updateTokenPrice: function (store, payload) {
             return __awaiter(this, void 0, void 0, function () {
-                var cmcId, price;
+                var cmcId, price, e_1;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
                             cmcId = ("cmcId" in payload) ? payload.cmcId : cmc.tickerIds[payload.blockchain];
+                            // console.log(`updateTokenPrice: cmcId=${cmcId}`)
                             store.commit('tokenPriceSetLoading', { token: cmcId, loading: true });
-                            return [4 /*yield*/, cmc.loadPrice(cmcId)];
+                            _a.label = 1;
                         case 1:
+                            _a.trys.push([1, 3, , 4]);
+                            return [4 /*yield*/, cmc.loadPrice(cmcId)
+                                // console.log(`updateTokenPrice: price=${price}`)
+                            ];
+                        case 2:
                             price = _a.sent();
+                            // console.log(`updateTokenPrice: price=${price}`)
                             store.commit('tokenPriceUpdate', { token: cmcId, price: price });
+                            return [3 /*break*/, 4];
+                        case 3:
+                            e_1 = _a.sent();
+                            console.log("error while loading token price! cmcId=" + cmcId);
+                            console.error(e_1);
+                            return [3 /*break*/, 4];
+                        case 4:
                             store.commit('tokenPriceSetLoading', { token: cmcId, loading: false });
                             return [2 /*return*/];
                     }
@@ -11015,4 +11029,4 @@ component.options.__file = "BigX.vue"
 
 /***/ })
 /******/ ]);
-//# sourceMappingURL=main.9e2c43fd.js.map
+//# sourceMappingURL=main.4201eec3.js.map
