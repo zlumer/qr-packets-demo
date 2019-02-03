@@ -30,12 +30,26 @@ export const options: SOptions = {
 	actions: {
 		async updateTokenPrice(store, payload)
 		{
+			// console.log(`updateTokenPrice(${JSON.stringify(payload)})`)
 			let cmcId = ("cmcId" in payload) ? payload.cmcId : cmc.tickerIds[payload.blockchain]
-
+			// console.log(`updateTokenPrice: cmcId=${cmcId}`)
+			
 			store.commit('tokenPriceSetLoading', { token: cmcId, loading: true })
-			let price = await cmc.loadPrice(cmcId)
-			store.commit('tokenPriceUpdate', { token: cmcId, price })
+			// console.log(`updateTokenPrice: tokenPriceSetLoading ${cmcId}=${true}`)
+			try
+			{
+				let price = await cmc.loadPrice(cmcId)
+				// console.log(`updateTokenPrice: price=${price}`)
+				store.commit('tokenPriceUpdate', { token: cmcId, price })
+				// console.log(`updateTokenPrice: tokenPriceUpdate ${cmcId}=${price}`)
+			}
+			catch(e)
+			{
+				console.log(`error while loading token price! cmcId=${cmcId}`)
+				console.error(e)
+			}
 			store.commit('tokenPriceSetLoading', { token: cmcId, loading: false })
+			// console.log(`updateTokenPrice: tokenPriceSetLoading ${cmcId}=${false}`)
 		}
 	},
 	getters: {
