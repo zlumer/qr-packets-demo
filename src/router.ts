@@ -5,6 +5,7 @@ import Login from "./pages/Login.vue"
 import Wallets from "./pages/Wallets.vue"
 import Wallet from "./pages/Wallet.vue"
 import Pay from "./pages/Pay.vue"
+import Instant0x from "./pages/Instant0x.vue"
 import TransferHoc from "./pages/blockchain/TransferHoc.vue"
 import EthTokens from "./pages/blockchain/EthTokens.vue"
 import PushTxVue from "./pages/PushTx.vue"
@@ -109,6 +110,12 @@ export function createRouter(store: Store)
 						meta: { ...metaLayout('app'), popup: true },
 					}
 				],
+			},
+			{
+				path: '/0xinstant',
+				name: '0xinstant',
+				component: Instant0x,
+				meta: metaLayout('default'),
 			},
 		]
 	})
