@@ -3,14 +3,37 @@
 	<!-- <span>{{intro}}</span> -->
 	<div
 		class="qr"
+		:class="{ 'qr-twostep': twoStep }"
 		:style="{ width: qrWidth }"
 	>
-		<Qr :qrs="qrs" />
+		<div
+			v-if="twoStep"
+			style="text-align: right; z-index: 3; margin-right:10%; top:0;"
+		><a
+				v-if="!scanning"
+				href="#"
+				@click.stop.prevent="scanning = true"
+			>Scan QR -&gt;</a></div>
+
+
+			<!-- v-show="!twoStep || !scanning" -->
+		<Qr
+			:class="{ 'qrimg-twostep': twoStep, visible: !scanning, hidden: scanning }"
+			:qrs="qrs"
+		/>
 	</div>
 	<div
 		class="qr-reader"
 		:style="{ width: readerWidth }"
 	>
+		<div
+			v-if="twoStep"
+			style="margin-bottom: 5%;"
+		><a
+				v-if="scanning"
+				href="#"
+				@click.stop.prevent="scanning = false"
+			>&lt;- Show QR</a></div>
 		<QrReader ref="reader" v-on:qr="onQr"></QrReader>
 	</div>
 </div>
@@ -33,6 +56,7 @@ export default (Vue as VueWithProps<{$refs: TRefs}>).extend({
 		return {
 			qrindex: 0,
 			timer: 0,
+			scanning: false,
 		}
 	},
 	props: {
@@ -43,12 +67,16 @@ export default (Vue as VueWithProps<{$refs: TRefs}>).extend({
 		qrs: {
 			type: Array as () => string[],
 			default: [],
-		}
+		},
+		twoStep: {
+			type: Boolean,
+			default: false,
+		},
 	},
 	computed: {
 		readerWidth: function()
 		{
-			return `calc(100% - ${this.qrWidth})`
+			return this.twoStep ? this.qrWidth : `calc(100% - ${this.qrWidth})`
 		}
 	},
 	methods: {
@@ -76,11 +104,37 @@ export default (Vue as VueWithProps<{$refs: TRefs}>).extend({
 	align-items: center;
 }
 
+a {
+	color: inherit;
+}
+
 .qr {
 	// width: calc(100% - 300px);
 	// max-height: min();
 	display: flex;
     flex-flow: column nowrap;
+}
+.qr-twostep {
+	position: absolute;
+    z-index: 2;
+
+    // opacity: 0.7;
+}
+.qrimg-twostep {
+	width: 120%;
+	height: 120%;
+	margin: -10%;
+	
+	transition: visibility 0s linear 0.2s, opacity 0.2s ease-in-out;
+}
+.qrimg-twostep.visible {
+	transition-delay: 0s;
+	visibility: visible;
+	opacity: 1;
+}
+.qrimg-twostep.hidden {
+	opacity: 0;
+	visibility: hidden;
 }
 .qr-reader {
 	// width: 300px;
