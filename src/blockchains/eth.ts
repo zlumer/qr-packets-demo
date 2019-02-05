@@ -21,6 +21,7 @@ export function getNetwork(providerUrl: string)
 	web3.setProvider(provider)
 	
 	return {
+		web3,
 		async getNonce(address: string): Promise<number>
 		{
 			return await web3.eth.getTransactionCount(address)
