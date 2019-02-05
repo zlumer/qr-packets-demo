@@ -6,18 +6,23 @@
 		<div v-else>
 			Loading 0x Instant UI...
 		</div>
-		
+		<button @click="renderZrx()">render</button>
+
 		<div id="zrx" />
 	</div>
 </template>
 
 <script lang="ts">
 import Vue from 'src/vue-ts'
+import { Provider } from 'web3/providers'
 
 interface ZRXInstantRenderProps
 {
 	orderSource: string
-	provider?: unknown // An instance of an Ethereum provider. If none is provided, 0x instant will try to grab the injected provider if one exists, otherwise it will suggest the user to install MetaMask
+	/**
+	 * An instance of an Ethereum provider. If none is provided, 0x instant will try to grab the injected provider if one exists, otherwise it will suggest the user to install MetaMask
+	 */
+	provider?: Provider
 	walletDisplayName?: string // A display string for the wallet you are connected to. Defaults to our best guess (i.e. MetaMask, Coinbase Wallet) but should be provided if a custom provider is supplied as an optional config.
 	availableAssetDatas?: string[] // An array of assetDatas that can be purchased through Instant. Defaults to all token pairs from orderSource. Will throw an error if empty.
 	defaultSelectedAssetData?: string // The asset that should be opened by default. If this is not provided, Instant will show "Select Token" if there are multiple availableAssetDatas.
@@ -43,6 +48,7 @@ interface ZRXInstant
 	render(opts: ZRXInstantRenderProps, elementSelector: string): unknown
 }
 declare let zeroExInstant: ZRXInstant
+let chainId = 1
 
 export default Vue.extend({
 	data: function()
@@ -59,6 +65,14 @@ export default Vue.extend({
 		document.head.appendChild(zrxScript)
 	},
 	computed: {
+		eth: function()
+		{
+			return this.$store.getters.blockchains.eth(chainId)
+		},
+		provider: function()
+		{
+			return this.eth.web3.web3.currentProvider
+		},
 	},
 	methods: {
 		hasLoaded()
@@ -72,7 +86,40 @@ export default Vue.extend({
 			if (!this.hasLoaded())
 				console.error(`Couldn't load 0x Instant library!`) //throw new Error("Couldn't load 0x Instant library!")
 			
-			zeroExInstant.render({ orderSource: 'https://api.radarrelay.com/0x/v2/' }, 'div#zrx')
+			let provider = this.provider
+
+			zeroExInstant.render({
+				orderSource: 'https://api.radarrelay.com/0x/v2/',
+				networkId: chainId,
+				walletDisplayName: 'Cold Crypto',
+				provider: {
+					async send(payload, callback)
+					{
+						console.log('provider send!')
+						console.log(payload, callback)
+						const respond = (result: any) =>
+						{
+							let resp = { jsonrpc: '2.0', id: payload.id, result }
+							if (callback)
+								callback(undefined as any, resp)
+							
+							return Promise.resolve(resp)
+						}
+						if (payload.method == 'eth_accounts')
+						{
+							return respond(['0xc94770007dda54cF92009BFF0dE90c06F603a09f'])
+						}
+						
+						if (payload.method == 'eth_sendTransaction')
+						{
+							let txHash = ''
+							return respond(txHash)
+						}
+
+						return provider.send(payload, callback)
+					}
+				}
+			}, 'div#zrx')
 		}
 	}
 })
