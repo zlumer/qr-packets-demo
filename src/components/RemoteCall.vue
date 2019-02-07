@@ -4,6 +4,7 @@
 		:qrs="[`${method}|${id}|${params}`]"
 		:intro="intro"
 		:qr-width="qrWidth"
+		:two-step="twoStep"
 		@qr="onQr"
 	/>
 	<div
@@ -35,6 +36,10 @@ export default Vue.extend({
 		qrWidth: {
 			type: String,
 			default: '60%',
+		},
+		twoStep: {
+			type: Boolean,
+			default: false,
 		},
 		id: {
 			type: [String, Number],
