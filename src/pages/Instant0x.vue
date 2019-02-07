@@ -1,20 +1,35 @@
 <template>
 	<div>
 		<div v-if="zrxLoaded">
-			0x Instant Works!
+			
 		</div>
 		<div v-else>
 			Loading 0x Instant UI...
 		</div>
-		<button @click="renderZrx()">render</button>
+		<!-- <button @click="renderZrx()">render</button> -->
 
-		<div id="zrx" />
+		<div v-if="loginProcess" class="hint-item">Scan this QR code with Cold Crypto mobile app to login</div>
+		<remote-call
+			v-if="command"
+			qr-width="350px"
+			:id="2"
+			:method="command.method"
+			:params="command.params"
+			:two-step="true"
+			@result="onRemoteResponse"
+		/>
+		<div id="zrx" v-show="!command && !loadingNonce"/>
+		<div v-if="loadingNonce">
+			Preparing transaction (loading nonce)...
+		</div>
 	</div>
 </template>
 
 <script lang="ts">
 import Vue from 'src/vue-ts'
 import { Provider } from 'web3/providers'
+import RemoteCall from 'src/components/RemoteCall.vue'
+import { IWallet } from 'src/store/interop'
 
 interface ZRXInstantRenderProps
 {
@@ -54,13 +69,20 @@ export default Vue.extend({
 	data: function()
 	{
 		return {
-			zrxLoaded: false
+			zrxLoaded: false,
+			loadingNonce: false,
+			cachedAddresses: [] as string[],
+			command: null as null | {
+				method: string,
+				params: string,
+				callback: (result: unknown) => void
+			},
 		}
 	},
 	mounted()
 	{
 		let zrxScript = document.createElement('script')
-		zrxScript.onload = () => this.hasLoaded()
+		zrxScript.onload = () => (this.hasLoaded(), this.renderZrx())
 		zrxScript.setAttribute('src', 'https://instant.0x.org/instant.js')
 		document.head.appendChild(zrxScript)
 	},
@@ -73,6 +95,10 @@ export default Vue.extend({
 		{
 			return this.eth.web3.web3.currentProvider
 		},
+		loginProcess: function()
+		{
+			return this.command && (this.command.method == 'getWalletList')
+		},
 	},
 	methods: {
 		hasLoaded()
@@ -81,12 +107,22 @@ export default Vue.extend({
 			this.zrxLoaded = !!zrx
 			return !!zrx
 		},
+		onRemoteResponse(result: unknown)
+		{
+			if (this.command)
+				this.command.callback(result)
+			else
+				console.error(`Instant0x: scanned QR code when no callback is available! ${JSON.stringify(result)}`)
+			
+			this.command = null
+		},
 		renderZrx()
 		{
 			if (!this.hasLoaded())
 				console.error(`Couldn't load 0x Instant library!`) //throw new Error("Couldn't load 0x Instant library!")
 			
 			let provider = this.provider
+			let vueComp = this
 
 			zeroExInstant.render({
 				orderSource: 'https://api.radarrelay.com/0x/v2/',
@@ -97,7 +133,7 @@ export default Vue.extend({
 					{
 						console.log('provider send!')
 						console.log(payload, callback)
-						const respond = (result: any) =>
+						const respond = <T>(result: T) =>
 						{
 							let resp = { jsonrpc: '2.0', id: payload.id, result }
 							if (callback)
@@ -107,13 +143,87 @@ export default Vue.extend({
 						}
 						if (payload.method == 'eth_accounts')
 						{
-							return respond(['0xc94770007dda54cF92009BFF0dE90c06F603a09f'])
+							// console.log(`Instant0x: eth_accounts() / cached: `, vueComp.cachedAddresses)
+
+							if (vueComp.cachedAddresses.length)
+								return respond(vueComp.cachedAddresses)
+							
+							return new Promise((res, rej) =>
+							{
+								vueComp.command = {
+									method: `getWalletList`,
+									params: `[["eth"]]`,
+									callback: result =>
+									{
+										let wallets = result as IWallet[]
+										let addresses = wallets
+											// .filter(x => parseInt(x.chainId + "") == chainId) // turned off for a while
+											.map(x => x.address.toLowerCase())
+										
+										vueComp.cachedAddresses = addresses
+										// console.log(`Instant0x: cachedAddresses set to: `, vueComp.cachedAddresses)
+
+										res(respond<string[]>(addresses))
+									}
+								}
+							})
 						}
 						
 						if (payload.method == 'eth_sendTransaction')
 						{
-							let txHash = ''
-							return respond(txHash)
+							return new Promise((res, rej) =>
+							{
+								let msg = payload.params[0] as {
+									data: "0x18978e8200000000000000000000000000000000000000000000000000000000000000e000000000000000000000000000000000000000000000000821ab0d4414980000000000000000000000000000000000000000000000000000000000000000030000000000000000000000000000000000000000000000000000000000000003c000000000000000000000000000000000000000000000000000000000000003c0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000dae9bf0e5b961b8eef35bc501ca196114c59570000000000000000000000000000000000000000000000000000000000000000000000000000000000000000a258b39954cef5cb142fd567a46cddb31a6701240000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000030ca024f987b9000000000000000000000000000000000000000000000000000000cb365104eaa2c0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005c5ae7b6000000000000000000000000000000000000000000000000000000005c5ae691000000000000000000000000000000000000000000000000000000000000018000000000000000000000000000000000000000000000000000000000000002a00000000000000000000000000000000000000000000000000000000000000024f47261b00000000000000000000000000d8775f648430679a709e98d2b0cb6250d2887ef000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000421b3087109254f6b98dc6b1b930d9332e64df239c1d40a9494a856b819ebe2229797cfcb7d4a20db8369bce94fbf7c404f74b84c8ae76d4095c71796ebbc8e098c2030000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+									from: "0x873375ac5181d80404a330c97f08704273b3b865"
+									gas: "0x39d1b"
+									gasPrice: "0x11e1a3000"
+									to: "0x5468a1dc173652ee28d249c271fa9933144746b1"
+									value: "0x21de62d6271b200"
+								}
+								let methodStamp = msg.data.replace('0x', '').substr(0, 8)
+								let dataArgs = msg.data.replace('0x', '').substr(8)
+								
+								vueComp.loadingNonce = true
+
+								vueComp.eth.web3.getNonce(msg.from).then(nonce =>
+								{
+									vueComp.loadingNonce = false
+									
+									let abiArgs = [dataArgs]
+
+									vueComp.command = {
+										method: 'signContractCall',
+										params: JSON.stringify({
+											wallet: {
+												address: msg.from,
+												blockchain: 'eth',
+												chainId,
+											},
+											tx: {
+												...msg,
+												nonce,
+												gas: undefined,
+												gasLimit: msg.gas,
+											},
+										}),
+										callback: result =>
+										{
+											let signedTx = result as string
+											console.log(`0x instant: got signed tx ${signedTx}`)
+											// return res(respond('0x298a400024aecc13bac2801876dd7b4b0d9f984e6bf40905611e544fcbe7d2fb'))
+
+											vueComp.eth.pushTx(signedTx).then(txHash =>
+											{
+												return res(respond(txHash))
+											})
+										}
+									}
+								})
+
+								// let txHash = ''
+								// return respond(txHash)
+							})
 						}
 
 						return provider.send(payload, callback)
@@ -121,10 +231,21 @@ export default Vue.extend({
 				}
 			}, 'div#zrx')
 		}
+	},
+	components: {
+		RemoteCall,
 	}
 })
 </script>
 
 <style lang="scss" scoped>
+
+.hint-item {
+	justify-content: space-around;
+    display: flex;
+    -webkit-box-pack: justify;
+    width: 100%;
+	margin-bottom: 20px;
+}
 
 </style>
