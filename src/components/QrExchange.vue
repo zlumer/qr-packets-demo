@@ -1,13 +1,13 @@
 <template>
-<div class="container">
+<div class="container" :style="{height: `calc(${qrWidth} * 1.1)`}">
 	<div
 		class="qr"
 		:class="{ 'qr-twostep': twoStep }"
 		:style="{ width: qrWidth }"
 	>
 		<div
-			v-if="twoStep"
-			style="text-align: right; z-index: 3; margin-right:10%; top:0;"
+			v-show="twoStep && !scanning"
+			style="text-align: right; z-index: 3; margin-right:10%; margin-bottom:5%;"
 		><a
 				v-if="!scanning"
 				href="#"
@@ -15,7 +15,7 @@
 			>Scan QR -&gt;</a></div>
 
 		<Qr
-			:class="{ 'qrimg-twostep': twoStep, visible: !scanning, hidden: scanning }"
+			:class="{ 'qrimg-twostep': twoStep, visible: twoStep && !scanning, hidden: twoStep && scanning }"
 			:qrs="qrs"
 		/>
 	</div>
@@ -24,14 +24,18 @@
 		:style="{ width: readerWidth }"
 	>
 		<div
-			v-if="twoStep"
+			v-show="twoStep && scanning"
 			style="margin-bottom: 5%;"
 		><a
 				v-if="scanning"
 				href="#"
 				@click.stop.prevent="scanning = false"
 			>&lt;- Show QR</a></div>
-		<QrReader ref="reader" v-on:qr="onQr"></QrReader>
+		<QrReader
+			ref="reader"
+			v-show="!twoStep || scanning"
+			@qr="onQr"
+		></QrReader>
 	</div>
 </div>
 </template>
@@ -118,9 +122,9 @@ a {
     // opacity: 0.7;
 }
 .qrimg-twostep {
-	width: 120%;
-	height: 120%;
-	margin: -10%;
+	width: 100%;
+	height: 100%;
+	// margin: 0%;
 	
 	transition: visibility 0s linear 0.2s, opacity 0.2s ease-in-out;
 }
