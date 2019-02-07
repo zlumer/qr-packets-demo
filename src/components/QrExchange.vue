@@ -1,6 +1,5 @@
 <template>
 <div class="container">
-	<!-- <span>{{intro}}</span> -->
 	<div
 		class="qr"
 		:class="{ 'qr-twostep': twoStep }"
@@ -15,8 +14,6 @@
 				@click.stop.prevent="scanning = true"
 			>Scan QR -&gt;</a></div>
 
-
-			<!-- v-show="!twoStep || !scanning" -->
 		<Qr
 			:class="{ 'qrimg-twostep': twoStep, visible: !scanning, hidden: scanning }"
 			:qrs="qrs"
