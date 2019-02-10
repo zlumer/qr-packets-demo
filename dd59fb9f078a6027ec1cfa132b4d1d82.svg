@@ -1,0 +1,53 @@
+
+<svg width="2640px" height="1106px" viewBox="0 0 2640 1106" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+        <polygon id="path-1" points="2647.3177 121.434415 2647.3177 1105.71689 0.323090738 989.716887 0.323090738 0.434414868"></polygon>
+        <linearGradient x1="55.2259033%" y1="-4.57752033%" x2="44.9257506%" y2="101.747886%" id="linearGradient-3">
+            <stop stop-color="#98C7EA" offset="0%"></stop>
+            <stop stop-color="#67A2DD" offset="99.73%"></stop>
+        </linearGradient>
+        <linearGradient x1="-0.0285087719%" y1="50.0082313%" x2="100.027632%" y2="50.0082313%" id="linearGradient-4">
+            <stop stop-color="#98C7EA" offset="0%"></stop>
+            <stop stop-color="#69A3DD" offset="96.49%"></stop>
+            <stop stop-color="#67A2DD" offset="99.73%"></stop>
+        </linearGradient>
+        <linearGradient x1="52.4952892%" y1="12.0194573%" x2="47.1148116%" y2="117.03137%" id="linearGradient-5">
+            <stop stop-color="#98C7EA" offset="0%"></stop>
+            <stop stop-color="#69A3DD" offset="96.49%"></stop>
+            <stop stop-color="#67A2DD" offset="99.73%"></stop>
+        </linearGradient>
+        <linearGradient x1="0.00221153846%" y1="50.0454315%" x2="100.007572%" y2="50.0454315%" id="linearGradient-6">
+            <stop stop-color="#98C7EA" offset="0%"></stop>
+            <stop stop-color="#67A2DD" offset="99.73%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="ColdCrypto-Ready-Wide" transform="translate(0.000000, -2146.000000)">
+            <g id="Block4" transform="translate(-4.000000, 2146.000000)">
+                <g id="Block4-BG">
+                    <polygon id="Rectangle" fill="#E6EAEE" fill-rule="nonzero" points="1 932.388889 2647 856 2647 1032.76768 1 1106"></polygon>
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <use id="Rectangle" fill="#F1F4F6" fill-rule="nonzero" xlink:href="#path-1"></use>
+                    <g id="6564" opacity="0.470191592" mask="url(#mask-2)">
+                        <g transform="translate(-636.000000, 258.000000)" id="Path">
+                            <polygon fill="url(#linearGradient-3)" points="1384.62952 818 1078 329.195122 1231.31476 156.949593 1384.62952 30.9243902 1702.56641 0 2240.9972 138.660976 2385 478.496748 2127.25827 818 1942.68193 818"></polygon>
+                            <polygon fill="url(#linearGradient-4)" points="1006 331 1078.66667 637.333333 1386 821 1078.66667 331"></polygon>
+                            <polygon fill="#BFCFEF" points="1386 31 1111 133 1006 330 1078.66667 330"></polygon>
+                            <polygon fill="#FFFFFF" points="1618 371 1961.99689 270.041968 2242.45084 140 2474 255.332851 2216.16867 331.552822"></polygon>
+                            <polygon fill="#5C6B93" points="2128 821 2215.66667 331 2474 255 2474 538 2412.66667 821"></polygon>
+                            <polygon fill="#5C6B93" opacity="0.46" points="1705 819.308185 1618.55949 368 1499 837"></polygon>
+                            <polygon fill="#FFFFFF" points="1151 260.856751 1269.92844 313.427002 1269.92844 410.249428 1369.53518 603.228833 1413.50872 728 1522.77631 369.657208 1498.79074 234.238902 1619.05171 120.78032 1705 1 1386.52495 31.9432494"></polygon>
+                            <polygon fill="#EAEEF9" points="1959.86782 268 1702 0 2240 138.655087"></polygon>
+                            <polygon fill="url(#linearGradient-5)" points="2272 508.117141 2472.8922 345 3244.86372 508.117141 3565.49299 675.894772 3790 793.072799 3719.48817 848 2320.56004 848"></polygon>
+                            <polygon fill="#EAEEF9" points="3567 674 3245.99717 506.169014 2473.12625 343 2272 506.169014 3183.39496 630.377264 3212.03214 634.373239"></polygon>
+                            <polygon fill="#CEDBFF" points="1032.20059 440 251 597.373737 556.62935 575.838384 664.048588 597.373737 698.30302 604 748.85325 597.373737 1264 597.373737"></polygon>
+                            <polygon fill="url(#linearGradient-6)" points="0 819 249.033654 596.233503 554.998798 574.621827 696.828125 602.883249 1036.08654 557 1263.14663 596.233503 1385 819"></polygon>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
