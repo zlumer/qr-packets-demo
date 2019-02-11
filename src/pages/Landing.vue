@@ -26,6 +26,7 @@
 					<li>Offline and online payments</li>
 					<li>It's free</li>
 				</ul>
+				<a href="https://itunes.apple.com/ru/app/coldcrypto/id1447853999?l=en&mt=8"><div class="btn-appstore"></div></a>
 				</div>
 				<div class="preview"></div>
 			</div>
@@ -224,6 +225,13 @@ h5 {
 
 .slide-1 .content {
   padding-left: 1rem;
+}
+
+.slide-1 .btn-appstore {
+	background: url("../../static/img/btn_appstore.svg") no-repeat center right;
+	background-size: contain;
+	width: 10rem;
+	height: 4rem;
 }
 
 .slide-1 .preview {
