@@ -34,10 +34,10 @@
 				<h4>Sign in to your wallet below</h4>
 				<div class="actions">
 					<router-link to="/login">
-						<button class="btn btn-primary" data-cy="login-qr">Airgapped login</button>
+						<button class="btn btn-primary" data-cy="login-qr">Airplane</button>
 					</router-link>
 					<router-link to="/webrtc">
-						<button class="btn btn-secondary" data-cy="login-webrtc">Online login</button>
+						<button class="btn btn-secondary" data-cy="login-webrtc">Online</button>
 					</router-link>
 				</div>
 			</div>
