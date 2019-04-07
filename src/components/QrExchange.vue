@@ -1,5 +1,5 @@
 <template>
-<div class="container" :style="{height: `calc(${qrWidth} * 1.1)`}">
+<div class="container" :style="{height: `calc(${qrWidth} * 1.1)`, 'max-width': '80vh' }">
 	<div
 		class="qr"
 		:class="{ 'qr-twostep': twoStep }"
