@@ -197,7 +197,7 @@ export default Vue.extend({
 			
 			return this.tokenInfo.name
 		},
-		tokenDecimals : function()
+		tokenDecimals: function()
 		{
 			if (!this.validToken || !this.tokenInfo || this.tokenInfo.notatoken)
 				return NaN
