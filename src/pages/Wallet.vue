@@ -24,6 +24,14 @@
 						Transfer ERC20
 					</button>
 				</router-link>
+				<router-link
+					v-if="blockchain == 'eos'"
+					:to="{name:'eostok', query:{ chainId: wallet.chainId }}"
+				>
+					<button class="blue-button">
+						Send tokens
+					</button>
+				</router-link>
 			</div>
 			<div class="column column-info">
 				<h1>{{blockchain}} Wallet</h1>
@@ -78,6 +86,7 @@ export default Vue.extend({
 				newtx: `Send ${this.blockchain.toUpperCase()}`,
 				erc20: 'Send tokens',
 				pushtx: 'Push TX',
+				eostok: `Send tokens`,
 			}
 			return headers[this.$route.name as keyof typeof headers] || ''
 		},

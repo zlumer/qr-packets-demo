@@ -8,6 +8,7 @@ import Pay from "./pages/Pay.vue"
 import Instant0x from "./pages/Instant0x.vue"
 import TransferHoc from "./pages/blockchain/TransferHoc.vue"
 import EthTokens from "./pages/blockchain/EthTokens.vue"
+import EosTokens from "./pages/blockchain/EosTokens.vue"
 import PushTxVue from "./pages/PushTx.vue"
 import WebrtcVue from "./pages/Webrtc.vue"
 
@@ -100,6 +101,12 @@ export function createRouter(store: Store)
 						path: 'erc20',
 						name: 'erc20',
 						component: EthTokens,
+						meta: { ...metaLayout('app'), popup: true },
+					},
+					{
+						path: 'eostok',
+						name: 'eostok',
+						component: EosTokens,
 						meta: { ...metaLayout('app'), popup: true },
 					},
 					{
