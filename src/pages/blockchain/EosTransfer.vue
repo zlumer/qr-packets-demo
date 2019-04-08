@@ -108,7 +108,7 @@ export default (Vue as VueWithProps<{ $refs: TRefs }>).extend({
 		txJson: function()
 		{
 			console.log(this.preparedTx)
-			return JSON.stringify({ transaction: this.preparedTx, method: this.eosMethod, wallet: this.wallet })
+			return JSON.stringify({ tx: { transaction: this.preparedTx, method: this.eosMethod }, wallet: this.wallet })
 		},
 		eos: function()
 		{
