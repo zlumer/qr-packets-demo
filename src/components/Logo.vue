@@ -1,7 +1,7 @@
 <template>
 	<!--<a class="css-1fdxz4i" href="/cold/">-->
 		<router-link to="/" class="logo-link">
-            <h1 :style="{ color: hcolor }">Cold Crypto<sup>beta mode</sup></h1>
+            <h1 :style="{ color: hcolor }">Ice Wallet<sup>beta mode</sup></h1>
 		</router-link>
 	<!--</a>-->
 </template>
@@ -41,7 +41,7 @@ h1 {
 }
 
 sup {
-	color: rgb(242, 73, 77);
+	color: #ff4057;
     font-size: 0.5rem;
     text-transform: lowercase;
     vertical-align: super;

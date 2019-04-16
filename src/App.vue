@@ -37,7 +37,8 @@ export default App
 }
 html,
 body {
-    font-family: 'GothamPro', 'Lato', 'Arial', sans-serif;
+    // font-family: 'GothamPro', 'Lato', 'Arial', sans-serif;
+    font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
     margin: 0;
     font-size: 16px;
 }

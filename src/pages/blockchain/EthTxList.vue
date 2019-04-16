@@ -45,8 +45,8 @@
 .self-tag {
 	padding: 4px;
 	border-radius: 4px;
-    color: #00BCF9;
-	background: rgba(179, 236, 254, 0.6);
+    color: #c19191;
+	background: #f0e9e9;
 }
 table {
 	border-collapse: collapse;
@@ -70,7 +70,7 @@ table {
 		text-align: center;
 	}
 	th {
-		color: #457b9d;
+		color: #c19191;
 		padding: .5rem;
 	}
 	tr {

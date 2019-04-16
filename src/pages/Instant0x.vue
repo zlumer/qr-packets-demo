@@ -8,7 +8,7 @@
 		</div>
 		<!-- <button @click="renderZrx()">render</button> -->
 
-		<div v-if="loginProcess" class="hint-item">Scan this QR code with Cold Crypto mobile app to login</div>
+		<div v-if="loginProcess" class="hint-item">Scan this QR code with Ice Wallet mobile app to login</div>
 		<remote-call
 			v-if="command"
 			qr-width="350px"
@@ -127,7 +127,7 @@ export default Vue.extend({
 			zeroExInstant.render({
 				orderSource: 'https://api.radarrelay.com/0x/v2/',
 				networkId: chainId,
-				walletDisplayName: 'Cold Crypto',
+				walletDisplayName: 'Ice Wallet',
 				provider: {
 					async send(payload, callback)
 					{

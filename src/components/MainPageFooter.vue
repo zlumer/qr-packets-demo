@@ -1,7 +1,7 @@
 <template>
 	<header>
 		<div class="copyright">
-			© Cold Crypto 2018. All rights reserved. Version:
+			© Ice Wallet 2018. All rights reserved. Version:
 			<span class="version"><a :href="commitLink"><code>{{ version }}</code></a></span>
 			<div class="api">API by
 				<a href="https://etherscan.io/">Etherscan</a>,

@@ -1,7 +1,7 @@
 <template>
 	<white-popup
 		header="Airgapped Login"
-		subheader="Scan QR code with Cold Crypto mobile app to login"
+		subheader="Scan QR code with Ice Wallet mobile app to login"
 	>
 		<remote-call
 			intro=""

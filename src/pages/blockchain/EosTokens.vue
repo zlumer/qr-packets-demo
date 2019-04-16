@@ -281,7 +281,7 @@ export default Vue.extend({
 			this.tx = {
 				to: form.to,
 				amount,
-				memo: 'Cold Crypto token transfer',
+				memo: 'Ice Wallet token transfer',
 			}
 			this.loading = false
 		},

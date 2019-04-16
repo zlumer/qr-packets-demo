@@ -105,9 +105,9 @@ export default Vue.extend({
 	color: #160a2e;
 }
 .link.blue {
-	color: #00BCF9;
-	border-left: 3px solid #00BCF9;
-	background: rgba(179, 236, 254, 0.6);
+	color: #c19191;
+	border-left: 3px solid #c19191;
+	background: #f0e9e9;
 }
 .link .icon {
 	vertical-align: middle;

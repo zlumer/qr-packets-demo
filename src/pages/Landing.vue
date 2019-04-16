@@ -18,7 +18,7 @@
 			<div class="slide-1">
 			<div class="slide-wrapper">
 				<div class="content">
-				<h1>Cold Crypto is first mobile cold storage wallet</h1>
+				<h1>Ice Wallet is first mobile cold storage wallet</h1>
 				<h5>Why are we better?</h5>
 				<ul>
 					<li>Support of BTC, USDT, also ETH, ERC20 tokens, EOS and EOS tokens</li>
@@ -42,7 +42,7 @@
 				</div>
 			</div>
 			</div>
-			<div class="slide-2">
+			<!-- <div class="slide-2">
 			<div class="slide-wrapper">
 				<div class="slide-header">
 				<h2>Online Mode</h2>
@@ -61,21 +61,21 @@
 				</div>
 				<div class="slide-pic"></div>
 			</div>
-			</div>
+			</div> -->
 			<div class="info-block">
 			<div class="info-block-wrapper">
-				<div class="info-pic"></div>
+				<!-- <div class="info-pic"></div> -->
 				<div class="info-content">
 				<div class="info-header">
-					Currently Cold Crypto is only avaliable on iOS
+					Currently Ice Wallet is only avaliable on iOS
 				</div>
 				<div class="info-data">
 					<span>
-					To start using Cold Crypto please download
+					To start using Ice Wallet please download
 					<a href="#">Here</a>
 					</span>
 					<span>
-					And then download the Cold Crypto app
+					And then download the Ice Wallet app
 					<a href="#">Here</a>
 					</span>
 				</div>
@@ -85,7 +85,7 @@
 		</main>
 		<footer>
 			<div class="wrapper">
-			<div class="copy">The project by DUCATUR</div>
+			<div class="copy">The project by ICE WALLET</div>
 			<nav>
 				<a
 					v-for="link in links"
@@ -162,7 +162,7 @@ nav {
 }
 
 nav > a {
-  color: #3F83FE;
+  color: #8b5d5d;
   text-decoration: none;
   padding: 0 1vw;
   text-align: center;
@@ -171,7 +171,7 @@ nav > a {
 h1 {
   font-weight: normal;
   font-size: 2.64rem;
-  color: #3F83FE;
+  color: #8b5d5d;
   line-height: 3.34rem;
   text-transform: uppercase;
   letter-spacing: -.14rem;
@@ -179,7 +179,7 @@ h1 {
 }
 
 h2 {
-  color: #3F83FE;
+  color: #8b5d5d;
   font-size: 3rem;
   text-transform: uppercase;
   font-weight: normal;
@@ -188,12 +188,12 @@ h2 {
 h4 {
   font-size: 1.8rem;
   text-transform: uppercase;
-  color: #2C99ED;
+  color: #8b5d5d;
 }
 
 h5 {
   font-size: 1.6rem;
-  color: #1FAAFE;
+  color: #8b5d5d;
   text-transform: uppercase;
   margin: 0 0 1rem 0;
 }
@@ -207,7 +207,7 @@ h5 {
 }
 
 .slide-1 {
-  background: url('../../static/img/main_bg.svg') no-repeat top center;
+  /* background: url('../../static/img/main_bg.svg') no-repeat top center; */
   background-size: cover;
   width: 100vw;
   height: 95vh;
@@ -282,14 +282,14 @@ ul > li:before {
 }
 
 .btn-primary {
-  background: #2C99ED;
+  background: #c19191;
   color: #FFFFFF;
 }
 
 .btn-secondary {
   background: #FFFFFF;
-  border: 2px solid #2C99ED;
-  color: #2C99ED;
+  border: 2px solid #c19191;
+  color: #c19191;
 }
 
 .slide-2 {
@@ -325,7 +325,7 @@ ul > li:before {
 
 .slide-2 .content-label {
   font-size: 1.6rem;
-  color: #2C99ED;
+  color: #8b5d5d;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -414,7 +414,7 @@ ul > li:before {
 }
 
 .info-block .info-data a {
-  color: #2C99ED;
+  color: #8b5d5d;
   line-height: 1.6rem;
   text-decoration: none;
 }

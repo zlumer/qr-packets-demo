@@ -25,7 +25,7 @@ export default Vue.extend({
 
 .container {
 	min-height: 100vh;
-    background: linear-gradient(57deg, rgb(13, 13, 13) 0%, rgb(22, 10, 46) 100%);
+    background: #8b5d5d;
 }
 
 main {
