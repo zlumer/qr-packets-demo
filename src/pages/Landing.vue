@@ -185,7 +185,7 @@ h1 {
   margin: 2rem 0 1rem 0;
 }
 .logo .logo-text {
-  transform: scale(0.5);
+  transform: scale(0.4);
   transform-origin: left;
 }
 
