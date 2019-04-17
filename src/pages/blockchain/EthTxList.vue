@@ -45,7 +45,7 @@
 .self-tag {
 	padding: 4px;
 	border-radius: 4px;
-    color: #c19191;
+    color: #5ca0d3;
 	background: #f0e9e9;
 }
 table {
@@ -70,7 +70,7 @@ table {
 		text-align: center;
 	}
 	th {
-		color: #c19191;
+		color: #5ca0d3;
 		padding: .5rem;
 	}
 	tr {

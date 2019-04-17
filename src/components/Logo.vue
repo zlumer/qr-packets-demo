@@ -1,7 +1,7 @@
 <template>
 	<!--<a class="css-1fdxz4i" href="/cold/">-->
 		<router-link to="/" class="logo-link">
-            <h1 :style="{ color: hcolor }">Ice Wallet<sup>beta mode</sup></h1>
+            <h1 :style="{ color: hcolor }">Ice Wallet<sup v-if="beta">beta mode</sup></h1>
 		</router-link>
 	<!--</a>-->
 </template>
@@ -14,6 +14,10 @@ export default Vue.extend({
         black: {
             type: Boolean,
             default: false,
+        },
+        beta: {
+            type: Boolean,
+            default: true,
         }
     },
     computed: {

@@ -11,7 +11,7 @@
                         <text id="COLD-CRYPTO" fill="#000000" font-size="27">
                             <tspan x="5.4621582" y="46">ICE WALLET</tspan>
                         </text>
-                        <text id="Beta-mode" font-size="16" line-spacing="16" fill="#8b5d5d">
+                        <text id="Beta-mode" font-size="16" line-spacing="16" fill="#5ca0d3">
                             <tspan x="115" y="15">beta mode</tspan>
                         </text>
                     </g>

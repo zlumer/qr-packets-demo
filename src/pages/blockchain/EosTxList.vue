@@ -100,7 +100,7 @@ table {
 		padding: 1rem .5rem;
 	}
 	th {
-		color: #c19191;
+		color: #5ca0d3;
 		padding: .5rem;
 	}
 	tr {

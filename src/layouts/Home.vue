@@ -25,7 +25,7 @@ export default Vue.extend({
 
 .container {
 	min-height: 100vh;
-    background: #8b5d5d;
+    background: #5ca0d3;
 }
 
 main {

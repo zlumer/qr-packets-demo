@@ -105,8 +105,8 @@ export default Vue.extend({
 	color: #160a2e;
 }
 .link.blue {
-	color: #c19191;
-	border-left: 3px solid #c19191;
+	color: #5ca0d3;
+	border-left: 3px solid #5ca0d3;
 	background: #f0e9e9;
 }
 .link .icon {

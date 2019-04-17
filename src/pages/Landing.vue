@@ -3,7 +3,8 @@
 		<header>
 			<div class="wrapper">
 			<div class="logo">
-				<img src="img/header_logo.svg"/>
+        <!-- <h1 class="logo-text">ICE WALLET</h1> -->
+        <logo class="logo-text"/>
 			</div>
 			<nav>
 				<a
@@ -16,31 +17,33 @@
 		</header>
 		<main>
 			<div class="slide-1">
-			<div class="slide-wrapper">
-				<div class="content">
-				<h1>Ice Wallet is first mobile cold storage wallet</h1>
-				<h5>Why are we better?</h5>
-				<ul>
-					<li>Support of BTC, USDT, also ETH, ERC20 tokens, EOS and EOS tokens</li>
-					<li>Offline and online access</li>
-					<li>Offline and online payments</li>
-					<li>It's free</li>
-				</ul>
-				<a href="https://itunes.apple.com/ru/app/coldcrypto/id1447853999?l=en&mt=8"><div class="btn-appstore"></div></a>
-				</div>
-				<div class="preview"></div>
-			</div>
-			<div class="actions-group slide-wrapper">
-				<h4>Sign in to your wallet below</h4>
-				<div class="actions">
-					<router-link to="/login">
-						<button class="btn btn-primary" data-cy="login-qr">Airplane</button>
-					</router-link>
-					<router-link to="/webrtc">
-						<button class="btn btn-secondary" data-cy="login-webrtc">Online</button>
-					</router-link>
-				</div>
-			</div>
+        <div class="slide-wrapper">
+          <div class="content">
+          <h1>Mobile cold storage wallet.</h1>
+          <!-- <h5>Why are we better?</h5> -->
+          <ul>
+            <li>Bitcoin ($BTC) and OMNI/Tether ($USDT)</li>
+            <li>Ethereum ($ETH) and ERC20 tokens</li>
+            <li>EOS ($EOS) and EOS tokens</li>
+            <li>Offline and online access</li>
+            <li>Offline and online payments</li>
+            <li>Completely free to use</li>
+          </ul>
+          <a href="https://itunes.apple.com/ru/app/coldcrypto/id1447853999?l=en&mt=8"><div class="btn-appstore"></div></a>
+          </div>
+          <div class="preview"></div>
+        </div>
+        <div class="actions-group slide-wrapper">
+          <h4>Sign in to your wallet below</h4>
+          <div class="actions">
+            <router-link to="/login">
+              <button class="btn btn-primary" data-cy="login-qr">Airgapped</button>
+            </router-link>
+            <router-link to="/webrtc">
+              <button class="btn btn-secondary" data-cy="login-webrtc">Online</button>
+            </router-link>
+          </div>
+        </div>
 			</div>
 			<!-- <div class="slide-2">
 			<div class="slide-wrapper">
@@ -101,6 +104,7 @@
 <script lang="ts">
 import Vue from 'src/vue-ts'
 import { reset } from 'src/webrtcsingleton'
+import Logo from 'src/components/LogoIce.vue'
 
 export default Vue.extend({
 	data()
@@ -116,7 +120,10 @@ export default Vue.extend({
 	beforeMount()
 	{
 		reset(true)
-	}
+  },
+  components: {
+    Logo,
+  }
 })
 </script>
 
@@ -162,7 +169,7 @@ nav {
 }
 
 nav > a {
-  color: #8b5d5d;
+  color: #5ca0d3;
   text-decoration: none;
   padding: 0 1vw;
   text-align: center;
@@ -171,15 +178,19 @@ nav > a {
 h1 {
   font-weight: normal;
   font-size: 2.64rem;
-  color: #8b5d5d;
+  color: #5ca0d3;
   line-height: 3.34rem;
-  text-transform: uppercase;
-  letter-spacing: -.14rem;
+  // text-transform: uppercase;
+  // letter-spacing: -.14rem;
   margin: 2rem 0 1rem 0;
+}
+.logo .logo-text {
+  transform: scale(0.5);
+  transform-origin: left;
 }
 
 h2 {
-  color: #8b5d5d;
+  color: #5ca0d3;
   font-size: 3rem;
   text-transform: uppercase;
   font-weight: normal;
@@ -188,14 +199,15 @@ h2 {
 h4 {
   font-size: 1.8rem;
   text-transform: uppercase;
-  color: #8b5d5d;
+  color: #5ca0d3;
 }
 
 h5 {
   font-size: 1.6rem;
-  color: #8b5d5d;
+  color: #5ca0d3;
   text-transform: uppercase;
   margin: 0 0 1rem 0;
+  font-weight: normal;
 }
 
 .slide-wrapper {
@@ -225,6 +237,7 @@ h5 {
 
 .slide-1 .content {
   padding-left: 1rem;
+  width: 100%;
 }
 
 .slide-1 .btn-appstore {
@@ -237,7 +250,7 @@ h5 {
 .slide-1 .preview {
   background: url("../../static/img/main_phone.svg") no-repeat center right;
   background-size: contain;
-  width: 50vw;
+  width: 30vw;
   height: 60vh;
 }
 
@@ -253,7 +266,7 @@ h5 {
 }
 
 ul {
-  font-size: .85rem;
+  // font-size: .85rem;
   margin: 0;
   padding-left: 1rem;
 }
@@ -261,6 +274,7 @@ ul {
 ul > li {
   margin: .5rem 0;
   list-style: none;
+  line-height: 1.5rem;
 }
 
 ul > li:before {
@@ -270,7 +284,7 @@ ul > li:before {
   width: 1rem;
   height: 1rem;
   margin-left: -1rem;
-  margin-top: .2rem;
+  margin-top: .5rem;
 }
 
 .btn {
@@ -282,14 +296,14 @@ ul > li:before {
 }
 
 .btn-primary {
-  background: #c19191;
+  background: #5ca0d3;
   color: #FFFFFF;
 }
 
 .btn-secondary {
   background: #FFFFFF;
-  border: 2px solid #c19191;
-  color: #c19191;
+  border: 2px solid #5ca0d3;
+  color: #5ca0d3;
 }
 
 .slide-2 {
@@ -325,7 +339,7 @@ ul > li:before {
 
 .slide-2 .content-label {
   font-size: 1.6rem;
-  color: #8b5d5d;
+  color: #5ca0d3;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -414,7 +428,7 @@ ul > li:before {
 }
 
 .info-block .info-data a {
-  color: #8b5d5d;
+  color: #5ca0d3;
   line-height: 1.6rem;
   text-decoration: none;
 }
