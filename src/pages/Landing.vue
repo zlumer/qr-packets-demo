@@ -1,5 +1,5 @@
 <template>
-	<body>
+	<div>
 		<header>
 			<div class="wrapper">
 			<div class="logo">
@@ -98,7 +98,7 @@
 			</nav>
 			</div>
 		</footer>
-	</body>
+	</div>
 </template>
 
 <script lang="ts">
@@ -229,6 +229,7 @@ h5 {
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
+  max-width: 100%;
 }
 
 .slide-1 .slide-wrapper {
