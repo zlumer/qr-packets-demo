@@ -18,23 +18,30 @@
 		<main>
 			<div class="slide-1">
         <div class="slide-wrapper">
+          <div class="preview"></div>
           <div class="content">
-          <h1>Mobile cold storage wallet.</h1>
+          <!-- <h1>The future of cold storage.</h1> -->
+          <h1>The future of cold storage</h1>
           <!-- <h5>Why are we better?</h5> -->
-          <ul>
+          <!-- <ul>
             <li>Bitcoin ($BTC) and OMNI/Tether ($USDT)</li>
             <li>Ethereum ($ETH) and ERC20 tokens</li>
             <li>EOS ($EOS) and EOS tokens</li>
             <li>Offline and online access</li>
             <li>Offline and online payments</li>
             <li>Completely free to use</li>
-          </ul>
+          </ul> -->
+          <div class="description-text">
+            <!-- <p><strong>ICE wallet</strong> brings together the security of hardware and the usability of online wallets.</p>
+            <p>Trustless custody solution (cold crypto storage) on any mobile device with the ability to interact with DEXs, DApps and payments.</p> -->
+            <p><strong>ICE wallet</strong> brings together the security of hardware and the usability of online wallets.</p>
+            <p>Trustless custody solution (cold crypto storage) on any mobile device with the ability to interact with DEXs, DApps and payments.</p>
+          </div>
           <a href="https://itunes.apple.com/ru/app/coldcrypto/id1447853999?l=en&mt=8"><div class="btn-appstore"></div></a>
           </div>
-          <div class="preview"></div>
         </div>
         <div class="actions-group slide-wrapper">
-          <h4>Sign in to your wallet below</h4>
+          <h4>Sign in to your wallet:</h4>
           <div class="actions">
             <router-link to="/login">
               <button class="btn btn-primary" data-cy="login-qr">Airgapped</button>
@@ -44,46 +51,6 @@
             </router-link>
           </div>
         </div>
-			</div>
-			<!-- <div class="slide-2">
-			<div class="slide-wrapper">
-				<div class="slide-header">
-				<h2>Online Mode</h2>
-				<div class="content-label">
-					<div class="label-label-img secure"></div>
-					<span>Secure P2P connection</span>
-				</div>
-				</div>
-				<div class="slide-pic"></div>
-			</div>
-			</div>
-			<div class="slide-3">
-			<div class="slide-wrapper">
-				<div class="slide-header">
-				<h2>Offline Mode</h2>
-				</div>
-				<div class="slide-pic"></div>
-			</div>
-			</div> -->
-			<div class="info-block">
-			<div class="info-block-wrapper">
-				<!-- <div class="info-pic"></div> -->
-				<div class="info-content">
-				<div class="info-header">
-					Currently Ice Wallet is only avaliable on iOS
-				</div>
-				<div class="info-data">
-					<span>
-					To start using Ice Wallet please download
-					<a href="#">Here</a>
-					</span>
-					<span>
-					And then download the Ice Wallet app
-					<a href="#">Here</a>
-					</span>
-				</div>
-				</div>
-			</div>
 			</div>
 		</main>
 		<footer>
@@ -192,20 +159,21 @@ h1 {
 h2 {
   color: #5ca0d3;
   font-size: 3rem;
-  text-transform: uppercase;
+  // text-transform: uppercase;
   font-weight: normal;
 }
 
 h4 {
   font-size: 1.8rem;
-  text-transform: uppercase;
+  // text-transform: uppercase;
   color: #5ca0d3;
+  font-weight: normal;
 }
 
 h5 {
   font-size: 1.6rem;
   color: #5ca0d3;
-  text-transform: uppercase;
+  // text-transform: uppercase;
   margin: 0 0 1rem 0;
   font-weight: normal;
 }
@@ -222,7 +190,7 @@ h5 {
   /* background: url('../../static/img/main_bg.svg') no-repeat top center; */
   background-size: cover;
   width: 100vw;
-  height: 95vh;
+  // height: 95vh;
   padding: 2rem;
   box-sizing: border-box;
   margin-top: 1rem;
@@ -241,6 +209,15 @@ h5 {
   width: 100%;
 }
 
+.slide-1 .content h1 {
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.description-text {
+  font-size: 1.2rem;
+}
+
 .slide-1 .btn-appstore {
 	background: url("../../static/img/btn_appstore.svg") no-repeat center right;
 	background-size: contain;
@@ -249,10 +226,12 @@ h5 {
 }
 
 .slide-1 .preview {
-  background: url("../../static/img/main_phone.svg") no-repeat center right;
+  background: url("../../static/img/main_phone.svg") no-repeat center left;
   background-size: contain;
   width: 30vw;
-  height: 60vh;
+  // height: 60vh;
+  min-height: 60vh;
+  max-width: 30vw;
 }
 
 .slide-1 .actions-group {
@@ -418,7 +397,7 @@ ul > li:before {
   font-size: 1.2rem;
   line-height: 2rem;
   color: #4A4A4A;
-  text-transform: uppercase;
+  // text-transform: uppercase;
 }
 
 .info-block .info-data {
