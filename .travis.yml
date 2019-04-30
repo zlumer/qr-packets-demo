@@ -33,3 +33,16 @@ jobs:
         local-dir: dist
         on:
           branch: master
+    - stage: icewall build
+      script:
+        - POI_PATH=/ yarn build
+        - git show -s --pretty=%H > ./dist/gitrev
+      deploy:
+        provider: pages
+        skip-cleanup: true
+        github-token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
+        keep-history: true
+        target-branch: gh-pages-ice
+        local-dir: dist
+        on:
+          branch: ice-wall
