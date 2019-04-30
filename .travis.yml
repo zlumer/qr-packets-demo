@@ -5,7 +5,7 @@ cache: yarn
 services:
   - docker
 install:
-  - yarn
+  - yarn --ignore-engines
   - yarn patch-package
 jobs:
   include:
