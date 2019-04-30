@@ -10493,14 +10493,16 @@ write-file-atomic@^2.0.0, write-file-atomic@^2.1.0:
     imurmurhash "^0.1.4"
     signal-exit "^3.0.2"
 
-wrtc@^0.3.2:
-  version "0.3.2"
-  resolved "https://registry.yarnpkg.com/wrtc/-/wrtc-0.3.2.tgz#9f30207d0b1b03e82f1cbe5973a790121d2dd899"
-  integrity sha512-bCeN3TMFO0VSbfoQM37gCbE47lQjG1YsR3sfzZffT4KNudoHNGwwAPRNa6cwLOh9xfGwQK87SgfaFTWPA+lQmQ==
+wrtc@^0.3.7:
+  version "0.3.7"
+  resolved "https://registry.yarnpkg.com/wrtc/-/wrtc-0.3.7.tgz#2279f1cb3a83573e77b3d9b7e720071fab2ae4af"
+  integrity sha512-mDFNFqAB+3IYVKlP15vpGD0EhXjsQlj/GLNje4KLpClLSq8pyTG0xqJFoU+Oq43XvDIUMmIJ/r1aNfrjT7KUQw==
   dependencies:
     nan "^2.3.2"
     node-cmake "2.3.2"
     node-pre-gyp "0.11.x"
+  optionalDependencies:
+    domexception "^1.0.1"
 
 ws@^3.0.0:
   version "3.3.3"
