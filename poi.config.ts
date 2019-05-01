@@ -20,7 +20,7 @@ const options: Options = {
   html: {
     title: 'Ice Wallet · Secure Crypto Wallet for ETH and EOS',
     description: 'Secure cold wallet for crypto assets. Store your crypto safely on any cheap mobile phone.',
-    favicon: 'favicon.ico',
+    favicon: 'static/favicon.ico',
   },
   publicPath: path,
   define: {
