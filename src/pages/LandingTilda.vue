@@ -499,7 +499,7 @@
               data-field-heightunits-value
               data-field-widthunits-value
               data-fields="top,left,width,container,axisx,axisy,widthunits,leftunits,topunits"
-              style="top: 116px; left: 479.5px; width: 560px;"
+              style="top: 116px; width: 560px;"
             >
               <div class="tn-atom" field="tn_text_1475084694739">Download ICE WALLET now!</div>
             </div>
@@ -526,7 +526,7 @@
               data-field-heightunits-value
               data-field-widthunits-value
               data-fields="img,width,filewidth,fileheight,top,left,container,axisx,axisy,widthunits,leftunits,topunits"
-              style="left: 662.5px; top: 247px; width: 197px;"
+              style="top: 247px; width: 197px;"
             >
               <a class="tn-atom" href="https://www.google.com/">
                 <img
@@ -562,7 +562,7 @@
               data-field-heightunits-value
               data-field-widthunits-value
               data-fields="top,left,width,container,axisx,axisy,widthunits,leftunits,topunits"
-              style="top: 175px; left: 479.5px; width: 560px;"
+              style="top: 175px; width: 560px;"
             >
               <div class="tn-atom" field="tn_text_1475084802744">
                 <br>ICE WALLET is available for free on the App Store.
@@ -746,7 +746,7 @@ export default Vue.extend({
   #rec101602511 .tn-elem[data-elem-id="1475084694739"] .tn-atom {
     color: #000000;
     font-size: 32px;
-    font-family: "Arial";
+    font-family:'IBM Plex Sans',Arial,sans-serif;
     line-height: 1.55;
     font-weight: 700;
     background-position: center center;
@@ -756,7 +756,7 @@ export default Vue.extend({
   @media screen and (max-width: 1199px) {
     #rec101602511 .tn-elem[data-elem-id="1475084694739"] {
       top: 116px;
-      left: calc(50% - 480px + 250px);
+      left: calc(50% - 280px);
       width: 460px;
     }
     #rec101602511 .tn-elem[data-elem-id="1475084694739"] .tn-atom {
@@ -766,13 +766,13 @@ export default Vue.extend({
   @media screen and (max-width: 959px) {
     #rec101602511 .tn-elem[data-elem-id="1475084694739"] {
       top: 116px;
-      left: calc(50% - 320px + 90px);
+      /* left: calc(50% - 320px + 90px); */
     }
   }
   @media screen and (max-width: 639px) {
     #rec101602511 .tn-elem[data-elem-id="1475084694739"] {
       top: 115px;
-      left: calc(50% - 240px + 10px);
+      /* left: calc(50% - 240px + 10px); */
     }
     #rec101602511 .tn-elem[data-elem-id="1475084694739"] .tn-atom {
       font-size: 26px;
@@ -781,7 +781,7 @@ export default Vue.extend({
   @media screen and (max-width: 479px) {
     #rec101602511 .tn-elem[data-elem-id="1475084694739"] {
       top: 115px;
-      left: calc(50% - 160px + 10px);
+      /* left: calc(50% - 160px + 10px); */
       width: 300px;
     }
   }
@@ -799,25 +799,25 @@ export default Vue.extend({
   @media screen and (max-width: 1199px) {
     #rec101602511 .tn-elem[data-elem-id="1475084724009"] {
       top: 239px;
-      left: calc(50% - 480px + 277px);
+      /* left: calc(50% - 480px + 277px); */
     }
   }
   @media screen and (max-width: 959px) {
     #rec101602511 .tn-elem[data-elem-id="1475084724009"] {
       top: 239px;
-      left: calc(50% - 320px + 117px);
+      /* left: calc(50% - 320px + 117px); */
     }
   }
   @media screen and (max-width: 639px) {
     #rec101602511 .tn-elem[data-elem-id="1475084724009"] {
       top: 225px;
-      left: calc(50% - 240px + 142px);
+      /* left: calc(50% - 240px + 142px); */
     }
   }
   @media screen and (max-width: 479px) {
     #rec101602511 .tn-elem[data-elem-id="1475084724009"] {
       top: 258px;
-      left: calc(50% - 160px + 62px);
+      /* left: calc(50% - 160px + 62px); */
     }
   }
   #rec101602511 .tn-elem[data-elem-id="1475084802744"] {
@@ -831,7 +831,7 @@ export default Vue.extend({
   #rec101602511 .tn-elem[data-elem-id="1475084802744"] .tn-atom {
     color: #000000;
     font-size: 16px;
-    font-family: "Arial";
+    font-family:'IBM Plex Sans',Arial,sans-serif;
     line-height: 1.55;
     font-weight: 400;
     background-position: center center;
@@ -841,7 +841,7 @@ export default Vue.extend({
   @media screen and (max-width: 1199px) {
     #rec101602511 .tn-elem[data-elem-id="1475084802744"] {
       top: 172px;
-      left: calc(50% - 480px + 250px);
+      /* left: calc(50% - 480px + 250px); */
       width: 460px;
     }
     #rec101602511 .tn-elem[data-elem-id="1475084802744"] .tn-atom {
@@ -851,13 +851,13 @@ export default Vue.extend({
   @media screen and (max-width: 959px) {
     #rec101602511 .tn-elem[data-elem-id="1475084802744"] {
       top: 172px;
-      left: calc(50% - 320px + 90px);
+      /* left: calc(50% - 320px + 90px); */
     }
   }
   @media screen and (max-width: 639px) {
     #rec101602511 .tn-elem[data-elem-id="1475084802744"] {
       top: 166px;
-      left: calc(50% - 240px + 10px);
+      /* left: calc(50% - 240px + 10px); */
     }
     #rec101602511 .tn-elem[data-elem-id="1475084802744"] .tn-atom {
       font-size: 12px;
@@ -867,7 +867,7 @@ export default Vue.extend({
   @media screen and (max-width: 479px) {
     #rec101602511 .tn-elem[data-elem-id="1475084802744"] {
       top: 166px;
-      left: calc(50% - 160px + 10px);
+      /* left: calc(50% - 160px + 10px); */
       width: 300px;
     }
   }
