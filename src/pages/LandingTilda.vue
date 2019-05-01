@@ -67,7 +67,7 @@
                         field="descr"
                       >
                         <div
-                          style="font-size:20px;line-height:14px;color:#000000;"
+                          style="font-size:20px;line-height:20px;color:#000000;"
                           data-customstyle="yes"
                         >The first mobile cold storage application with online and offline modes.</div>
                       </div>
@@ -661,7 +661,7 @@ export default Vue.extend({
 </script>
 
 <style>
-@media screen and (min-width: 980px) {
+  @media screen and (min-width: 980px) {
     .t-records {
       opacity: 0;
     }
@@ -870,5 +870,8 @@ export default Vue.extend({
       /* left: calc(50% - 160px + 10px); */
       width: 300px;
     }
+  }
+  .t107__width {
+	max-width: 80vw !important;
   }
 </style>
