@@ -326,7 +326,7 @@
           <div class="t-container">
             <div class="t490__col t-col t-col_4 t-align_center t-item">
               <img
-                src="../../static/index_files/square6.png"
+                src="../../static/index_files/easy.png"
                 data-original="https://static.tildacdn.com/tild3063-3762-4665-b230-396365616135/square6.png"
                 class="t490__img t-img loaded"
                 imgfield="li_img__1476968690512"
@@ -342,7 +342,7 @@
             </div>
             <div class="t490__col t-col t-col_4 t-align_center t-item">
               <img
-                src="../../static/index_files/square5.png"
+                src="../../static/index_files/qr.png"
                 data-original="https://static.tildacdn.com/tild6439-6432-4031-b335-656366356331/square5.png"
                 class="t490__img t-img loaded"
                 imgfield="li_img__1476968700508"
@@ -358,7 +358,7 @@
             </div>
             <div class="t490__col t-col t-col_4 t-align_center t-item">
               <img
-                src="../../static/index_files/square2.png"
+                src="../../static/index_files/crypto.png"
                 data-original="https://static.tildacdn.com/tild3136-3666-4338-b736-626238373866/square2.png"
                 class="t490__img t-img loaded"
                 imgfield="li_img__1476968722790"
@@ -375,7 +375,7 @@
             <div class="t-clear t490__separator" style></div>
             <div class="t490__col t-col t-col_4 t-align_center t-item">
               <img
-                src="../../static/index_files/square7.png"
+                src="../../static/index_files/free.png"
                 data-original="https://static.tildacdn.com/tild3964-3335-4966-b538-633135343533/square7.png"
                 class="t490__img t-img loaded"
                 imgfield="li_img__1482408317745"
@@ -391,7 +391,7 @@
             </div>
             <div class="t490__col t-col t-col_4 t-align_center t-item">
               <img
-                src="../../static/index_files/square8.png"
+                src="../../static/index_files/fast.png"
                 data-original="https://static.tildacdn.com/tild6638-3466-4462-b835-353030623730/square8.png"
                 class="t490__img t-img loaded"
                 imgfield="li_img__1482408319814"
@@ -407,7 +407,7 @@
             </div>
             <div class="t490__col t-col t-col_4 t-align_center t-item">
               <img
-                src="../../static/index_files/square9.png"
+                src="../../static/index_files/efficient.png"
                 data-original="https://static.tildacdn.com/tild3066-3332-4333-b364-666233346633/square9.png"
                 class="t490__img t-img loaded"
                 imgfield="li_img__1482408321577"
