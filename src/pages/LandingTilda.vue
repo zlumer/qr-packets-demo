@@ -158,7 +158,7 @@
             <div class="t-col t-col_10 t-prefix_1">
               <div class="t442__wrapone">
                 <div class="t442__wraptwo">
-                  <a class="t442__link" href="." target style="color:#000000;">
+                  <a class="t442__link" href="#section-features" target style="color:#000000;" @click.stop.prevent="gotoFeatures">
                     <div class="t442__link-wrapper t442__link-wrapper-hover">
                       <div class="t442__btn-img-wrapper">
                         <img
@@ -313,7 +313,7 @@
           <div class="t-section__container t-container">
             <div class="t-col t-col_12">
               <div class="t-section__topwrapper t-align_center">
-                <div class="t-section__title t-title t-title_xs" field="btitle">Features</div>
+                <div id="section-features" class="t-section__title t-title t-title_xs" field="btitle">Features</div>
                 <div class="t-section__descr t-descr t-descr_xl t-margin_auto" field="bdescr">
                   <div
                     style="font-size:18px;"
@@ -656,6 +656,19 @@ export default Vue.extend({
 				return script
 			})
 			.forEach(script => document.head.appendChild(script))
+	},
+	methods: {
+		gotoFeatures()
+		{
+			let element = document.getElementById("section-features")
+			element!.scrollIntoView({ behavior: 'smooth' })
+			let prev = location.hash
+			setTimeout(() =>
+			{
+				if (location.hash == prev)
+					location.hash = "section-features"
+			}, 1200)
+		}
 	}
 });
 </script>
