@@ -122,7 +122,7 @@
                   <table style="width:100%; height:100%;">
                     <tbody>
                       <tr>
-                        <td>Airgapped login</td>
+                        <td>Offline login</td>
                       </tr>
                     </tbody>
                   </table>
