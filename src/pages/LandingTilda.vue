@@ -528,7 +528,7 @@
               data-fields="img,width,filewidth,fileheight,top,left,container,axisx,axisy,widthunits,leftunits,topunits"
               style="top: 247px; width: 197px;"
             >
-              <a class="tn-atom" href="https://www.google.com/">
+              <a class="tn-atom" href="https://testflight.apple.com/join/BhKI7Cdd">
                 <img
                   class="tn-atom__img t-img loaded"
                   data-original="https://static.tildacdn.com/tild6566-6661-4461-b032-313336303533/Download_on_the_App_Store_Badge_USUK_135x40.svg"
