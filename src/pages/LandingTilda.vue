@@ -623,7 +623,7 @@ const INLINE_SCRIPTS = [
 export default Vue.extend({
 	mounted()
 	{
-		let csss = ["tilda-grid-3.0.min", "tilda-blocks-2.12", "tilda-animation-1.0.min", "tilda-slds-1.4.min", "tilda-zoom-2.0"]
+		let csss = ["tilda-grid-3.0.min", "tilda-blocks-2.12", "tilda-animation-1.0.min", "tilda-slds-1.4.min", "tilda-zoom-2.0.min"]
 		csss
 			.map(x => `./static/index_files/${x}.css`)
 			.map(x =>
