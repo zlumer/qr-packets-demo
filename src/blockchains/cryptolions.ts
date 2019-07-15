@@ -45,12 +45,12 @@ type IActionResponse = IResponse<{
 type IResponse<T>  = T
 
 export const jungle = {
-	loadTxList: (address: string) => loadTxList('https://junglehistory.cryptolions.io:4433', address)
+	loadTxList: (address: string) => loadTxList('https://history.cryptolions.io', address)
 }
 
 export async function loadTxList(host: string, address: string): Promise<IEosTxHistoryItem<IEosTransferActionData>[]>
 {
-	let res = await load(host, `/v1/history/get_actions/${address}?limit=100&skip=0`) as IActionResponse
+	let res = await load(host, `/v2/history/get_actions?account=${address}&limit=100&skip=0`) as IActionResponse
 	return res.actions
 }
 export async function load(host: string, path: string): Promise<IResponse<unknown>>
