@@ -8,9 +8,13 @@
 			<input-label class="slider-label">Gas price:</input-label>
 			<vue-slider
 				style="width:50vw;display:inline-block;"
+				ref="slider"
 				:value="value"
 				:data="gweiValues"
 				:piecewise="true"
+				tooltip="always"
+				:marks="true"
+				:hide-label="true"
 				@input="onSlide"
 			/>
 		</div>
@@ -35,6 +39,7 @@
 <script lang="ts">
 import Vue from 'src/vue-ts'
 import VueSlider from 'vue-slider-component'
+import 'vue-slider-component/theme/default.css'
 import InputLabel from './InputLabel.vue'
 import * as eth from "src/blockchains/eth"
 
@@ -55,7 +60,7 @@ export default Vue.extend({
 		},
 		value: {
 			type: Number,
-		}
+		},
 	},
 	mounted()
 	{
@@ -88,7 +93,7 @@ export default Vue.extend({
 		gweiValues: function()
 		{
 			return this.$store.getters.ethGas_gweiPrices
-		}
+		},
 	},
 	methods: {
 		onSlide(val: number)
