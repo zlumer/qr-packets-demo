@@ -31,7 +31,7 @@ export function getCachedNetworkByChainId(chainId: number | string): BtcBlockcha
 export type IChainId = keyof typeof CHAINS
 export type IChainSettings = typeof CHAINS[IChainId]
 
-function blockcypherTxToHistory(tx: ITxRef)
+function bcyTxToHistory(tx: ITxRef)
 {
 	return {
 		hash: tx.tx_hash,
@@ -40,16 +40,39 @@ function blockcypherTxToHistory(tx: ITxRef)
 		incoming: (tx.tx_output_n >= 0)
 	}
 }
+function bcyMergeTxs(txs: ITxRef[])
+{
+	return txs.map(bcyTxToHistory).reduce((arr, cur) =>
+	{
+		if (!arr.length) // skip first element
+			return arr.push(cur), arr
+		
+		let prevTx = arr[arr.length - 1]
+		if (prevTx.hash != cur.hash) // no need to merge
+			return arr.push(cur), arr
+		
+		if (prevTx.incoming)
+		{
+			prevTx.incoming = false
+			prevTx.value = cur.value - prevTx.value
+		}
+		else
+		{
+			prevTx.value = prevTx.value - cur.value
+		}
+		return arr
+	}, [] as IBtcHistoryItem[])
+}
 
 const TESTNET = {
 	testnet: true,
 	name: "Testnet",
-	loadTxList: async (addr: string) => (await testnet.getAddressInfo(addr)).txrefs.map(blockcypherTxToHistory)
+	loadTxList: async (addr: string) => bcyMergeTxs((await testnet.getAddressInfo(addr)).txrefs)
 }
 const MAINNET = {
 	testnet: false,
 	name: "Mainnet",
-	loadTxList: async (addr: string) => (await mainnet.getAddressInfo(addr)).txrefs.map(blockcypherTxToHistory)
+	loadTxList: async (addr: string) => bcyMergeTxs((await mainnet.getAddressInfo(addr)).txrefs)
 }
 const CHAINS = {
 	'00': MAINNET,       // Pubkey hash (P2PKH address)     17VZNX1SN5NtKa8UQFxwQbFeFc3iqRYhem
