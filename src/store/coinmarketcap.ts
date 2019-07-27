@@ -60,6 +60,7 @@ export const options: SOptions = {
 		},
 		eosPrice: (state, getters) => getters.getTokenPrice(cmc.tickerIds.eos),
 		ethPrice: (state, getters) => getters.getTokenPrice(cmc.tickerIds.eth),
+		btcPrice: (state, getters) => getters.getTokenPrice(cmc.tickerIds.btc),
 	}
 }
 
@@ -89,4 +90,5 @@ type GettersReturnMap = {
 	getTokenPrice: (token: string) => number
 	ethPrice: number
 	eosPrice: number
+	btcPrice: number
 }
