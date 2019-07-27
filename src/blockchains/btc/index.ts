@@ -12,7 +12,7 @@ export interface IBtcHistoryItem
 }
 
 export type BtcBlockchain = IBlockchain<IBtcHistoryItem, string> & {
-	// empty for now
+	prepareTx: typeof mainnet.newTx
 }
 
 const getUsdRate = () => coinmarketcap.loadPrice(coinmarketcap.tickerIds.btc)
@@ -67,11 +67,13 @@ function bcyMergeTxs(txs: ITxRef[])
 const TESTNET = {
 	testnet: true,
 	name: "Testnet",
+	blockcypher: testnet,
 	loadTxList: async (addr: string) => bcyMergeTxs((await testnet.getAddressInfo(addr)).txrefs)
 }
 const MAINNET = {
 	testnet: false,
 	name: "Mainnet",
+	blockcypher: mainnet,
 	loadTxList: async (addr: string) => bcyMergeTxs((await mainnet.getAddressInfo(addr)).txrefs)
 }
 const CHAINS = {
@@ -98,6 +100,7 @@ function getNetworkByChainId(chainId: IChainId): BtcBlockchain
 		getUsdValue: () => getUsdRate(),
 		loadTxList: wallet => chain.loadTxList(wallet.address),
 		pushTx: tx => { throw "BTC pushTx() not implemented!" },
+		prepareTx: chain.blockcypher.newTx,
 	}
 }
 const CACHE = { } as { [chainId in IChainId]: BtcBlockchain }
