@@ -1,4 +1,4 @@
-import { IAddressResponse, IAddressFullResponse } from "./blockcypher.i"
+import { IAddressResponse, IAddressFullResponse, INewTxResponse } from "./blockcypher.i"
 
 // https://api.blockcypher.com/v1/btc/test3/addrs/mjB1mRuNzsJK8b2PmgfWawPAXHqS6M5Akb
 
@@ -11,8 +11,11 @@ function makeNetwork(host: string)
 	return {
 		getAddressInfo: curryFirst(getAddressInfo, host),
 		getAddressInfoFull: curryFirst(getAddressInfoFull, host),
+		newTx: curryFirst(newTx, host),
 	}
 }
+
+const TOKEN = `9aa7d51f02ba4d2fa3b18ffd93535238`
 
 function curryFirst<TFirst, TRest extends any[], TRes>(func: (first: TFirst, ...args: TRest) => TRes, firstArg: TFirst)
 {
@@ -27,11 +30,37 @@ export async function getAddressInfoFull(host: string, addr: string): Promise<IA
 {
 	return load(host, `/addrs/${addr}/full`)
 }
+export async function newTx(host: string, from: string, to: string, value: string): Promise<INewTxResponse>
+{
+	// {"inputs":[{"addresses": ["CEztKBAYNoUEEaPYbkyFeXC5v8Jz9RoZH9"]}],"outputs":[{"addresses": ["C1rGdt7QEPGiwPMFhNKNhHmyoWpa5X92pn"], "value": 1000000}]}
+	return post(host, `/txs/new?token=${TOKEN}`, {
+		inputs: [{ addresses: [from] }],
+		outputs: [{ addresses: [to], value: parseInt(value) }],
+	})
+}
 
 export async function load<T = unknown>(host: string, path: string): Promise<T>
 {
 	let url = `${host}${path}`
 	return fetch(url).then(x => x.json()).then(res =>
+	{
+		if (!res || res.error)
+			throw Error(res && res.error)
+		
+		return res
+	})
+}
+export async function post<T = unknown>(host: string, path: string, data: {}): Promise<T>
+{
+	let url = `${host}${path}`
+	return fetch(url, {
+		method: 'POST',
+		headers: {
+			'Accept': 'application/json',
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(data)
+	}).then(x => x.json()).then(res =>
 	{
 		if (!res || res.error)
 			throw Error(res && res.error)

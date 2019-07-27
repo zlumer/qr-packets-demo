@@ -96,3 +96,9 @@ export enum ITxPreference
     Low = "low",
     Medium = "medium",
 }
+
+export interface INewTxResponse
+{
+	tx: unknown
+	tosign: string[]
+}
