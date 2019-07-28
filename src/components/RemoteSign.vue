@@ -92,6 +92,19 @@ export default Vue.extend({
 		onResult(signedTx: string)
 		{
 			console.log(`signed tx: ${signedTx}`)
+			
+			if (this.blockchainId == 'btc')
+			{
+				// I'm so fucking sorry for this edge case, please forgive me
+				let skeleton = this.$store.state.btcSkeletonTx
+				let { signatures, publicKeys } = signedTx as any
+				signedTx = JSON.stringify({
+					...skeleton,
+					signatures,
+					pubkeys: publicKeys
+				})
+			}
+
 			this.$store.commit('setTxToPush', { tx: signedTx, wallet: this.wallet })
 			this.$router.push({ name: "pushtx", params: {
 				blockchain: this.blockchainId,
