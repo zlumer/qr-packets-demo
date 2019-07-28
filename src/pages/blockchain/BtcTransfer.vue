@@ -66,7 +66,6 @@ export default (Vue as VueWithProps<{ $refs: TRefs }>).extend({
 				amount: '',
 				usd: '',
 			},
-			skeleton: {},
 			tosign: [] as string[],
 			inputs: ['to', 'amount', 'usd']
 		}
@@ -83,7 +82,19 @@ export default (Vue as VueWithProps<{ $refs: TRefs }>).extend({
 		txJson: function()
 		{
 			// console.log(this.tx)
-			return JSON.stringify({ tosign: this.tosign, wallet: this.wallet })
+			return JSON.stringify({
+				tx: {
+					tosign: this.tosign,
+					to: this.values.to,
+					value: this.values.amount,
+					// tx: this.skeleton
+				},
+				wallet: this.wallet,
+			})
+		},
+		skeleton: function()
+		{
+			return this.$store.state.btcSkeletonTx
 		},
 		btc: function()
 		{
@@ -124,8 +135,7 @@ export default (Vue as VueWithProps<{ $refs: TRefs }>).extend({
 			this.loading = true
 			// this.nonce = await this.web3.getNonce(this.address)
 			let res = await this.btc.prepareTx(this.address, form.to, (parseFloat(form.amount) * 1e8).toString())
-			console.log(res)
-			this.skeleton = res.tx as any
+			this.$store.commit('btc_setSkeletonTx', { tx: res })
 			this.tosign = res.tosign
 			this.loading = false
 		},
