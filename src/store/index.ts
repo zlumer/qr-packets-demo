@@ -9,8 +9,9 @@ import { options as btcTxs, Store as StoreBtcTxs, IState as StateBtcTxs } from "
 import { options as ethTokens, Store as StoreEthTokens, IState as StateEthTokens } from "./ethTokens"
 import { options as eosTokens, Store as StoreEosTokens, IState as StateEosTokens } from "./eosTokens"
 import { options as ethGasPrice, Store as StoreEthGasPrice, IState as StateEthGasPrice } from "./ethGasPrice"
+import { options as btc, Store as StoreBtc, IState as StateBtc } from "./btc"
 
-export const storeOptions = mergeOptions(cmc, main, ethTxs, ethTokens, mergeOptions(ethGasPrice, eosTokens, btcTxs))
+export const storeOptions = mergeOptions(cmc, main, ethTxs, ethTokens, mergeOptions(ethGasPrice, eosTokens, btcTxs, btc))
 
 export function createStore()
 {
@@ -19,9 +20,9 @@ export function createStore()
 }
 
 export type Store = MergeMultiple<StoreCMC, StoreMain, StoreEthTxs, StoreEthTokens,
-					MergeMultiple<StoreEthGasPrice, StoreEosTokens, StoreBtcTxs>>
+					MergeMultiple<StoreEthGasPrice, StoreEosTokens, StoreBtcTxs, StoreBtc>>
 export type IState = MergeMultiple<StateCMC, StateMain, StateEthTxs, StateEthTokens,
-					MergeMultiple<StateEthGasPrice, StateEosTokens, StateBtcTxs>>
+					MergeMultiple<StateEthGasPrice, StateEosTokens, StateBtcTxs, StoreBtc>>
 
 
 
