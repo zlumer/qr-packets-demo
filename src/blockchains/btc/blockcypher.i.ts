@@ -41,6 +41,12 @@ export interface IAddressFullResponse
     txs:                 IFullTx[]
 }
 
+export interface ISendTxResponse
+{
+    tx:     IFullTx
+    tosign: string[]
+}
+
 export interface IFullTx
 {
     block_hash:    string

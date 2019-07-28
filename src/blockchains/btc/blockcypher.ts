@@ -1,4 +1,4 @@
-import { IAddressResponse, IAddressFullResponse, INewTxResponse } from "./blockcypher.i"
+import { IAddressResponse, IAddressFullResponse, INewTxResponse, ISendTxResponse } from "./blockcypher.i"
 
 // https://api.blockcypher.com/v1/btc/test3/addrs/mjB1mRuNzsJK8b2PmgfWawPAXHqS6M5Akb
 
@@ -12,6 +12,7 @@ function makeNetwork(host: string)
 		getAddressInfo: curryFirst(getAddressInfo, host),
 		getAddressInfoFull: curryFirst(getAddressInfoFull, host),
 		newTx: curryFirst(newTx, host),
+		sendTx: curryFirst(sendTx, host),
 	}
 }
 
@@ -37,6 +38,10 @@ export async function newTx(host: string, from: string, to: string, value: strin
 		inputs: [{ addresses: [from] }],
 		outputs: [{ addresses: [to], value: parseInt(value) }],
 	})
+}
+export async function sendTx(host: string, tx: unknown): Promise<ISendTxResponse>
+{
+	return post(host, `/txs/send?token=${TOKEN}`, tx as {})
 }
 
 export async function load<T = unknown>(host: string, path: string): Promise<T>
