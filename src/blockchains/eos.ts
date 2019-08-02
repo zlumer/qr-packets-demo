@@ -140,7 +140,7 @@ function getNetworkByChainId(chainId: IChainId): EosBlockchain
 	return {
 		networkName: chain.name,
 		testnet: chain.testnet,
-		getTxHash: (tx) => '0xEOS_FAKE_HASH',
+		getTxHash: (tx) => 'UNKNOWN',
 		getUsdValue: () => getUsdRate(),
 		loadTxList: wallet => chain.loadTxList(wallet.address),
 		pushTx: eos.pushTx,

@@ -96,7 +96,7 @@ function getNetworkByChainId(chainId: IChainId): BtcBlockchain
 	return {
 		networkName: chain.name,
 		testnet: chain.testnet,
-		getTxHash: (tx) => '0xBTC_FAKE_HASH',
+		getTxHash: (tx) => 'UNKNOWN',
 		getUsdValue: () => getUsdRate(),
 		loadTxList: wallet => chain.loadTxList(wallet.address),
 		pushTx: async tx => (await chain.blockcypher.sendTx(JSON.parse(tx))).tx.hash,
