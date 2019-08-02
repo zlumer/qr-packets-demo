@@ -671,12 +671,12 @@ exports.generate = generate;
 // webpack env variables
 Object.defineProperty(exports, "__esModule", { value: true });
 console.log("ROOT_PATH: " + "/");
-console.assert("ea012bf7dc1ecc386168883488381c5dd6906f9f", "GIT_VERSION is not defined!");
+console.assert("366c043e904e7df1d684d1b99d6d63154a968050", "GIT_VERSION is not defined!");
 console.assert("https://github.com/zlumer/qr-packets-demo.git", "GIT_REMOTE is not defined!");
 exports.default = {
     blockchains: ["eth", "eos", "btc"],
     basePath: "/",
-    gitVersion: "ea012bf7dc1ecc386168883488381c5dd6906f9f",
+    gitVersion: "366c043e904e7df1d684d1b99d6d63154a968050",
     gitRemote: "https://github.com/zlumer/qr-packets-demo.git",
 };
 
@@ -7776,7 +7776,7 @@ function getNetworkByChainId(chainId) {
     return {
         networkName: chain.name,
         testnet: chain.testnet,
-        getTxHash: function (tx) { return '0xEOS_FAKE_HASH'; },
+        getTxHash: function (tx) { return 'UNKNOWN'; },
         getUsdValue: function () { return getUsdRate(); },
         loadTxList: function (wallet) { return chain.loadTxList(wallet.address); },
         pushTx: eos.pushTx,
@@ -11698,7 +11698,7 @@ function getNetworkByChainId(chainId) {
     return {
         networkName: chain.name,
         testnet: chain.testnet,
-        getTxHash: function (tx) { return '0xBTC_FAKE_HASH'; },
+        getTxHash: function (tx) { return 'UNKNOWN'; },
         getUsdValue: function () { return getUsdRate(); },
         loadTxList: function (wallet) { return chain.loadTxList(wallet.address); },
         pushTx: function (tx) { return __awaiter(_this, void 0, void 0, function () { return __generator(this, function (_a) {
@@ -13255,4 +13255,4 @@ component.options.__file = "BigX.vue"
 
 /***/ })
 /******/ ]);
-//# sourceMappingURL=main.5e73b4e9.js.map
+//# sourceMappingURL=main.f49c919e.js.map
