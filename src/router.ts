@@ -28,6 +28,15 @@ export function createRouter(store: Store)
 		let blockchain = to.params.blockchain as IBlockchainSymbol
 		let address: string = to.params.address
 		let chainId: string = (to.query.chainId || "").toString()
+		if (store.state.currentWallet)
+		{
+			if (!address)
+				address = store.state.currentWallet.address
+			if (!chainId)
+				chainId = store.state.currentWallet.chainId + ""
+			if (!blockchain)
+				blockchain = store.state.currentWallet.blockchain
+		}
 		store.commit('setCurrentWallet', { wallet: { blockchain, address, chainId } })
 		return next()
 	}
@@ -90,6 +99,7 @@ export function createRouter(store: Store)
 				name: 'wallet',
 				component: Wallet,
 				meta: metaLayout('app'),
+				beforeEnter: updateWallet,
 				children: [
 					{
 						path: 'create',

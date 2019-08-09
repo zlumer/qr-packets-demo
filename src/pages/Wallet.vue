@@ -94,7 +94,11 @@ export default Vue.extend({
 	methods: {
 		closePopup()
 		{
-			this.$router.push({ name: 'wallet', params: this.$route.params, query: this.$route.query })
+			let w = {
+				address: this.wallet.address,
+				blockchain: this.wallet.blockchain,
+			}
+			this.$router.push({ name: 'wallet', params: w, query: { chainId: this.wallet.chainId + "" } })
 		}
 	},
 	components: {
