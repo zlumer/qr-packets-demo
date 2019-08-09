@@ -8,6 +8,7 @@
 				<a href="https://coinmarketcap.com/">CoinMarketCap</a>,
 				<a href="https://etherchain.org/">Etherchain</a>,
 				<a href="https://ethgasstation.info/">ETH Gas Station</a>,
+				<a href="https://bloks.io/">Bloks.io</a>,
 				<a href="https://greymass.com/">Greymass</a>.
 				Blockchain nodes by
 				<a href="https://infura.io/">Infura</a>,
