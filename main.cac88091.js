@@ -671,12 +671,12 @@ exports.generate = generate;
 // webpack env variables
 Object.defineProperty(exports, "__esModule", { value: true });
 console.log("ROOT_PATH: " + "/");
-console.assert("366c043e904e7df1d684d1b99d6d63154a968050", "GIT_VERSION is not defined!");
+console.assert("4156a9edfa8cfeb1365b23c3505a7ce99b492e09", "GIT_VERSION is not defined!");
 console.assert("https://github.com/zlumer/qr-packets-demo.git", "GIT_REMOTE is not defined!");
 exports.default = {
     blockchains: ["eth", "eos", "btc"],
     basePath: "/",
-    gitVersion: "366c043e904e7df1d684d1b99d6d63154a968050",
+    gitVersion: "4156a9edfa8cfeb1365b23c3505a7ce99b492e09",
     gitRemote: "https://github.com/zlumer/qr-packets-demo.git",
 };
 
@@ -1379,7 +1379,7 @@ exports.default = vue_ts_1.default.extend({
 /***/ }),
 /* 104 */
 /*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader??ref--1-oneOf-2-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/sass-loader/lib/loader.js??ref--1-oneOf-2-2!./node_modules/vue-loader/lib??vue-loader-options!./src/components/MainPageFooter.vue?vue&type=style&index=0&id=bac3cc0c&lang=scss&scoped=true& ***!
+  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader??ref--1-oneOf-2-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/sass-loader/lib/loader.js??ref--1-oneOf-2-2!./node_modules/vue-loader/lib??vue-loader-options!./src/components/MainPageFooter.vue?vue&type=style&index=0&id=a6bb060e&lang=scss&scoped=true& ***!
   \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /*! exports used: default */
@@ -6591,7 +6591,7 @@ var staticRenderFns = []
 /***/ }),
 /* 258 */
 /*!**************************************************************************************************!*\
-  !*** ./src/components/MainPageFooter.vue?vue&type=template&id=bac3cc0c&scoped=true& + 1 modules ***!
+  !*** ./src/components/MainPageFooter.vue?vue&type=template&id=a6bb060e&scoped=true& + 1 modules ***!
   \**************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /*! exports used: render, staticRenderFns */
@@ -6599,12 +6599,12 @@ var staticRenderFns = []
 
 "use strict";
 
-// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./src/components/MainPageFooter.vue?vue&type=template&id=bac3cc0c&scoped=true&
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./src/components/MainPageFooter.vue?vue&type=template&id=a6bb060e&scoped=true&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('header',[_c('div',{staticClass:"copyright"},[_vm._v("\n\t\t© Ice Wallet 2018. All rights reserved. Version:\n\t\t"),_c('span',{staticClass:"version"},[_c('a',{attrs:{"href":_vm.commitLink}},[_c('code',[_vm._v(_vm._s(_vm.version))])])]),_vm._v(" "),_vm._m(0)])])}
-var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"api"},[_vm._v("API by\n\t\t\t"),_c('a',{attrs:{"href":"https://etherscan.io/"}},[_vm._v("Etherscan")]),_vm._v(",\n\t\t\t"),_c('a',{attrs:{"href":"https://coinmarketcap.com/"}},[_vm._v("CoinMarketCap")]),_vm._v(",\n\t\t\t"),_c('a',{attrs:{"href":"https://etherchain.org/"}},[_vm._v("Etherchain")]),_vm._v(",\n\t\t\t"),_c('a',{attrs:{"href":"https://ethgasstation.info/"}},[_vm._v("ETH Gas Station")]),_vm._v(",\n\t\t\t"),_c('a',{attrs:{"href":"https://greymass.com/"}},[_vm._v("Greymass")]),_vm._v(".\n\t\t\tBlockchain nodes by\n\t\t\t"),_c('a',{attrs:{"href":"https://infura.io/"}},[_vm._v("Infura")]),_vm._v(",\n\t\t\t"),_c('a',{attrs:{"href":"https://cryptolions.io/"}},[_vm._v("CryptoLions")]),_vm._v(".\n\t\t")])}]
+var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"api"},[_vm._v("API by\n\t\t\t"),_c('a',{attrs:{"href":"https://etherscan.io/"}},[_vm._v("Etherscan")]),_vm._v(",\n\t\t\t"),_c('a',{attrs:{"href":"https://coinmarketcap.com/"}},[_vm._v("CoinMarketCap")]),_vm._v(",\n\t\t\t"),_c('a',{attrs:{"href":"https://etherchain.org/"}},[_vm._v("Etherchain")]),_vm._v(",\n\t\t\t"),_c('a',{attrs:{"href":"https://ethgasstation.info/"}},[_vm._v("ETH Gas Station")]),_vm._v(",\n\t\t\t"),_c('a',{attrs:{"href":"https://bloks.io/"}},[_vm._v("Bloks.io")]),_vm._v(",\n\t\t\t"),_c('a',{attrs:{"href":"https://greymass.com/"}},[_vm._v("Greymass")]),_vm._v(".\n\t\t\tBlockchain nodes by\n\t\t\t"),_c('a',{attrs:{"href":"https://infura.io/"}},[_vm._v("Infura")]),_vm._v(",\n\t\t\t"),_c('a',{attrs:{"href":"https://cryptolions.io/"}},[_vm._v("CryptoLions")]),_vm._v(".\n\t\t")])}]
 
 
-// CONCATENATED MODULE: ./src/components/MainPageFooter.vue?vue&type=template&id=bac3cc0c&scoped=true&
+// CONCATENATED MODULE: ./src/components/MainPageFooter.vue?vue&type=template&id=a6bb060e&scoped=true&
 /* concated harmony reexport render */__webpack_require__.d(__webpack_exports__, "a", function() { return render; });
 /* concated harmony reexport staticRenderFns */__webpack_require__.d(__webpack_exports__, "b", function() { return staticRenderFns; });
 
@@ -7880,9 +7880,9 @@ component.options.__file = "MainPageHeader.vue"
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _MainPageFooter_vue_vue_type_template_id_bac3cc0c_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MainPageFooter.vue?vue&type=template&id=bac3cc0c&scoped=true& */ 258);
+/* harmony import */ var _MainPageFooter_vue_vue_type_template_id_a6bb060e_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MainPageFooter.vue?vue&type=template&id=a6bb060e&scoped=true& */ 258);
 /* harmony import */ var _MainPageFooter_vue_vue_type_script_lang_ts___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MainPageFooter.vue?vue&type=script&lang=ts& */ 102);
-/* harmony import */ var _MainPageFooter_vue_vue_type_style_index_0_id_bac3cc0c_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./MainPageFooter.vue?vue&type=style&index=0&id=bac3cc0c&lang=scss&scoped=true& */ 394);
+/* harmony import */ var _MainPageFooter_vue_vue_type_style_index_0_id_a6bb060e_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./MainPageFooter.vue?vue&type=style&index=0&id=a6bb060e&lang=scss&scoped=true& */ 394);
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ 0);
 
 
@@ -7894,11 +7894,11 @@ component.options.__file = "MainPageHeader.vue"
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
   _MainPageFooter_vue_vue_type_script_lang_ts___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _MainPageFooter_vue_vue_type_template_id_bac3cc0c_scoped_true___WEBPACK_IMPORTED_MODULE_0__[/* render */ "a"],
-  _MainPageFooter_vue_vue_type_template_id_bac3cc0c_scoped_true___WEBPACK_IMPORTED_MODULE_0__[/* staticRenderFns */ "b"],
+  _MainPageFooter_vue_vue_type_template_id_a6bb060e_scoped_true___WEBPACK_IMPORTED_MODULE_0__[/* render */ "a"],
+  _MainPageFooter_vue_vue_type_template_id_a6bb060e_scoped_true___WEBPACK_IMPORTED_MODULE_0__[/* staticRenderFns */ "b"],
   false,
   null,
-  "bac3cc0c",
+  "a6bb060e",
   null
   
 )
@@ -8323,17 +8323,17 @@ component.options.__file = "IconNeo.vue"
 /***/ }),
 /* 394 */
 /*!*****************************************************************************************************!*\
-  !*** ./src/components/MainPageFooter.vue?vue&type=style&index=0&id=bac3cc0c&lang=scss&scoped=true& ***!
+  !*** ./src/components/MainPageFooter.vue?vue&type=style&index=0&id=a6bb060e&lang=scss&scoped=true& ***!
   \*****************************************************************************************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module exports are unknown */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_MainPageFooter_vue_vue_type_style_index_0_id_bac3cc0c_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/mini-css-extract-plugin/dist/loader.js!../../node_modules/css-loader??ref--1-oneOf-2-1!../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../node_modules/sass-loader/lib/loader.js??ref--1-oneOf-2-2!../../node_modules/vue-loader/lib??vue-loader-options!./MainPageFooter.vue?vue&type=style&index=0&id=bac3cc0c&lang=scss&scoped=true& */ 104);
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_MainPageFooter_vue_vue_type_style_index_0_id_bac3cc0c_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_MainPageFooter_vue_vue_type_style_index_0_id_bac3cc0c_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_MainPageFooter_vue_vue_type_style_index_0_id_a6bb060e_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/mini-css-extract-plugin/dist/loader.js!../../node_modules/css-loader??ref--1-oneOf-2-1!../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../node_modules/sass-loader/lib/loader.js??ref--1-oneOf-2-2!../../node_modules/vue-loader/lib??vue-loader-options!./MainPageFooter.vue?vue&type=style&index=0&id=a6bb060e&lang=scss&scoped=true& */ 104);
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_MainPageFooter_vue_vue_type_style_index_0_id_a6bb060e_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_MainPageFooter_vue_vue_type_style_index_0_id_a6bb060e_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__);
 /* unused harmony reexport * */
- /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_MainPageFooter_vue_vue_type_style_index_0_id_bac3cc0c_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default.a); 
+ /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_MainPageFooter_vue_vue_type_style_index_0_id_a6bb060e_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 /* 395 */
@@ -12461,7 +12461,7 @@ var vue_ts_1 = __importDefault(__webpack_require__(/*! src/vue-ts */ 1));
 var eos_1 = __webpack_require__(/*! src/blockchains/eos */ 354);
 var utils_1 = __webpack_require__(/*! ./utils */ 57);
 var blockchains_1 = __webpack_require__(/*! src/blockchains */ 72);
-var eospark_1 = __webpack_require__(/*! src/blockchains/eospark */ 763);
+var bloksio_1 = __webpack_require__(/*! src/blockchains/eos/bloksio */ 763);
 exports.options = {
     state: {
         eosTokens: {
@@ -12558,28 +12558,27 @@ exports.options = {
                                 store.commit('eosTokens_setTokenBalanceEmpty', { wallet: wallet });
                                 return [2 /*return*/, Promise.resolve()]; // ignore testnet tokens list
                             }
-                            return [4 /*yield*/, eospark_1.loadTokensList(wallet.address)];
+                            return [4 /*yield*/, bloksio_1.loadTokensList(wallet.address)];
                         case 1:
                             res = _b.sent();
-                            res.symbol_list.forEach(function (info) {
-                                // TODO: call updateTokenInfo() and load new token data
+                            res.tokens.forEach(function (info) {
                                 store.commit('eosTokens_setTokenInfo', {
                                     chainId: wallet.chainId,
-                                    contractAddr: info.code,
+                                    contractAddr: info.contract,
                                     info: {
                                         notatoken: false,
-                                        decimals: 4,
-                                        name: info.symbol,
-                                        symbol: info.symbol,
+                                        decimals: parseInt(info.decimals),
+                                        name: info.metadata.name || info.currency,
+                                        symbol: info.currency,
                                     }
                                 });
                                 store.commit('eosTokens_setTokenBalance', {
                                     wallet: wallet,
-                                    contractAddr: info.code,
-                                    amount: info.balance
+                                    contractAddr: info.contract,
+                                    amount: info.amount + "",
                                 });
                             });
-                            addresses = res.symbol_list.map(function (x) { return x.code; });
+                            addresses = res.tokens.map(function (x) { return x.contract; });
                             if (!addresses.length)
                                 store.commit('eosTokens_setTokenBalanceEmpty', { wallet: wallet });
                             addresses.forEach(function (addr) {
@@ -12667,9 +12666,9 @@ exports.options = {
 
 /***/ }),
 /* 763 */
-/*!************************************!*\
-  !*** ./src/blockchains/eospark.ts ***!
-  \************************************/
+/*!****************************************!*\
+  !*** ./src/blockchains/eos/bloksio.ts ***!
+  \****************************************/
 /*! no static exports found */
 /*! all exports used */
 /*! ModuleConcatenation bailout: Module is not an ECMAScript module */
@@ -12677,17 +12676,6 @@ exports.options = {
 
 "use strict";
 
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -12724,43 +12712,18 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var API_KEY = 'a9564ebc3289b7a14551baf8ad5ec60a';
 function loadTokensList(account) {
     return __awaiter(this, void 0, Promise, function () {
-        var res;
         return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, load('account', 'get_token_list', API_KEY, { account: account })];
-                case 1:
-                    res = _a.sent();
-                    return [2 /*return*/, res.data];
-            }
-        });
-    });
-}
-exports.loadTokensList = loadTokensList;
-function load(module, action, apiKey, query) {
-    return __awaiter(this, void 0, Promise, function () {
-        var qobj, qs, url;
-        return __generator(this, function (_a) {
-            qobj = __assign({ module: module,
-                action: action, apikey: apiKey }, query);
-            qs = Object.keys(qobj)
-                .map(function (key) { return encodeURIComponent(key) + "=" + encodeURIComponent(qobj[key] + ''); })
-                .join('&');
-            url = "https://mighty-coast-75043.herokuapp.com/https://api.eospark.com/api?" + qs;
-            // let fake = `{"errno":0,"errmsg":"Success","data":{"symbol_list":[{"symbol":"EOS","code":"eosio.token","balance":"0.2963"},{"symbol":"PGL","code":"prospectorsg","balance":"3.0096"},{"symbol":"MEETONE","code":"eosiomeetone","balance":"124.2457"},{"symbol":"BLACK","code":"eosblackteam","balance":"9.9760"},{"symbol":"OCT","code":"octtothemoon","balance":"42.4033"},{"symbol":"IQ","code":"everipediaiq","balance":"108.623"},{"symbol":"CET","code":"eosiochaince","balance":"34.6332"},{"symbol":"ZOS","code":"zosdiscounts","balance":"138.0000"},{"symbol":"GGS","code":"eosggshost11","balance":"52.5000"},{"symbol":"PEOS","code":"thepeostoken","balance":"1.0100"},{"symbol":"EMT","code":"emanateoneos","balance":"10.0000"},{"symbol":"NDX","code":"newdexissuer","balance":"10303.5874"}]}}`
-            // fake = `{"errno":0,"errmsg":"Success","data":{"symbol_list":[{"symbol":"EOS","code":"eosio.token","balance":"4.5749"},{"symbol":"KARMA","code":"therealkarma","balance":"2290.6000"},{"symbol":"ZOS","code":"zosdiscounts","balance":"140.0000"},{"symbol":"MEETONE","code":"eosiomeetone","balance":"1212.2522"},{"symbol":"ADD","code":"eosadddddddd","balance":"1411.2522"},{"symbol":"BET","code":"betdividends","balance":"12.0374"},{"symbol":"CET","code":"eosiochaince","balance":"100.0000"},{"symbol":"EMT","code":"emanateoneos","balance":"10.0000"},{"symbol":"PEOS","code":"thepeostoken","balance":"51.5944"},{"symbol":"EFOR","code":"theforcegrou","balance":"100.0000"},{"symbol":"GO","code":"okkkkkkkkkkk","balance":"2000"},{"symbol":"MPT","code":"metpacktoken","balance":"16.6245"}]}}`
-            // let p = new Promise<IEPResponse<T>>(res => res(JSON.parse(fake)))
-            return [2 /*return*/, fetch(url).then(function (x) { return x.json(); }).then(function (res) {
-                    if (!res || (res.errno != 0) || (res.errmsg != "Success"))
-                        throw Error(res.errmsg);
+            return [2 /*return*/, fetch("https://www.api.bloks.io/account/" + account + "?type=getAccountTokens").then(function (x) { return x.json(); }).then(function (res) {
+                    if (!res || ("error" in res))
+                        throw new Error(JSON.stringify(res));
                     return res;
                 })];
         });
     });
 }
-exports.load = load;
+exports.loadTokensList = loadTokensList;
 
 
 /***/ }),
@@ -13255,4 +13218,4 @@ component.options.__file = "BigX.vue"
 
 /***/ })
 /******/ ]);
-//# sourceMappingURL=main.f49c919e.js.map
+//# sourceMappingURL=main.cac88091.js.map
