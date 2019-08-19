@@ -1,5 +1,5 @@
 import { ITransactionsResponse } from "./bitcoincom.i"
-
+import { curryFirst } from "../../store/utils"
 // https://rest.bitcoin.com/v2/address/transactions/qpkxhhyumvx07s3cluq7un367mnxzgzswy4el8tn4w
 
 export const testnet = makeNetwork("https://trest.bitcoin.com/v2")
@@ -16,11 +16,6 @@ function makeNetwork(host: string)
 }
 
 const TOKEN = `9aa7d51f02ba4d2fa3b18ffd93535238`
-
-function curryFirst<TFirst, TRest extends any[], TRes>(func: (first: TFirst, ...args: TRest) => TRes, firstArg: TFirst)
-{
-	return (...args: TRest) => func(firstArg, ...args)
-}
     
 export async function getAddressInfo(host: string, addr: string): Promise<IAddressResponse>
 {

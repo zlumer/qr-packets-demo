@@ -16,3 +16,9 @@ export function pick<T, K extends keyof T>(obj: T, paths: K[]): Pick<T, K>
 {
 	return { ...paths.reduce((mem, key) => ({ ...mem, [key]: obj[key] }), {}) } as Pick<T, K>
 }
+
+
+export function curryFirst<TFirst, TRest extends any[], TRes>(func: (first: TFirst, ...args: TRest) => TRes, firstArg: TFirst)
+{
+	return (...args: TRest) => func(firstArg, ...args)
+}
