@@ -1,9 +1,8 @@
 import { ITransactionsResponse } from "./bitcoincom.i"
 
-// https://api.blockcypher.com/v1/btc/test3/addrs/mjB1mRuNzsJK8b2PmgfWawPAXHqS6M5Akb
+// https://rest.bitcoin.com/v2/address/transactions/qpkxhhyumvx07s3cluq7un367mnxzgzswy4el8tn4w
 
 export const testnet = makeNetwork("https://trest.bitcoin.com/v2")
-export const bcytestnet = makeNetwork("https://api.blockcypher.com/v1/bcy/test")
 export const mainnet = makeNetwork("https://rest.bitcoin.com/v2")
 
 function makeNetwork(host: string)
