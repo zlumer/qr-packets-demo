@@ -9,5 +9,6 @@ export default generate({
 	eth: EthTransfer,
 	eos: EosTransfer,
 	btc: BtcTransfer,
+	bch: BtcTransfer,
 })
 </script>

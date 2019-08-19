@@ -10,6 +10,7 @@ import { generate } from "src/pages/blockchain/bbhoc"
 export default generate({
 	eth: IconEth,
 	btc: IconBtc,
+	bch: IconBtc,
 	eos: IconEos,
 	neo: IconNeo,
 })

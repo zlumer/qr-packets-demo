@@ -1,6 +1,6 @@
 import VueRouter, { NavigationGuard } from "vue-router"
 
-import Landing from "./pages/LandingTilda.vue"
+import Landing from "./pages/Landing.vue"
 import Login from "./pages/Login.vue"
 import Wallets from "./pages/Wallets.vue"
 import Wallet from "./pages/Wallet.vue"
