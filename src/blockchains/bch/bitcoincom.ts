@@ -1,5 +1,5 @@
 import { ITransactionsResponse } from "./bitcoincom.i"
-import { curryFirst } from "../../store/utils"
+import { curryFirst } from "../../utils"
 // https://rest.bitcoin.com/v2/address/transactions/qpkxhhyumvx07s3cluq7un367mnxzgzswy4el8tn4w
 
 export const testnet = makeNetwork("https://trest.bitcoin.com/v2")

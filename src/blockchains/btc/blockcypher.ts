@@ -1,5 +1,5 @@
 import { IAddressResponse, IAddressFullResponse, INewTxResponse, ISendTxResponse } from "./blockcypher.i"
-import { curryFirst } from "../../store/utils"
+import { curryFirst } from "../../utils"
 
 // https://api.blockcypher.com/v1/btc/test3/addrs/mjB1mRuNzsJK8b2PmgfWawPAXHqS6M5Akb
 
