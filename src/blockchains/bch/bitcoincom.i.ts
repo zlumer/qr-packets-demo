@@ -1,3 +1,31 @@
+export interface IUtxoResponse {
+  utxos:         IUtxo[];
+  legacyAddress: string;
+  cashAddress:   string;
+  slpAddress:    string;
+  scriptPubKey:  string;
+}
+
+export interface IUtxo {
+  txid:          string;
+  vout:          number;
+  amount:        number;
+  satoshis:      number;
+  height:        number;
+  confirmations: number;
+}
+
+export interface INewTx {
+  utxos:        IUtxo[],
+  destinations: IDest[],
+  scriptPubKey: string,
+}
+
+export interface IDest {
+	address:      string,
+	value:        number
+}
+
 export interface ITransactionsResponse {
   pagesTotal:    number
   txs:           ITx[]

@@ -96,6 +96,10 @@ function bcyMergeTxs(txResponse: ITransactionsResponse)
 	}, [] as IBchHistoryItem[])
 }
 
+async function pushBchTx(tx: string) {
+	return (await mainnet.sendTx(tx)) //.tx.hash
+}
+
 const TESTNET = {
 	testnet: true,
 	name: "Testnet",
@@ -107,8 +111,8 @@ const MAINNET = {
 	testnet: false,
 	name: "Mainnet",
 	loadTxList: async (addr: string) => bcyMergeTxs((await mainnet.getAddressInfoFull(addr))),
-	pushTx: () => { throw "NOTIMPLENTED" },
-	prepareTx: async (tx: string) => (await mainnet.sendTx(JSON.parse(tx))).tx.hash,
+	pushTx: async (tx: string) => pushBchTx(tx),
+	prepareTx: mainnet.newTx,
 }
 
 const CHAINS = {

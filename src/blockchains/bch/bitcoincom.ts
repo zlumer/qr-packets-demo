@@ -1,5 +1,6 @@
-import { ITransactionsResponse } from "./bitcoincom.i"
+import { ITransactionsResponse, IUtxoResponse, INewTx } from "./bitcoincom.i"
 import { curryFirst } from "../../utils"
+import { buildTx } from "./bch-tx-builder"
 // https://rest.bitcoin.com/v2/address/transactions/qpkxhhyumvx07s3cluq7un367mnxzgzswy4el8tn4w
 
 export const testnet = makeNetwork("https://trest.bitcoin.com/v2")
@@ -12,6 +13,7 @@ function makeNetwork(host: string)
 		getAddressInfoFull: curryFirst(getTxs, host),
 		newTx: curryFirst(newTx, host),
 		sendTx: curryFirst(sendTx, host),
+		getUtoxs: curryFirst(getUtoxs, host)
 	}
 }
 
@@ -21,21 +23,25 @@ export async function getAddressInfo(host: string, addr: string): Promise<IAddre
 {
 	return load(host, `/addrs/${addr}`)
 }
-export async function getTxs(host: string, addr: string): Promise<ITransactionsResponse>
+export async function getUtoxs(host: string, addr: string): Promise<IUtxoResponse>
 {
+	return load(host, `/address/utxo/${addr}`)
+}
+
+export async function getTxs(host: string, addr: string): Promise<ITransactionsResponse> {
 	return load(host, `/address/transactions/${addr}`)
 }
-export async function newTx(host: string, from: string, to: string, value: string): Promise<INewTxResponse>
+
+export async function newTx(host: string, from: string, to: string, value: string): Promise<INewTx>
 {
-	// {"inputs":[{"addresses": ["CEztKBAYNoUEEaPYbkyFeXC5v8Jz9RoZH9"]}],"outputs":[{"addresses": ["C1rGdt7QEPGiwPMFhNKNhHmyoWpa5X92pn"], "value": 1000000}]}
-	return post(host, `/txs/new?token=${TOKEN}`, {
-		inputs: [{ addresses: [from] }],
-		outputs: [{ addresses: [to], value: parseInt(value) }],
+	return getUtoxs(host, from).then(response => {
+		return buildTx(value, to, from, response.utxos, response.scriptPubKey)
 	})
 }
-export async function sendTx(host: string, tx: unknown): Promise<ISendTxResponse>
+
+export async function sendTx(host: string, tx: any): Promise<string>
 {
-	return post(host, `/txs/send?token=${TOKEN}`, tx as {})
+	return post(host, `/rawtransactions/sendRawTransaction/${tx.signedBchTx}`, tx as {})
 }
 
 export async function load<T = unknown>(host: string, path: string): Promise<T>
