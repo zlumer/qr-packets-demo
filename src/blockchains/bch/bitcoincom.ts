@@ -41,7 +41,7 @@ export async function newTx(host: string, from: string, to: string, value: strin
 
 export async function sendTx(host: string, tx: any): Promise<string>
 {
-	return post(host, `/rawtransactions/sendRawTransaction/${tx.signedBchTx}`, tx as {})
+	return post(host, `/rawtransactions/sendRawTransaction`, { hexes: [tx.signedBchTx] })
 }
 
 export async function load<T = unknown>(host: string, path: string): Promise<T>
