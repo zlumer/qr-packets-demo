@@ -136,7 +136,7 @@
 /******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
 /******/
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "/cold/";
+/******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	var jsonpArray = window["webpackJsonp"] = window["webpackJsonp"] || [];
 /******/ 	var oldJsonpFunction = jsonpArray.push.bind(jsonpArray);
@@ -589,13 +589,13 @@ exports.generate = generate;
 
 // webpack env variables
 Object.defineProperty(exports, "__esModule", { value: true });
-console.log("ROOT_PATH: " + "/cold");
-console.assert("ca46c0b6d66896f9ede6df965ca10304bfad3b3f", "GIT_VERSION is not defined!");
+console.log("ROOT_PATH: " + "/");
+console.assert("56016538f993528131c23ed64e9d93f48f81f35c", "GIT_VERSION is not defined!");
 console.assert("https://github.com/zlumer/qr-packets-demo.git", "GIT_REMOTE is not defined!");
 exports.default = {
     blockchains: ["eth", "eos"],
-    basePath: "/cold",
-    gitVersion: "ca46c0b6d66896f9ede6df965ca10304bfad3b3f",
+    basePath: "/",
+    gitVersion: "56016538f993528131c23ed64e9d93f48f81f35c",
     gitRemote: "https://github.com/zlumer/qr-packets-demo.git",
 };
 
@@ -12095,4 +12095,4 @@ component.options.__file = "BigX.vue"
 
 /***/ })
 /******/ ]);
-//# sourceMappingURL=main.ff104e57.js.map
+//# sourceMappingURL=main.4cb467da.js.map
