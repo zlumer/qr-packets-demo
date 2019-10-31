@@ -1,11 +1,19 @@
 language: node_js
 node_js:
-  - "node"
+  - "11"
 cache: yarn
 services:
   - docker
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - gcc-6
+      - g++-6
+      - cmake
 install:
-  - yarn
+  - yarn --ignore-engines
   - yarn patch-package
 jobs:
   include:
