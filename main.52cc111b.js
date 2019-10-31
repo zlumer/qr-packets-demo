@@ -590,12 +590,12 @@ exports.generate = generate;
 // webpack env variables
 Object.defineProperty(exports, "__esModule", { value: true });
 console.log("ROOT_PATH: " + "/qr-packets-demo");
-console.assert("ca46c0b6d66896f9ede6df965ca10304bfad3b3f", "GIT_VERSION is not defined!");
+console.assert("56016538f993528131c23ed64e9d93f48f81f35c", "GIT_VERSION is not defined!");
 console.assert("https://github.com/zlumer/qr-packets-demo.git", "GIT_REMOTE is not defined!");
 exports.default = {
     blockchains: ["eth", "eos"],
     basePath: "/qr-packets-demo",
-    gitVersion: "ca46c0b6d66896f9ede6df965ca10304bfad3b3f",
+    gitVersion: "56016538f993528131c23ed64e9d93f48f81f35c",
     gitRemote: "https://github.com/zlumer/qr-packets-demo.git",
 };
 
@@ -12095,4 +12095,4 @@ component.options.__file = "BigX.vue"
 
 /***/ })
 /******/ ]);
-//# sourceMappingURL=main.5c7750ca.js.map
+//# sourceMappingURL=main.52cc111b.js.map
