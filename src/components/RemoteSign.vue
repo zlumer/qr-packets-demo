@@ -9,6 +9,7 @@
 		<button
 			v-if="!signing || loading"
 			class="blue-button"
+			:class="{[cfg.ident]: true}"
 			type="submit"
 			:disabled="signing || !canSign"
 			@click="onButton"
@@ -28,6 +29,7 @@
 <script lang="ts">
 import Vue from 'src/vue-ts'
 import RemoteCall from './RemoteCall.vue'
+import cfg from 'src/config'
 
 export default Vue.extend({
 	data()

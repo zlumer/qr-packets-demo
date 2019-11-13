@@ -1,14 +1,14 @@
 <template>
 	<!--<a class="css-1fdxz4i" href="/cold/">-->
 		<router-link to="/" class="logo-link">
-            <h1 :style="{ color: hcolor }">Ice Wallet<sup v-if="beta">beta mode</sup></h1>
+            <h1 :style="{ color: hcolor }">{{ appName }}<sup v-if="beta" :class="identcss">beta mode</sup></h1>
 		</router-link>
 	<!--</a>-->
 </template>
 
 <script lang="ts">
 import Vue from 'src/vue-ts'
-
+import config from 'src/config'
 export default Vue.extend({
     props: {
         black: {
@@ -24,6 +24,14 @@ export default Vue.extend({
         hcolor: function()
         {
             return this.black ? 'rgb(23, 25, 51)' : '#fff'
+        },                                                                                                                  
+        identcss: function()                                                                                           
+        {                                                                                                              
+            return { [config.ident]: true }                                                                            
+        },                                                                                                             
+        appName: function()                                                                                            
+        {                                                                                                              
+            return config.appName
         }
     }
 })
