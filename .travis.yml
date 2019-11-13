@@ -30,7 +30,7 @@ jobs:
           branch: master
     - stage: duxi build
       script:
-        - POI_PATH=/cold yarn build
+        - POI_PATH=/ yarn build
         - git show -s --pretty=%H > ./dist/gitrev
       deploy:
         provider: pages

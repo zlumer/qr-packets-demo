@@ -9,9 +9,14 @@ console.assert(GIT_VERSION, "GIT_VERSION is not defined!")
 declare let GIT_REMOTE: string
 console.assert(GIT_REMOTE, "GIT_REMOTE is not defined!")
 
+declare let PROJ_IDENT: string                                                                                                
+console.log(`PROJ_IDENT: ${PROJ_IDENT}`)
+
 export default {
 	blockchains: ["eth", "eos", "btc"],
 	basePath: ROOT_PATH,
+	ident: PROJ_IDENT,                                                                                                     
+  appName: (PROJ_IDENT == 'cold') ? 'Cold Crypto' : 'Ice Wallet',
 	gitVersion: GIT_VERSION,
 	gitRemote: GIT_REMOTE,
 }

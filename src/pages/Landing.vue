@@ -17,40 +17,69 @@
 		</header>
 		<main>
 			<div class="slide-1">
-        <div class="slide-wrapper">
-          <div class="preview"></div>
-          <div class="content">
-          <!-- <h1>The future of cold storage.</h1> -->
-          <h1>The future of cold storage</h1>
-          <!-- <h5>Why are we better?</h5> -->
-          <!-- <ul>
-            <li>Bitcoin ($BTC) and OMNI/Tether ($USDT)</li>
-            <li>Ethereum ($ETH) and ERC20 tokens</li>
-            <li>EOS ($EOS) and EOS tokens</li>
-            <li>Offline and online access</li>
-            <li>Offline and online payments</li>
-            <li>Completely free to use</li>
-          </ul> -->
-          <div class="description-text">
-            <!-- <p><strong>ICE wallet</strong> brings together the security of hardware and the usability of online wallets.</p>
-            <p>Trustless custody solution (cold crypto storage) on any mobile device with the ability to interact with DEXs, DApps and payments.</p> -->
-            <p><strong>ICE wallet</strong> brings together the security of hardware and the usability of online wallets.</p>
-            <p>Trustless custody solution (cold crypto storage) on any mobile device with the ability to interact with DEXs, DApps and payments.</p>
-          </div>
-          <a href="https://itunes.apple.com/ru/app/coldcrypto/id1447853999?l=en&mt=8"><div class="btn-appstore"></div></a>
-          </div>
-        </div>
-        <div class="actions-group slide-wrapper">
-          <h4>Sign in to your wallet:</h4>
-          <div class="actions">
-            <router-link to="/login">
-              <button class="btn btn-primary" data-cy="login-qr">Airgapped</button>
-            </router-link>
-            <router-link to="/webrtc">
-              <button class="btn btn-secondary" data-cy="login-webrtc">Online</button>
-            </router-link>
-          </div>
-        </div>
+			<div class="slide-wrapper">
+				<div class="content">
+				<h1>Cold Crypto is first mobile cold storage wallet</h1>
+				<h5>Why are we better?</h5>
+				<ul>
+					<li>Support of BTC, USDT, also ETH, ERC20 tokens, EOS and EOS tokens</li>
+					<li>Offline and online access</li>
+					<li>Offline and online payments</li>
+					<li>It's free</li>
+				</ul>
+				<a href="https://itunes.apple.com/ru/app/coldcrypto/id1447853999?l=en&mt=8"><div class="btn-appstore"></div></a>
+				</div>
+				<div class="preview"></div>
+			</div>
+			<div class="actions-group slide-wrapper">
+				<h4>Sign in to your wallet below</h4>
+				<div class="actions">
+					<router-link to="/login">
+						<button class="btn btn-primary" data-cy="login-qr">Airplane</button>
+					</router-link>
+				</div>
+			</div>
+			</div>
+			<div class="slide-2">
+			<div class="slide-wrapper">
+				<div class="slide-header">
+				<h2>Online Mode</h2>
+				<div class="content-label">
+					<div class="label-label-img secure"></div>
+					<span>Secure P2P connection</span>
+				</div>
+				</div>
+				<div class="slide-pic"></div>
+			</div>
+			</div>
+			<div class="slide-3">
+			<div class="slide-wrapper">
+				<div class="slide-header">
+				<h2>Offline Mode</h2>
+				</div>
+				<div class="slide-pic"></div>
+			</div>
+			</div>
+			<div class="info-block">
+			<div class="info-block-wrapper">
+				<div class="info-pic"></div>
+				<div class="info-content">
+				<div class="info-header">
+					Currently Cold Crypto is only avaliable on iOS
+				</div>
+				<div class="info-data">
+					<span>
+					To start using Cold Crypto please download
+					<a href="#">Here</a>
+					</span>
+					<span>
+					And then download the Cold Crypto app
+					<a href="#">Here</a>
+					</span>
+				</div>
+				</div>
+			</div>
+
 			</div>
 		</main>
 		<footer>
@@ -79,8 +108,8 @@ export default Vue.extend({
 		return {
 			links: [
 				{ text: 'GitHub', href: 'https://github.com/DucaturFw/cold-crypto-web/issues' },
-				{ text: 'Privacy policy', href: 'https://duxi.io/cold/COLDCRYPTO_PRIVACY_POLICY.pdf' },
-				{ text: 'Terms of Use', href: 'https://duxi.io/cold/COLDCRYPTO_TERMS_OF_USE.pdf' },
+				{ text: 'Privacy policy', href: 'https://coldcrypto.one/COLDCRYPTO_PRIVACY_POLICY.pdf' },
+				{ text: 'Terms of Use', href: 'https://coldcrypto.one/COLDCRYPTO_TERMS_OF_USE.pdf' },
 			]
 		}
 	},

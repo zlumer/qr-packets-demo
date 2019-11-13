@@ -35,7 +35,7 @@ export default (Vue as VueWithProps<{$refs: TRefs}>).extend({
 		return {
 			loginError: '',
 			status: 'not started',
-			url: "wss://duxi.io/shake",
+			url: "wss://coldcrypto.one/shake",
 			sid: '',
 		}
 	},
