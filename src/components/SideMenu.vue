@@ -120,7 +120,7 @@ export default Vue.extend({
           border-left: 3px solid #00BCF9;                                                                         
           background: rgba(179, 236, 254, 0.6);                                                                   
   }
-
+}
 .link .icon {
 	vertical-align: middle;
 	width: 2rem;
