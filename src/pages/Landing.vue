@@ -1,10 +1,9 @@
 <template>
-	<div>
+	<body>
 		<header>
 			<div class="wrapper">
 			<div class="logo">
-        <!-- <h1 class="logo-text">ICE WALLET</h1> -->
-        <logo class="logo-text"/>
+				<img src="img/header_logo.svg"/>
 			</div>
 			<nav>
 				<a
@@ -79,12 +78,11 @@
 				</div>
 				</div>
 			</div>
-
 			</div>
 		</main>
 		<footer>
 			<div class="wrapper">
-			<div class="copy">The project by ICE WALLET</div>
+			<div class="copy">The project by DUCATUR</div>
 			<nav>
 				<a
 					v-for="link in links"
@@ -94,13 +92,12 @@
 			</nav>
 			</div>
 		</footer>
-	</div>
+	</body>
 </template>
 
 <script lang="ts">
 import Vue from 'src/vue-ts'
 import { reset } from 'src/webrtcsingleton'
-import Logo from 'src/components/LogoIce.vue'
 
 export default Vue.extend({
 	data()
@@ -116,10 +113,7 @@ export default Vue.extend({
 	beforeMount()
 	{
 		reset(true)
-  },
-  components: {
-    Logo,
-  }
+	}
 })
 </script>
 
@@ -165,7 +159,7 @@ nav {
 }
 
 nav > a {
-  color: #5ca0d3;
+  color: #3F83FE;
   text-decoration: none;
   padding: 0 1vw;
   text-align: center;
@@ -174,37 +168,31 @@ nav > a {
 h1 {
   font-weight: normal;
   font-size: 2.64rem;
-  color: #5ca0d3;
+  color: #3F83FE;
   line-height: 3.34rem;
-  // text-transform: uppercase;
-  // letter-spacing: -.14rem;
+  text-transform: uppercase;
+  letter-spacing: -.14rem;
   margin: 2rem 0 1rem 0;
-}
-.logo .logo-text {
-  transform: scale(0.4);
-  transform-origin: left;
 }
 
 h2 {
-  color: #5ca0d3;
+  color: #3F83FE;
   font-size: 3rem;
-  // text-transform: uppercase;
+  text-transform: uppercase;
   font-weight: normal;
 }
 
 h4 {
   font-size: 1.8rem;
-  // text-transform: uppercase;
-  color: #5ca0d3;
-  font-weight: normal;
+  text-transform: uppercase;
+  color: #2C99ED;
 }
 
 h5 {
   font-size: 1.6rem;
-  color: #5ca0d3;
-  // text-transform: uppercase;
+  color: #1FAAFE;
+  text-transform: uppercase;
   margin: 0 0 1rem 0;
-  font-weight: normal;
 }
 
 .slide-wrapper {
@@ -216,17 +204,16 @@ h5 {
 }
 
 .slide-1 {
-  /* background: url('../../static/img/main_bg.svg') no-repeat top center; */
+  background: url('../../static/img/main_bg.svg') no-repeat top center;
   background-size: cover;
   width: 100vw;
-  // height: 95vh;
+  height: 95vh;
   padding: 2rem;
   box-sizing: border-box;
   margin-top: 1rem;
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
-  max-width: 100%;
 }
 
 .slide-1 .slide-wrapper {
@@ -235,16 +222,6 @@ h5 {
 
 .slide-1 .content {
   padding-left: 1rem;
-  width: 100%;
-}
-
-.slide-1 .content h1 {
-  text-transform: uppercase;
-  font-weight: bold;
-}
-
-.description-text {
-  font-size: 1.2rem;
 }
 
 .slide-1 .btn-appstore {
@@ -255,12 +232,10 @@ h5 {
 }
 
 .slide-1 .preview {
-  background: url("../../static/img/main_phone.svg") no-repeat center left;
+  background: url("../../static/img/main_phone.svg") no-repeat center right;
   background-size: contain;
-  width: 30vw;
-  // height: 60vh;
-  min-height: 60vh;
-  max-width: 30vw;
+  width: 50vw;
+  height: 60vh;
 }
 
 .slide-1 .actions-group {
@@ -275,7 +250,7 @@ h5 {
 }
 
 ul {
-  // font-size: .85rem;
+  font-size: .85rem;
   margin: 0;
   padding-left: 1rem;
 }
@@ -283,7 +258,6 @@ ul {
 ul > li {
   margin: .5rem 0;
   list-style: none;
-  line-height: 1.5rem;
 }
 
 ul > li:before {
@@ -293,7 +267,7 @@ ul > li:before {
   width: 1rem;
   height: 1rem;
   margin-left: -1rem;
-  margin-top: .5rem;
+  margin-top: .2rem;
 }
 
 .btn {
@@ -305,14 +279,14 @@ ul > li:before {
 }
 
 .btn-primary {
-  background: #5ca0d3;
+  background: #2C99ED;
   color: #FFFFFF;
 }
 
 .btn-secondary {
   background: #FFFFFF;
-  border: 2px solid #5ca0d3;
-  color: #5ca0d3;
+  border: 2px solid #2C99ED;
+  color: #2C99ED;
 }
 
 .slide-2 {
@@ -348,7 +322,7 @@ ul > li:before {
 
 .slide-2 .content-label {
   font-size: 1.6rem;
-  color: #5ca0d3;
+  color: #2C99ED;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -426,7 +400,7 @@ ul > li:before {
   font-size: 1.2rem;
   line-height: 2rem;
   color: #4A4A4A;
-  // text-transform: uppercase;
+  text-transform: uppercase;
 }
 
 .info-block .info-data {
@@ -437,7 +411,7 @@ ul > li:before {
 }
 
 .info-block .info-data a {
-  color: #5ca0d3;
+  color: #2C99ED;
   line-height: 1.6rem;
   text-decoration: none;
 }
