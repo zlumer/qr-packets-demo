@@ -1,15 +1,22 @@
 <template>
 	<!--<a class="css-1fdxz4i" href="/cold/">-->
 		<router-link to="/" class="logo-link">
-            <h1 :style="{ color: hcolor }">{{ appName }}<sup v-if="beta" :class="identcss">beta mode</sup></h1>
+            <h1 :style="{ color: hcolor }">{{ appName }}<sup v-if="beta" :class="cssident">beta mode</sup></h1>
 		</router-link>
 	<!--</a>-->
 </template>
 
 <script lang="ts">
 import Vue from 'src/vue-ts'
-import config from 'src/config'
+import { appName, cssident } from 'src/multiproj'
+
 export default Vue.extend({
+    data: function()
+    {
+        return {
+            appName, cssident
+        }
+    },
     props: {
         black: {
             type: Boolean,
@@ -24,15 +31,7 @@ export default Vue.extend({
         hcolor: function()
         {
             return this.black ? 'rgb(23, 25, 51)' : '#fff'
-        },                                                                                                                  
-        identcss: function()                                                                                           
-        {                                                                                                              
-            return { [config.ident]: true }                                                                            
-        },                                                                                                             
-        appName: function()                                                                                            
-        {                                                                                                              
-            return config.appName
-        }
+        },
     }
 })
 </script>

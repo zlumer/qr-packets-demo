@@ -31,10 +31,9 @@
   * Improve consistency of default fonts in all browsers. (https://github.com/sindresorhus/modern-normalize/issues/3)
   */
   body {
-    /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
       Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-      'Segoe UI Symbol'; */
-      font-family: 'Source Sans Pro','Helvetica Neue',Helvetica,Arial,sans-serif;
+      'Segoe UI Symbol';
   }
   /**
   * Correct the font size and margin on \`h1\` elements within \`section\` and

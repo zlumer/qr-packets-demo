@@ -1,5 +1,5 @@
 <template>
-    <div class="container" :class="{[cfg.ident]: true}">
+    <div class="container" :class="cssident">
 		<mp-header />
     	<main>
         	<slot/>
@@ -12,9 +12,15 @@
 import Vue from 'src/vue-ts'
 import Header from 'src/components/MainPageHeader.vue'
 import Footer from 'src/components/MainPageFooter.vue'
-import cfg from 'src/config'
+import { cssident } from 'src/multiproj'
 
 export default Vue.extend({
+	data: function()
+	{
+		return {
+			cssident
+		}
+	},
 	components: {
 		"mp-header": Header,
 		"mp-footer": Footer,

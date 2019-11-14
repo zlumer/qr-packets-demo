@@ -32,7 +32,7 @@ import Vue from 'src/vue-ts'
 import Logo from './Logo.vue'
 import CryptoIcon from './icons/CryptoIcon.vue'
 import { IWallet } from 'src/store/interop'
-import cfg from 'src/config'
+import { cssident } from 'src/multiproj'
 
 export default Vue.extend({
 	computed: {
@@ -71,9 +71,9 @@ export default Vue.extend({
 			}
 		},
 		identcss: function(obj: {})
-  	{
-			return { [cfg.ident]: true, ...obj }
-  	},
+		{
+			return { ...cssident, ...obj }
+		},
 		isActiveWallet: function(w: IWallet)
 		{
 			if (!this.selectedAddress || !w || !w.address)

@@ -8,7 +8,7 @@
 		</div>
 		<!-- <button @click="renderZrx()">render</button> -->
 
-		<div v-if="loginProcess" class="hint-item">Scan this QR code with Ice Wallet mobile app to login</div>
+		<div v-if="loginProcess" class="hint-item">{{ subheader }}</div>
 		<remote-call
 			v-if="command"
 			qr-width="350px"
@@ -30,6 +30,7 @@ import Vue from 'src/vue-ts'
 import { Provider } from 'web3/providers'
 import RemoteCall from 'src/components/RemoteCall.vue'
 import { IWallet } from 'src/store/interop'
+import { appName } from 'src/multiproj'
 
 interface ZRXInstantRenderProps
 {
@@ -99,6 +100,9 @@ export default Vue.extend({
 		{
 			return this.command && (this.command.method == 'getWalletList')
 		},
+		subheader: function() {
+			return 'Scan this QR code with ' + appName + ' mobile app to login'
+		}
 	},
 	methods: {
 		hasLoaded()
