@@ -44,7 +44,6 @@ export default App
 }
 html,
 body {
-	font-family: 'Source Sans Pro','Helvetica Neue',Helvetica,Arial,sans-serif;
 	margin: 0;
 	font-size: 16px;
 	div.ice {

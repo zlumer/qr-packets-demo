@@ -9,7 +9,7 @@
 		<button
 			v-if="!signing || loading"
 			class="blue-button"
-			:class="{[cfg.ident]: true}"
+			:class="cssident"
 			type="submit"
 			:disabled="signing || !canSign"
 			@click="onButton"
@@ -29,13 +29,14 @@
 <script lang="ts">
 import Vue from 'src/vue-ts'
 import RemoteCall from './RemoteCall.vue'
-import cfg from 'src/config'
+import { cssident } from 'src/multiproj'
 
 export default Vue.extend({
 	data()
 	{
 		return {
 			signing: false,
+			cssident
 		}
 	},
 	props: {
