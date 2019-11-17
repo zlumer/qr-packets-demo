@@ -1,4 +1,6 @@
 /node_modules
+/cypress
+cypress.json
 yarn-error.log
 npm-debug.log
 /dist
