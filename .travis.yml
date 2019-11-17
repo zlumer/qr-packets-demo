@@ -18,7 +18,7 @@ install:
 jobs:
   include:
     - stage: github build
-      script: POI_PATH=/qr-packets-demo yarn build
+      script: POI_PATH=/qr-packets-demo POI_PROJ=cold yarn build
       deploy:
         provider: pages
         skip-cleanup: true
@@ -30,7 +30,7 @@ jobs:
           branch: master
     - stage: duxi build
       script:
-        - POI_PATH=/ yarn build
+        - POI_PATH=/ POI_PROJ=cold yarn build
         - git show -s --pretty=%H > ./dist/gitrev
       deploy:
         provider: pages
@@ -43,7 +43,7 @@ jobs:
           branch: master
     - stage: icewall build
       script:
-        - POI_PATH=/ yarn build
+        - POI_PATH=/ POI_PROJ=ice yarn build
         - git show -s --pretty=%H > ./dist/gitrev
       deploy:
         provider: pages
@@ -53,4 +53,4 @@ jobs:
         target-branch: gh-pages-ice
         local-dir: dist
         on:
-          branch: ice-wall
+          branch: master
