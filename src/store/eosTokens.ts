@@ -4,7 +4,7 @@ import { IChainId, defaultChainId } from "src/blockchains/eos"
 import { IWallet } from "./interop"
 import { calcWalletId } from "./utils"
 import { typedBlockchains } from "src/blockchains"
-import { loadTokensList } from "src/blockchains/eospark"
+import { loadTokensList } from "src/blockchains/eos/bloksio"
 
 export const options: SOptions = {
 	state: {
@@ -112,27 +112,26 @@ export const options: SOptions = {
 			
 			let res = await loadTokensList(wallet.address)
 			
-			res.symbol_list.forEach(info =>
+			res.tokens.forEach(info =>
 			{
-				// TODO: call updateTokenInfo() and load new token data
 				store.commit('eosTokens_setTokenInfo', {
 					chainId: wallet.chainId as IChainId,
-					contractAddr: info.code,
+					contractAddr: info.contract,
 					info: {
 						notatoken: false,
-						decimals: 4,
-						name: info.symbol,
-						symbol: info.symbol,
+						decimals: parseInt(info.decimals),
+						name: info.metadata.name || info.currency,
+						symbol: info.currency,
 					}
 				})
 				store.commit('eosTokens_setTokenBalance', {
 					wallet: wallet,
-					contractAddr: info.code,
-					amount: info.balance
+					contractAddr: info.contract,
+					amount: info.amount + "",
 				})
 			})
 
-			let addresses = res.symbol_list.map(x => x.code)
+			let addresses = res.tokens.map(x => x.contract)
 			if (!addresses.length)
 				store.commit('eosTokens_setTokenBalanceEmpty', { wallet })
 			addresses.forEach(addr =>

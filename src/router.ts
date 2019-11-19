@@ -1,6 +1,7 @@
 import VueRouter, { NavigationGuard } from "vue-router"
 
-import Landing from "./pages/Landing.vue"
+import LandingIce from "./pages/LandingTilda.vue"
+import LandingCold from "./pages/Landing.vue"
 import Login from "./pages/Login.vue"
 import Wallets from "./pages/Wallets.vue"
 import Wallet from "./pages/Wallet.vue"
@@ -28,6 +29,15 @@ export function createRouter(store: Store)
 		let blockchain = to.params.blockchain as IBlockchainSymbol
 		let address: string = to.params.address
 		let chainId: string = (to.query.chainId || "").toString()
+		if (store.state.currentWallet)
+		{
+			if (!address)
+				address = store.state.currentWallet.address
+			if (!chainId)
+				chainId = store.state.currentWallet.chainId + ""
+			if (!blockchain)
+				blockchain = store.state.currentWallet.blockchain
+		}
 		store.commit('setCurrentWallet', { wallet: { blockchain, address, chainId } })
 		return next()
 	}
@@ -51,7 +61,7 @@ export function createRouter(store: Store)
 		...(BASE_PATH ? { base: BASE_PATH } : {}),
 		mode: 'history',
 		routes: [
-			{ path: '/', component: Landing, meta: metaLayout('default') },
+			{ path: '/', component: config.ident == "cold" ? LandingCold : LandingIce, meta: metaLayout('default') },
 			{ path: '/login', component: Login, meta: metaLayout('home') },
 			{ path: '/webrtc', component: WebrtcVue, meta: metaLayout('home') },
 			{ path: '/wallets', component: Wallets, meta: metaLayout('default') },
@@ -90,6 +100,7 @@ export function createRouter(store: Store)
 				name: 'wallet',
 				component: Wallet,
 				meta: metaLayout('app'),
+				beforeEnter: updateWallet,
 				children: [
 					{
 						path: 'create',

@@ -1,13 +1,14 @@
 <template>
 	<header>
 		<div class="copyright">
-			© Cold Crypto 2018. All rights reserved. Version:
+			{{ copyright }}
 			<span class="version"><a :href="commitLink"><code>{{ version }}</code></a></span>
 			<div class="api">API by
 				<a href="https://etherscan.io/">Etherscan</a>,
 				<a href="https://coinmarketcap.com/">CoinMarketCap</a>,
 				<a href="https://etherchain.org/">Etherchain</a>,
 				<a href="https://ethgasstation.info/">ETH Gas Station</a>,
+				<a href="https://bloks.io/">Bloks.io</a>,
 				<a href="https://greymass.com/">Greymass</a>.
 				Blockchain nodes by
 				<a href="https://infura.io/">Infura</a>,
@@ -20,6 +21,7 @@
 <script lang="ts">
 import Vue from 'src/vue-ts'
 import config from 'src/config'
+import { appName, ident } from '../multiproj'
 
 export default Vue.extend({
 	computed: {
@@ -36,6 +38,9 @@ export default Vue.extend({
 			remoteUrl = remoteUrl.replace('git@github.com:', 'https://github.com/')
 			remoteUrl = remoteUrl.replace(/\.git$/, '')
 			return `${remoteUrl}/tree/${this.version}`
+		},
+		copyright: function() {
+			return '&copy; '+ appName+' 2018-2019. All rights reserved. Version:'
 		}
 	}
 })
@@ -53,7 +58,7 @@ header {
     font-size: 0.85rem;
     padding-left: 2rem;
 }
-.copyright a {
+.copyright a{
 	text-decoration-color: none;
 	color: inherit;
 }

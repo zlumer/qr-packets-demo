@@ -1,7 +1,7 @@
 <template>
 	<white-popup
 		header="Online Login"
-		subheader="Scan QR code with Cold Crypto mobile app to login"
+		:subheader="subheader"
 	>
 		<h1 v-if="connected">CONNECTED</h1>
 		<div v-else data-cy="webrtc-force" ref="wrapper">
@@ -24,6 +24,7 @@ import { WebrtcHSInitiator } from "../network/wrtchs"
 import { fromQuery } from 'src/router-tools'
 import config from 'src/config'
 import { IWallet } from 'src/store/interop'
+import { appName } from 'src/multiproj'
 
 type TRefs = {
 	wrapper: HTMLDivElement
@@ -72,7 +73,11 @@ export default (Vue as VueWithProps<{$refs: TRefs}>).extend({
 				return ""
 			
 			return `webrtcLogin|1|${JSON.stringify({ sid: this.sid, url: this.url })}`
+		},
+		subheader: function() {
+			return 'Scan QR code with ' + appName + ' mobile app to login'
 		}
+		
 	},
 	watch: {
 		connected: function()

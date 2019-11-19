@@ -8,7 +8,7 @@
 		</div>
 		<!-- <button @click="renderZrx()">render</button> -->
 
-		<div v-if="loginProcess" class="hint-item">Scan this QR code with Cold Crypto mobile app to login</div>
+		<div v-if="loginProcess" class="hint-item">{{ subheader }}</div>
 		<remote-call
 			v-if="command"
 			qr-width="350px"
@@ -30,6 +30,7 @@ import Vue from 'src/vue-ts'
 import { Provider } from 'web3/providers'
 import RemoteCall from 'src/components/RemoteCall.vue'
 import { IWallet } from 'src/store/interop'
+import { appName } from 'src/multiproj'
 
 interface ZRXInstantRenderProps
 {
@@ -99,6 +100,9 @@ export default Vue.extend({
 		{
 			return this.command && (this.command.method == 'getWalletList')
 		},
+		subheader: function() {
+			return 'Scan this QR code with ' + appName + ' mobile app to login'
+		}
 	},
 	methods: {
 		hasLoaded()
@@ -127,7 +131,7 @@ export default Vue.extend({
 			zeroExInstant.render({
 				orderSource: 'https://api.radarrelay.com/0x/v2/',
 				networkId: chainId,
-				walletDisplayName: 'Cold Crypto',
+				walletDisplayName: appName,
 				provider: {
 					async send(payload, callback)
 					{

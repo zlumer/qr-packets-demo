@@ -1,7 +1,7 @@
 <template>
 	<white-popup
 		header="Airgapped Login"
-		subheader="Scan QR code with Cold Crypto mobile app to login"
+		:subheader="subheader"
 	>
 		<remote-call
 			intro=""
@@ -21,6 +21,7 @@ import WhitePopup from 'src/components/WhitePopup.vue'
 import config from "src/config"
 import { IWallet } from 'src/store/interop'
 import { fromQuery } from 'src/router-tools'
+import { appName } from 'src/multiproj'
 
 export default Vue.extend({
 	data()
@@ -44,6 +45,9 @@ export default Vue.extend({
 		{
 			let blockchains = this.blockchains
 			return JSON.stringify({ blockchains })
+		},
+		subheader: function() {
+			return 'Scan QR code with ' + appName + ' mobile app to login'
 		}
 	},
 	methods: {

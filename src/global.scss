@@ -9,7 +9,12 @@
 	line-height: 1.45rem;
 	width: 100%;
 	border-radius: 6rem;
-	background: #00BCF9;
+	&.cold {                                                                                                             
+	              background: #00BCF9;                                                                                   
+	}                                                                                                              
+	&.ice {                                                                                                        
+					background: #5ca0d3;                                                                                   
+	}
 	color: #fff;
 	transition: .2s ease-in-out all;
 	font-size: 1.1rem;	

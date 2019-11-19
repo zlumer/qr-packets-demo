@@ -9,6 +9,7 @@
 		<button
 			v-if="!signing || loading"
 			class="blue-button"
+			:class="cssident"
 			type="submit"
 			:disabled="signing || !canSign"
 			@click="onButton"
@@ -28,12 +29,14 @@
 <script lang="ts">
 import Vue from 'src/vue-ts'
 import RemoteCall from './RemoteCall.vue'
+import { cssident } from 'src/multiproj'
 
 export default Vue.extend({
 	data()
 	{
 		return {
 			signing: false,
+			cssident
 		}
 	},
 	props: {
@@ -92,6 +95,19 @@ export default Vue.extend({
 		onResult(signedTx: string)
 		{
 			console.log(`signed tx: ${signedTx}`)
+			
+			if (this.blockchainId == 'btc')
+			{
+				// I'm so fucking sorry for this edge case, please forgive me
+				let skeleton = this.$store.state.btcSkeletonTx
+				let { signatures, publicKeys } = signedTx as any
+				signedTx = JSON.stringify({
+					...skeleton,
+					signatures,
+					pubkeys: publicKeys
+				})
+			}
+
 			this.$store.commit('setTxToPush', { tx: signedTx, wallet: this.wallet })
 			this.$router.push({ name: "pushtx", params: {
 				blockchain: this.blockchainId,

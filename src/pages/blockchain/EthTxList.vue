@@ -1,5 +1,5 @@
 <template>
-	<div class="tx-list-container">
+	<div class="tx-list-container" :class="cssident">
 		<span v-if="error" data-cy="error">ERROR LOADING TRANSACTIONS: {{ error }}</span>
 		<span v-else-if="loading" data-cy="loading">Loading tx list...</span>
 
@@ -45,8 +45,14 @@
 .self-tag {
 	padding: 4px;
 	border-radius: 4px;
+	&.cold {                    
     color: #00BCF9;
-	background: rgba(179, 236, 254, 0.6);
+		background: rgba(179, 236, 254, 0.6);
+	}
+	&.ice {
+		color: #5ca0d3;
+		background: #f0e9e9;
+	}
 }
 table {
 	border-collapse: collapse;
@@ -70,7 +76,12 @@ table {
 		text-align: center;
 	}
 	th {
-		color: #457b9d;
+		&.cold {                    
+			color: #457b9d;
+		}
+		&.ice {
+			color: #5ca0d3;
+		}
 		padding: .5rem;
 	}
 	tr {
@@ -82,6 +93,7 @@ table {
 <script lang="ts">
 import Vue from 'src/vue-ts'
 import { IWallet } from 'src/store/interop'
+import { cssident } from 'src/multiproj'
 
 interface ITransaction
 {
@@ -95,6 +107,7 @@ export default Vue.extend({
 	data()
 	{
 		return {
+			cssident
 		}
 	},
 	props: {
