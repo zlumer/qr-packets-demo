@@ -40,7 +40,7 @@ export default Vue.extend({
 			return `${remoteUrl}/tree/${this.version}`
 		},
 		copyright: function() {
-			return '© '+ appName+' 2018. All rights reserved. Version:'
+			return '&copy; '+ appName+' 2018-2019. All rights reserved. Version:'
 		}
 	}
 })
