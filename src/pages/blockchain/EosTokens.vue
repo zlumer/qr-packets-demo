@@ -282,7 +282,7 @@ export default Vue.extend({
 			this.tx = {
 				to: form.to,
 				amount,
-				memo: appName + ' token transfer',
+				memo: `${appName} token transfer`,
 			}
 			this.loading = false
 		},
