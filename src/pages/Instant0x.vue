@@ -131,7 +131,7 @@ export default Vue.extend({
 			zeroExInstant.render({
 				orderSource: 'https://api.radarrelay.com/0x/v2/',
 				networkId: chainId,
-				walletDisplayName: 'Ice Wallet',
+				walletDisplayName: appName,
 				provider: {
 					async send(payload, callback)
 					{
