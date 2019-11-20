@@ -36,6 +36,9 @@
 					<router-link to="/login">
 						<button class="btn btn-primary" data-cy="login-qr">Airplane</button>
 					</router-link>
+          <router-link to="/webrtc">
+						<button class="btn btn-secondary" data-cy="login-webrtc">Online</button>
+					</router-link>
 				</div>
 			</div>
 			</div>
