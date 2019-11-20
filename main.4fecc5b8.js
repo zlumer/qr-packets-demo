@@ -520,14 +520,14 @@ var isChecksumAddress = function (address) {
 // webpack env variables
 Object.defineProperty(exports, "__esModule", { value: true });
 console.log("ROOT_PATH: " + "/");
-console.assert("9139d6b12487c69c138cf311aca0ff2bde0c4415", "GIT_VERSION is not defined!");
+console.assert("4bcbe3c9b4bb36659bd23df7ec8f9833fb493592", "GIT_VERSION is not defined!");
 console.assert("https://github.com/zlumer/qr-packets-demo.git", "GIT_REMOTE is not defined!");
 console.log("PROJ_IDENT: " + "cold");
 exports.default = {
     blockchains: ["eth", "eos", "btc"],
     basePath: "/",
     ident: "cold",
-    gitVersion: "9139d6b12487c69c138cf311aca0ff2bde0c4415",
+    gitVersion: "4bcbe3c9b4bb36659bd23df7ec8f9833fb493592",
     gitRemote: "https://github.com/zlumer/qr-packets-demo.git",
 };
 
@@ -1620,7 +1620,7 @@ exports.default = vue_ts_1.default.extend({
 /***/ }),
 /* 113 */
 /*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader??ref--1-oneOf-2-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/sass-loader/lib/loader.js??ref--1-oneOf-2-2!./node_modules/vue-loader/lib??vue-loader-options!./src/pages/Landing.vue?vue&type=style&index=0&id=18a1f2ee&lang=scss&scoped=true& ***!
+  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader??ref--1-oneOf-2-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/sass-loader/lib/loader.js??ref--1-oneOf-2-2!./node_modules/vue-loader/lib??vue-loader-options!./src/pages/Landing.vue?vue&type=style&index=0&id=7695e2ae&lang=scss&scoped=true& ***!
   \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /*! exports used: default */
@@ -6597,7 +6597,7 @@ var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _
 /***/ }),
 /* 252 */
 /*!**************************************************************************************!*\
-  !*** ./src/pages/Landing.vue?vue&type=template&id=18a1f2ee&scoped=true& + 1 modules ***!
+  !*** ./src/pages/Landing.vue?vue&type=template&id=7695e2ae&scoped=true& + 1 modules ***!
   \**************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /*! exports used: render, staticRenderFns */
@@ -6605,12 +6605,12 @@ var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _
 
 "use strict";
 
-// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./src/pages/Landing.vue?vue&type=template&id=18a1f2ee&scoped=true&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('body',[_c('header',[_c('div',{staticClass:"wrapper"},[_vm._m(0),_vm._v(" "),_c('nav',_vm._l((_vm.links),function(link){return _c('a',{key:link.text,attrs:{"href":link.href}},[_vm._v(_vm._s(link.text))])}))])]),_vm._v(" "),_c('main',[_c('div',{staticClass:"slide-1"},[_vm._m(1),_vm._v(" "),_c('div',{staticClass:"actions-group slide-wrapper"},[_c('h4',[_vm._v("Sign in to your wallet below")]),_vm._v(" "),_c('div',{staticClass:"actions"},[_c('router-link',{attrs:{"to":"/login"}},[_c('button',{staticClass:"btn btn-primary",attrs:{"data-cy":"login-qr"}},[_vm._v("Airplane")])])],1)])]),_vm._v(" "),_vm._m(2),_vm._v(" "),_vm._m(3),_vm._v(" "),_vm._m(4)]),_vm._v(" "),_c('footer',[_c('div',{staticClass:"wrapper"},[_c('div',{staticClass:"copy"},[_vm._v("The project by DUCATUR")]),_vm._v(" "),_c('nav',_vm._l((_vm.links),function(link){return _c('a',{key:link.text,attrs:{"href":link.href}},[_vm._v(_vm._s(link.text))])}))])])])}
-var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"logo"},[_c('img',{attrs:{"src":"img/header_logo.svg"}})])},function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"slide-wrapper"},[_c('div',{staticClass:"content"},[_c('h1',[_vm._v("Cold Crypto is first mobile cold storage wallet")]),_vm._v(" "),_c('h5',[_vm._v("Why are we better?")]),_vm._v(" "),_c('ul',[_c('li',[_vm._v("Support of BTC, USDT, also ETH, ERC20 tokens, EOS and EOS tokens")]),_vm._v(" "),_c('li',[_vm._v("Offline and online access")]),_vm._v(" "),_c('li',[_vm._v("Offline and online payments")]),_vm._v(" "),_c('li',[_vm._v("It's free")])]),_vm._v(" "),_c('a',{attrs:{"href":"https://itunes.apple.com/ru/app/coldcrypto/id1447853999?l=en&mt=8"}},[_c('div',{staticClass:"btn-appstore"})])]),_vm._v(" "),_c('div',{staticClass:"preview"})])},function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"slide-2"},[_c('div',{staticClass:"slide-wrapper"},[_c('div',{staticClass:"slide-header"},[_c('h2',[_vm._v("Online Mode")]),_vm._v(" "),_c('div',{staticClass:"content-label"},[_c('div',{staticClass:"label-label-img secure"}),_vm._v(" "),_c('span',[_vm._v("Secure P2P connection")])])]),_vm._v(" "),_c('div',{staticClass:"slide-pic"})])])},function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"slide-3"},[_c('div',{staticClass:"slide-wrapper"},[_c('div',{staticClass:"slide-header"},[_c('h2',[_vm._v("Offline Mode")])]),_vm._v(" "),_c('div',{staticClass:"slide-pic"})])])},function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"info-block"},[_c('div',{staticClass:"info-block-wrapper"},[_c('div',{staticClass:"info-pic"}),_vm._v(" "),_c('div',{staticClass:"info-content"},[_c('div',{staticClass:"info-header"},[_vm._v("\n\t\t\t\tCurrently Cold Crypto is only avaliable on iOS\n\t\t\t")]),_vm._v(" "),_c('div',{staticClass:"info-data"},[_c('span',[_vm._v("\n\t\t\t\tTo start using Cold Crypto please download\n\t\t\t\t"),_c('a',{attrs:{"href":"#"}},[_vm._v("Here")])]),_vm._v(" "),_c('span',[_vm._v("\n\t\t\t\tAnd then download the Cold Crypto app\n\t\t\t\t"),_c('a',{attrs:{"href":"#"}},[_vm._v("Here")])])])])])])}]
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./src/pages/Landing.vue?vue&type=template&id=7695e2ae&scoped=true&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('body',[_c('header',[_c('div',{staticClass:"wrapper"},[_vm._m(0),_vm._v(" "),_c('nav',_vm._l((_vm.links),function(link){return _c('a',{key:link.text,attrs:{"href":link.href}},[_vm._v(_vm._s(link.text))])}))])]),_vm._v(" "),_c('main',[_c('div',{staticClass:"slide-1"},[_vm._m(1),_vm._v(" "),_c('div',{staticClass:"actions-group slide-wrapper"},[_c('h4',[_vm._v("Sign in to your wallet below")]),_vm._v(" "),_c('div',{staticClass:"actions"},[_c('router-link',{attrs:{"to":"/login"}},[_c('button',{staticClass:"btn btn-primary",attrs:{"data-cy":"login-qr"}},[_vm._v("Airplane")])]),_vm._v(" "),_c('router-link',{attrs:{"to":"/webrtc"}},[_c('button',{staticClass:"btn btn-secondary",attrs:{"data-cy":"login-webrtc"}},[_vm._v("Online")])])],1)])]),_vm._v(" "),_vm._m(2),_vm._v(" "),_vm._m(3),_vm._v(" "),_vm._m(4)]),_vm._v(" "),_c('footer',[_c('div',{staticClass:"wrapper"},[_c('div',{staticClass:"copy"},[_vm._v("The project by DUCATUR")]),_vm._v(" "),_c('nav',_vm._l((_vm.links),function(link){return _c('a',{key:link.text,attrs:{"href":link.href}},[_vm._v(_vm._s(link.text))])}))])])])}
+var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"logo"},[_c('img',{attrs:{"src":"img/header_logo.svg"}})])},function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"slide-wrapper"},[_c('div',{staticClass:"content"},[_c('h1',[_vm._v("Cold Crypto is first mobile cold storage wallet")]),_vm._v(" "),_c('h5',[_vm._v("Why are we better?")]),_vm._v(" "),_c('ul',[_c('li',[_vm._v("Support of BTC, USDT, also ETH, ERC20 tokens, EOS and EOS tokens")]),_vm._v(" "),_c('li',[_vm._v("Offline and online access")]),_vm._v(" "),_c('li',[_vm._v("Offline and online payments")]),_vm._v(" "),_c('li',[_vm._v("It's free")])]),_vm._v(" "),_c('a',{attrs:{"href":"https://itunes.apple.com/ru/app/coldcrypto/id1447853999?l=en&mt=8"}},[_c('div',{staticClass:"btn-appstore"})])]),_vm._v(" "),_c('div',{staticClass:"preview"})])},function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"slide-2"},[_c('div',{staticClass:"slide-wrapper"},[_c('div',{staticClass:"slide-header"},[_c('h2',[_vm._v("Online Mode")]),_vm._v(" "),_c('div',{staticClass:"content-label"},[_c('div',{staticClass:"label-label-img secure"}),_vm._v(" "),_c('span',[_vm._v("Secure P2P connection")])])]),_vm._v(" "),_c('div',{staticClass:"slide-pic"})])])},function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"slide-3"},[_c('div',{staticClass:"slide-wrapper"},[_c('div',{staticClass:"slide-header"},[_c('h2',[_vm._v("Offline Mode")])]),_vm._v(" "),_c('div',{staticClass:"slide-pic"})])])},function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"info-block"},[_c('div',{staticClass:"info-block-wrapper"},[_c('div',{staticClass:"info-pic"}),_vm._v(" "),_c('div',{staticClass:"info-content"},[_c('div',{staticClass:"info-header"},[_vm._v("\n\t\t\t\t\tCurrently Cold Crypto is only avaliable on iOS\n\t\t\t\t")]),_vm._v(" "),_c('div',{staticClass:"info-data"},[_c('span',[_vm._v("\n\t\t\t\t\tTo start using Cold Crypto please download\n\t\t\t\t\t"),_c('a',{attrs:{"href":"#"}},[_vm._v("Here")])]),_vm._v(" "),_c('span',[_vm._v("\n\t\t\t\t\tAnd then download the Cold Crypto app\n\t\t\t\t\t"),_c('a',{attrs:{"href":"#"}},[_vm._v("Here")])])])])])])}]
 
 
-// CONCATENATED MODULE: ./src/pages/Landing.vue?vue&type=template&id=18a1f2ee&scoped=true&
+// CONCATENATED MODULE: ./src/pages/Landing.vue?vue&type=template&id=7695e2ae&scoped=true&
 /* concated harmony reexport render */__webpack_require__.d(__webpack_exports__, "a", function() { return render; });
 /* concated harmony reexport staticRenderFns */__webpack_require__.d(__webpack_exports__, "b", function() { return staticRenderFns; });
 
@@ -8916,10 +8916,10 @@ module.exports = __webpack_require__.p + "1cfd5dba4a9210bcf77f5dbe48ec2e66.svg";
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Landing_vue_vue_type_template_id_18a1f2ee_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Landing.vue?vue&type=template&id=18a1f2ee&scoped=true& */ 252);
+/* harmony import */ var _Landing_vue_vue_type_template_id_7695e2ae_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Landing.vue?vue&type=template&id=7695e2ae&scoped=true& */ 252);
 /* harmony import */ var _Landing_vue_vue_type_script_lang_ts___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Landing.vue?vue&type=script&lang=ts& */ 111);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _Landing_vue_vue_type_script_lang_ts___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _Landing_vue_vue_type_script_lang_ts___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _Landing_vue_vue_type_style_index_0_id_18a1f2ee_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Landing.vue?vue&type=style&index=0&id=18a1f2ee&lang=scss&scoped=true& */ 420);
+/* harmony import */ var _Landing_vue_vue_type_style_index_0_id_7695e2ae_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Landing.vue?vue&type=style&index=0&id=7695e2ae&lang=scss&scoped=true& */ 420);
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ 0);
 
 
@@ -8931,11 +8931,11 @@ __webpack_require__.r(__webpack_exports__);
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(
   _Landing_vue_vue_type_script_lang_ts___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _Landing_vue_vue_type_template_id_18a1f2ee_scoped_true___WEBPACK_IMPORTED_MODULE_0__[/* render */ "a"],
-  _Landing_vue_vue_type_template_id_18a1f2ee_scoped_true___WEBPACK_IMPORTED_MODULE_0__[/* staticRenderFns */ "b"],
+  _Landing_vue_vue_type_template_id_7695e2ae_scoped_true___WEBPACK_IMPORTED_MODULE_0__[/* render */ "a"],
+  _Landing_vue_vue_type_template_id_7695e2ae_scoped_true___WEBPACK_IMPORTED_MODULE_0__[/* staticRenderFns */ "b"],
   false,
   null,
-  "18a1f2ee",
+  "7695e2ae",
   null
   
 )
@@ -8946,17 +8946,17 @@ component.options.__file = "Landing.vue"
 /***/ }),
 /* 420 */
 /*!*****************************************************************************************!*\
-  !*** ./src/pages/Landing.vue?vue&type=style&index=0&id=18a1f2ee&lang=scss&scoped=true& ***!
+  !*** ./src/pages/Landing.vue?vue&type=style&index=0&id=7695e2ae&lang=scss&scoped=true& ***!
   \*****************************************************************************************/
 /*! no static exports found */
 /*! ModuleConcatenation bailout: Module exports are unknown */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Landing_vue_vue_type_style_index_0_id_18a1f2ee_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/mini-css-extract-plugin/dist/loader.js!../../node_modules/css-loader??ref--1-oneOf-2-1!../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../node_modules/sass-loader/lib/loader.js??ref--1-oneOf-2-2!../../node_modules/vue-loader/lib??vue-loader-options!./Landing.vue?vue&type=style&index=0&id=18a1f2ee&lang=scss&scoped=true& */ 113);
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Landing_vue_vue_type_style_index_0_id_18a1f2ee_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Landing_vue_vue_type_style_index_0_id_18a1f2ee_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Landing_vue_vue_type_style_index_0_id_7695e2ae_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/mini-css-extract-plugin/dist/loader.js!../../node_modules/css-loader??ref--1-oneOf-2-1!../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../node_modules/sass-loader/lib/loader.js??ref--1-oneOf-2-2!../../node_modules/vue-loader/lib??vue-loader-options!./Landing.vue?vue&type=style&index=0&id=7695e2ae&lang=scss&scoped=true& */ 113);
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Landing_vue_vue_type_style_index_0_id_7695e2ae_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Landing_vue_vue_type_style_index_0_id_7695e2ae_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__);
 /* unused harmony reexport * */
- /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Landing_vue_vue_type_style_index_0_id_18a1f2ee_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default.a); 
+ /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_index_js_ref_1_oneOf_2_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_sass_loader_lib_loader_js_ref_1_oneOf_2_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Landing_vue_vue_type_style_index_0_id_7695e2ae_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 /* 421 */
@@ -13459,4 +13459,4 @@ component.options.__file = "BigX.vue"
 
 /***/ })
 /******/ ]);
-//# sourceMappingURL=main.3c2c9e2d.js.map
+//# sourceMappingURL=main.4fecc5b8.js.map
