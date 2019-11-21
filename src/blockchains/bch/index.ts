@@ -1,9 +1,9 @@
 import { IBlockchain } from "../IBlockchain"
 import * as coinmarketcap from "../coinmarketcap"
-import { testnet, mainnet } from "./blockcypher"
-import { ITxRef } from "./blockcypher.i"
+import { testnet, mainnet } from "./bitcoincom"
+import { ITx, ITransactionsResponse } from "./bitcoincom.i"
 
-export interface IBtcHistoryItem
+export interface IBchHistoryItem
 {
 	hash: string
 	value: number
@@ -11,13 +11,13 @@ export interface IBtcHistoryItem
 	incoming: boolean
 }
 
-export type BtcBlockchain = IBlockchain<IBtcHistoryItem, string> & {
+export type BchBlockchain = IBlockchain<IBchHistoryItem, string> & {
 	prepareTx: typeof mainnet.newTx
 }
 
-const getUsdRate = () => coinmarketcap.loadPrice(coinmarketcap.tickerIds.btc)
+const getUsdRate = () => coinmarketcap.loadPrice(coinmarketcap.tickerIds.bch)
 
-export function getCachedNetworkByChainId(chainId: number | string): BtcBlockchain
+export function getCachedNetworkByChainId(chainId: number | string): BchBlockchain
 {
 	chainId = chainId + ""
 	
@@ -31,18 +31,50 @@ export function getCachedNetworkByChainId(chainId: number | string): BtcBlockcha
 export type IChainId = keyof typeof CHAINS
 export type IChainSettings = typeof CHAINS[IChainId]
 
-function bcyTxToHistory(tx: ITxRef)
+function bcyTxToHistory(tx: ITx, addr: string)
 {
 	return {
-		hash: tx.tx_hash,
-		value: tx.value,
-		date: tx.confirmed + "",
-		incoming: (tx.tx_output_n >= 0)
+		hash: tx.txid,
+		value: getTxValue(tx, addr),
+		date:  new Date(tx.time * 1000).toDateString(),
+		incoming: (tx.valueOut >= 0)
 	}
 }
-function bcyMergeTxs(txs: ITxRef[])
+function getTxValue(tx: ITx, addr: string): number{
+	let positive = true
+	for(let input of tx.vin) {
+		if (addr == input.addr) {
+			positive = false
+		}
+	}
+        
+	// value
+	var value = 0
+	if (positive) {
+		for (let out of tx.vout) {
+				for (let address of out.scriptPubKey.addresses) {
+						if (addr == address) {
+								value += parseFloat(out.value)
+						}
+				}
+		}
+	} else {
+			var v = 0
+			for (let out of tx.vout) {
+					for(let address of out.scriptPubKey.addresses) {
+							if (addr != address) {
+									value += parseFloat(out.value)
+							}
+					}
+			}
+	}
+	console.log((positive? "+" : "") + value)
+	return value * 100000000
+}
+
+function bcyMergeTxs(txResponse: ITransactionsResponse)
 {
-	return txs.map(bcyTxToHistory).reduce((arr, cur) =>
+	return txResponse.txs.map((tx) => {return bcyTxToHistory(tx, txResponse.legacyAddress)}).reduce((arr, cur) =>
 	{
 		if (!arr.length) // skip first element
 			return arr.push(cur), arr
@@ -61,23 +93,28 @@ function bcyMergeTxs(txs: ITxRef[])
 			prevTx.value = prevTx.value - cur.value
 		}
 		return arr
-	}, [] as IBtcHistoryItem[])
+	}, [] as IBchHistoryItem[])
+}
+
+async function pushBchTx(tx: string) {
+	return (await mainnet.sendTx(tx)) //.tx.hash
 }
 
 const TESTNET = {
 	testnet: true,
 	name: "Testnet",
-	loadTxList: async (addr: string) => bcyMergeTxs((await testnet.getAddressInfo(addr)).txrefs),
-	prepareTx: testnet.newTx,
-	pushTx: async (tx: string) => (await testnet.sendTx(JSON.parse(tx))).tx.hash,
+	loadTxList: async (addr: string) => bcyMergeTxs((await testnet.getAddressInfoFull(addr))),
+	pushTx: () => { throw "NOTIMPLENTED" },
+	prepareTx: () => { throw "NOTIMPLENTED" },
 }
 const MAINNET = {
 	testnet: false,
 	name: "Mainnet",
-	loadTxList: async (addr: string) => bcyMergeTxs((await mainnet.getAddressInfo(addr)).txrefs),
+	loadTxList: async (addr: string) => bcyMergeTxs((await mainnet.getAddressInfoFull(addr))),
+	pushTx: async (tx: string) => pushBchTx(tx),
 	prepareTx: mainnet.newTx,
-	pushTx: async (tx: string) => (await mainnet.sendTx(JSON.parse(tx))).tx.hash,
 }
+
 const CHAINS = {
 	'00': MAINNET,       // Pubkey hash (P2PKH address)     17VZNX1SN5NtKa8UQFxwQbFeFc3iqRYhem
 	'05': MAINNET,       // Script hash (P2SH address)      3EktnHQD7RiAE6uzMj2ZifT9YgRrkSgzQX
@@ -89,7 +126,7 @@ const CHAINS = {
 
 export const defaultChainId = '00'
 
-function getNetworkByChainId(chainId: IChainId): BtcBlockchain
+function getNetworkByChainId(chainId: IChainId): BchBlockchain
 {
 	chainId = chainId.toLowerCase() as IChainId
 
@@ -105,4 +142,4 @@ function getNetworkByChainId(chainId: IChainId): BtcBlockchain
 		prepareTx: chain.prepareTx,
 	}
 }
-const CACHE = { } as { [chainId in IChainId]: BtcBlockchain }
+const CACHE = { } as { [chainId in IChainId]: BchBlockchain }

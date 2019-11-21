@@ -2,7 +2,8 @@ import { StoreOptions, Store as IStore } from "./vuex-type-ext"
 import { IBlockchainSymbol, IWallet } from "./interop"
 import { TypedBlockchains, typedBlockchains, defaultChainIds } from "src/blockchains"
 import { IBlockchain } from "src/blockchains/IBlockchain"
-import { calcWalletId, pick } from "./utils"
+import { calcWalletId} from "./utils"
+import { pick } from "../utils"
 
 export const options: SOptions = {
 	state: {

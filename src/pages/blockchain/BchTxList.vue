@@ -1,5 +1,5 @@
 <template>
-	<div class="tx-list-container" :class="cssident">
+	<div class="tx-list-container">
 		<span v-if="error" data-cy="error">ERROR LOADING TRANSACTIONS: {{ error }}</span>
 		<span v-else-if="loading" data-cy="loading">Loading tx list...</span>
 
@@ -9,17 +9,21 @@
 				<tr>
 				<th>Date</th>
 				<th>TxHash</th>
-				<th>From</th>
+				<!-- <th>Incoming</th> -->
 				<th></th>
-				<th>To</th>
+				<!-- <th>To</th> -->
 				<th>Value</th>
 				</tr>
 			</thead>
 			<tbody>
 					<tr :key="tx.hash" v-for="tx in txs">
-						<td>{{new Date(tx.timeStamp * 1000).toLocaleString()}}</td>
+						<td>{{tx.date}}</td>
 						<td class="short">{{ tx.hash }}</td>
 						<td class="short">
+							<span v-if="tx.incoming">Received</span>
+							<span v-else>Sent</span>
+						</td>
+						<!-- <td class="short">
 							<span v-if="!isSelf(tx.from)">{{ tx.from }}</span>
 							<span v-else class="self-tag">this wallet</span>
 						</td>
@@ -27,8 +31,8 @@
 						<td class="short">
 							<span v-if="!isSelf(tx.to)">{{ tx.to || tx.contractAddress }}</span>
 							<span v-else class="self-tag">this wallet</span>
-						</td>
-						<td>{{ (tx.value / 1e18).toFixed(4) }}</td>
+						</td> -->
+						<td>{{ (tx.value / 1e8).toFixed(4) }}</td>
 					</tr>
 			</tbody>
 		</table>
@@ -45,14 +49,8 @@
 .self-tag {
 	padding: 4px;
 	border-radius: 4px;
-	&.cold {                    
-    color: #00BCF9;
-		background: rgba(179, 236, 254, 0.6);
-	}
-	&.ice {
-		color: #5ca0d3;
-		background: #f0e9e9;
-	}
+    color: #5ca0d3;
+	background: #f0e9e9;
 }
 table {
 	border-collapse: collapse;
@@ -76,12 +74,7 @@ table {
 		text-align: center;
 	}
 	th {
-		&.cold {                    
-			color: #457b9d;
-		}
-		&.ice {
-			color: #5ca0d3;
-		}
+		color: #5ca0d3;
 		padding: .5rem;
 	}
 	tr {
@@ -93,7 +86,7 @@ table {
 <script lang="ts">
 import Vue from 'src/vue-ts'
 import { IWallet } from 'src/store/interop'
-import { cssident } from 'src/multiproj'
+import { print } from 'util';
 
 interface ITransaction
 {
@@ -107,7 +100,6 @@ export default Vue.extend({
 	data()
 	{
 		return {
-			cssident
 		}
 	},
 	props: {
@@ -119,7 +111,7 @@ export default Vue.extend({
 	computed: {
 		txs: function()
 		{
-			let txs = this.$store.getters.ethtx_getTxs(this.wallet)
+			let txs = this.$store.getters.bchtx_getTxs(this.wallet)
 			return txs
 		},
 		hasTxs: function()
@@ -128,12 +120,12 @@ export default Vue.extend({
 		},
 		error()
 		{
-			let e = this.$store.getters.ethtx_hasError(this.wallet)
+			let e = this.$store.getters.bchtx_hasError(this.wallet)
 			return (e instanceof Error) ? e.message : e
 		},
 		loading()
 		{
-			return this.$store.getters.ethtx_isLoading(this.wallet) || !this.$store.getters.ethtx_getTxs(this.wallet)
+			return this.$store.getters.bchtx_isLoading(this.wallet) || !this.$store.getters.bchtx_getTxs(this.wallet)
 		}
 	},
 	watch: {
@@ -149,7 +141,7 @@ export default Vue.extend({
 		},
 		updateTxs: async function()
 		{
-			this.$store.dispatch('ethtx_hardUpdateTxs', { wallet: this.wallet })
+			this.$store.dispatch('bchtx_hardUpdateTxs', { wallet: this.wallet })
 		},
 	},
 	mounted: function()

@@ -7,7 +7,7 @@
 				v-for="w in wallets"
 				tag="div"
 				class="link"
-				:class="{ blue: isActiveWallet(w) }"
+				:class="identcss({ blue: isActiveWallet(w) })"
 				:to="link(w)"
 				:key="calcWalletId(w)"
 			>
@@ -32,6 +32,7 @@ import Vue from 'src/vue-ts'
 import Logo from './Logo.vue'
 import CryptoIcon from './icons/CryptoIcon.vue'
 import { IWallet } from 'src/store/interop'
+import { cssident } from 'src/multiproj'
 
 export default Vue.extend({
 	computed: {
@@ -69,6 +70,10 @@ export default Vue.extend({
 				query: { chainId: w.chainId }
 			}
 		},
+		identcss: function(obj: {})
+		{
+			return { ...cssident, ...obj }
+		},
 		isActiveWallet: function(w: IWallet)
 		{
 			if (!this.selectedAddress || !w || !w.address)
@@ -105,9 +110,16 @@ export default Vue.extend({
 	color: #160a2e;
 }
 .link.blue {
-	color: #5ca0d3;
-	border-left: 3px solid #5ca0d3;
-	background: #f0e9e9;
+	&.ice {                                                                                                       
+          color: #5ca0d3;                                                                                         
+          border-left: 3px solid #5ca0d3;                                                                         
+          background: #f0e9e9;                                                                                    
+  }                                                                                                               
+  &.cold {                                                                                                        
+          color: #00BCF9;                                                                                         
+          border-left: 3px solid #00BCF9;                                                                         
+          background: rgba(179, 236, 254, 0.6);                                                                   
+  }
 }
 .link .icon {
 	vertical-align: middle;

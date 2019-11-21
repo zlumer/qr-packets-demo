@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container" :class="cssident">
 		<mp-header />
     	<main>
         	<slot/>
@@ -12,8 +12,15 @@
 import Vue from 'src/vue-ts'
 import Header from 'src/components/MainPageHeader.vue'
 import Footer from 'src/components/MainPageFooter.vue'
+import { cssident } from 'src/multiproj'
 
 export default Vue.extend({
+	data: function()
+	{
+		return {
+			cssident
+		}
+	},
 	components: {
 		"mp-header": Header,
 		"mp-footer": Footer,
@@ -25,7 +32,12 @@ export default Vue.extend({
 
 .container {
 	min-height: 100vh;
-    background: #5ca0d3;
+	&.cold {                                                                                                             
+					background: linear-gradient(57deg, rgb(13, 13, 13) 0%, rgb(22, 10, 46) 100%);                                
+	}                                                                                                                    
+	&.ice {                                                                                                              
+					background: #5ca0d3;                                                                                         
+	}
 }
 
 main {

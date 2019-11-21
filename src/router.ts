@@ -1,6 +1,7 @@
 import VueRouter, { NavigationGuard } from "vue-router"
 
-import Landing from "./pages/LandingTilda.vue"
+import LandingIce from "./pages/LandingTilda.vue"
+import LandingCold from "./pages/Landing.vue"
 import Login from "./pages/Login.vue"
 import Wallets from "./pages/Wallets.vue"
 import Wallet from "./pages/Wallet.vue"
@@ -60,7 +61,7 @@ export function createRouter(store: Store)
 		...(BASE_PATH ? { base: BASE_PATH } : {}),
 		mode: 'history',
 		routes: [
-			{ path: '/', component: Landing, meta: metaLayout('default') },
+			{ path: '/', component: config.ident == "cold" ? LandingCold : LandingIce, meta: metaLayout('default') },
 			{ path: '/login', component: Login, meta: metaLayout('home') },
 			{ path: '/webrtc', component: WebrtcVue, meta: metaLayout('home') },
 			{ path: '/wallets', component: Wallets, meta: metaLayout('default') },
