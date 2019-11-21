@@ -520,14 +520,14 @@ var isChecksumAddress = function (address) {
 // webpack env variables
 Object.defineProperty(exports, "__esModule", { value: true });
 console.log("ROOT_PATH: " + "/");
-console.assert("4bcbe3c9b4bb36659bd23df7ec8f9833fb493592", "GIT_VERSION is not defined!");
+console.assert("f96a6c9ff8b5b1e278acec86d60aaa6f60355e41", "GIT_VERSION is not defined!");
 console.assert("https://github.com/zlumer/qr-packets-demo.git", "GIT_REMOTE is not defined!");
 console.log("PROJ_IDENT: " + "ice");
 exports.default = {
     blockchains: ["eth", "eos", "btc"],
     basePath: "/",
     ident: "ice",
-    gitVersion: "4bcbe3c9b4bb36659bd23df7ec8f9833fb493592",
+    gitVersion: "f96a6c9ff8b5b1e278acec86d60aaa6f60355e41",
     gitRemote: "https://github.com/zlumer/qr-packets-demo.git",
 };
 
@@ -819,7 +819,7 @@ exports.loadPrice = loadPrice;
 Object.defineProperty(exports, "__esModule", { value: true });
 var eth_chains_1 = __webpack_require__(/*! ./eth-chains */ 358);
 var eos_1 = __webpack_require__(/*! ./eos */ 359);
-var btc_1 = __webpack_require__(/*! ./btc */ 764);
+var btc_1 = __webpack_require__(/*! ./btc */ 763);
 exports.typedBlockchains = {
     eth: function (chainId) { return eth_chains_1.getCachedNetworkByChainId(chainId); },
     eos: function (chainId) { return eos_1.getCachedNetworkByChainId(chainId); },
@@ -3032,7 +3032,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var vue_ts_1 = __importDefault(__webpack_require__(/*! src/vue-ts */ 1));
 var CloseButton_vue_1 = __importDefault(__webpack_require__(/*! ./CloseButton.vue */ 462));
-var GreyOverlay_vue_1 = __importDefault(__webpack_require__(/*! ./GreyOverlay.vue */ 777));
+var GreyOverlay_vue_1 = __importDefault(__webpack_require__(/*! ./GreyOverlay.vue */ 776));
 var WhiteRect_vue_1 = __importDefault(__webpack_require__(/*! ./WhiteRect.vue */ 466));
 exports.default = vue_ts_1.default.extend({
     props: {
@@ -3092,7 +3092,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var vue_ts_1 = __importDefault(__webpack_require__(/*! src/vue-ts */ 1));
-var BigX_vue_1 = __importDefault(__webpack_require__(/*! ./BigX.vue */ 778));
+var BigX_vue_1 = __importDefault(__webpack_require__(/*! ./BigX.vue */ 777));
 exports.default = vue_ts_1.default.extend({
     props: {
         href: {
@@ -7458,8 +7458,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var vue_1 = __importDefault(__webpack_require__(/*! vue */ 42));
 var App_vue_1 = __importDefault(__webpack_require__(/*! ./App.vue */ 388));
-var Default_vue_1 = __importDefault(__webpack_require__(/*! ./Default.vue */ 775));
-var Home_vue_1 = __importDefault(__webpack_require__(/*! ./Home.vue */ 776));
+var Default_vue_1 = __importDefault(__webpack_require__(/*! ./Default.vue */ 774));
+var Home_vue_1 = __importDefault(__webpack_require__(/*! ./Home.vue */ 775));
 var LAYOUTS = {
     app: App_vue_1.default,
     default: Default_vue_1.default,
@@ -7876,8 +7876,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var coinmarketcap = __importStar(__webpack_require__(/*! ./coinmarketcap */ 72));
 var cryptolions = __importStar(__webpack_require__(/*! ./cryptolions */ 686));
-var greymass = __importStar(__webpack_require__(/*! ./greymass */ 687));
-var eosjs_1 = __importDefault(__webpack_require__(/*! eosjs */ 688));
+var eosjs_1 = __importDefault(__webpack_require__(/*! eosjs */ 687));
 var getUsdRate = function () { return coinmarketcap.loadPrice(coinmarketcap.tickerIds.eos); };
 function getNetwork(httpEndpoint, chainId) {
     var eos = eosjs_1.default({
@@ -7967,7 +7966,7 @@ var CHAINS = {
         testnet: false,
         name: 'Mainnet',
         url: 'https://eos.greymass.com',
-        loadTxList: greymass.mainnet.loadTxList
+        loadTxList: cryptolions.main.loadTxList
     },
     'e70aaab8997e1dfce58fbfac80cbbb8fecec7b99cf982a9444273cbc64c41473': {
         testnet: true,
@@ -11189,12 +11188,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var vuex_1 = __importDefault(__webpack_require__(/*! vuex */ 293));
 var coinmarketcap_1 = __webpack_require__(/*! ./coinmarketcap */ 683);
 var main_1 = __webpack_require__(/*! ./main */ 684);
-var ethTxs_1 = __webpack_require__(/*! ./ethTxs */ 766);
-var btcTxs_1 = __webpack_require__(/*! ./btcTxs */ 767);
-var ethTokens_1 = __webpack_require__(/*! ./ethTokens */ 768);
-var eosTokens_1 = __webpack_require__(/*! ./eosTokens */ 769);
-var ethGasPrice_1 = __webpack_require__(/*! ./ethGasPrice */ 771);
-var btc_1 = __webpack_require__(/*! ./btc */ 774);
+var ethTxs_1 = __webpack_require__(/*! ./ethTxs */ 765);
+var btcTxs_1 = __webpack_require__(/*! ./btcTxs */ 766);
+var ethTokens_1 = __webpack_require__(/*! ./ethTokens */ 767);
+var eosTokens_1 = __webpack_require__(/*! ./eosTokens */ 768);
+var ethGasPrice_1 = __webpack_require__(/*! ./ethGasPrice */ 770);
+var btc_1 = __webpack_require__(/*! ./btc */ 773);
 exports.storeOptions = mergeOptions(coinmarketcap_1.options, main_1.options, ethTxs_1.options, ethTokens_1.options, mergeOptions(ethGasPrice_1.options, eosTokens_1.options, btcTxs_1.options, btc_1.options));
 function createStore() {
     var store = new vuex_1.default.Store(exports.storeOptions);
@@ -11591,6 +11590,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.jungle = {
+    loadTxList: function (address) { return loadTxList('https://junglehistory.cryptolions.io', address); }
+};
+exports.main = {
     loadTxList: function (address) { return loadTxList('https://history.cryptolions.io', address); }
 };
 function loadTxList(host, address) {
@@ -11624,101 +11626,7 @@ exports.load = load;
 
 
 /***/ }),
-/* 687 */
-/*!*************************************!*\
-  !*** ./src/blockchains/greymass.ts ***!
-  \*************************************/
-/*! no static exports found */
-/*! all exports used */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.mainnet = {
-    loadTxList: function (address) { return loadTxList('https://eos.greymass.com', address); }
-};
-function loadTxList(host, address) {
-    return __awaiter(this, void 0, Promise, function () {
-        var params, res;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    params = {
-                        account_name: address,
-                        offset: -100,
-                        pos: -1
-                    };
-                    return [4 /*yield*/, load(host, "/v1/history/get_actions", params)];
-                case 1:
-                    res = _a.sent();
-                    console.log(res);
-                    return [2 /*return*/, res.actions.map(function (x) { return x.action_trace; }).reverse()];
-            }
-        });
-    });
-}
-exports.loadTxList = loadTxList;
-function load(host, path, bodyParams) {
-    return __awaiter(this, void 0, Promise, function () {
-        var url;
-        return __generator(this, function (_a) {
-            url = "" + host + path;
-            return [2 /*return*/, fetch(url, {
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(bodyParams)
-                }).then(function (x) { return x.json(); }).then(function (res) {
-                    // if (!res || (res.status != '1') || (res.message != "OK"))
-                    // 	throw Error(res.message)
-                    return res;
-                })];
-        });
-    });
-}
-exports.load = load;
-
-
-/***/ }),
+/* 687 */,
 /* 688 */,
 /* 689 */,
 /* 690 */,
@@ -11794,8 +11702,7 @@ exports.load = load;
 /* 760 */,
 /* 761 */,
 /* 762 */,
-/* 763 */,
-/* 764 */
+/* 763 */
 /*!**************************************!*\
   !*** ./src/blockchains/btc/index.ts ***!
   \**************************************/
@@ -11851,7 +11758,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var coinmarketcap = __importStar(__webpack_require__(/*! ../coinmarketcap */ 72));
-var blockcypher_1 = __webpack_require__(/*! ./blockcypher */ 765);
+var blockcypher_1 = __webpack_require__(/*! ./blockcypher */ 764);
 var getUsdRate = function () { return coinmarketcap.loadPrice(coinmarketcap.tickerIds.btc); };
 function getCachedNetworkByChainId(chainId) {
     chainId = chainId + "";
@@ -11945,7 +11852,7 @@ var CACHE = {};
 
 
 /***/ }),
-/* 765 */
+/* 764 */
 /*!********************************************!*\
   !*** ./src/blockchains/btc/blockcypher.ts ***!
   \********************************************/
@@ -12088,7 +11995,7 @@ exports.post = post;
 
 
 /***/ }),
-/* 766 */
+/* 765 */
 /*!*****************************!*\
   !*** ./src/store/ethTxs.ts ***!
   \*****************************/
@@ -12229,7 +12136,7 @@ exports.options = {
 
 
 /***/ }),
-/* 767 */
+/* 766 */
 /*!*****************************!*\
   !*** ./src/store/btcTxs.ts ***!
   \*****************************/
@@ -12372,7 +12279,7 @@ exports.options = {
 
 
 /***/ }),
-/* 768 */
+/* 767 */
 /*!********************************!*\
   !*** ./src/store/ethTokens.ts ***!
   \********************************/
@@ -12638,7 +12545,7 @@ exports.options = {
 
 
 /***/ }),
-/* 769 */
+/* 768 */
 /*!********************************!*\
   !*** ./src/store/eosTokens.ts ***!
   \********************************/
@@ -12692,7 +12599,7 @@ var vue_ts_1 = __importDefault(__webpack_require__(/*! src/vue-ts */ 1));
 var eos_1 = __webpack_require__(/*! src/blockchains/eos */ 359);
 var utils_1 = __webpack_require__(/*! ./utils */ 59);
 var blockchains_1 = __webpack_require__(/*! src/blockchains */ 73);
-var bloksio_1 = __webpack_require__(/*! src/blockchains/eos/bloksio */ 770);
+var bloksio_1 = __webpack_require__(/*! src/blockchains/eos/bloksio */ 769);
 exports.options = {
     state: {
         eosTokens: {
@@ -12896,7 +12803,7 @@ exports.options = {
 
 
 /***/ }),
-/* 770 */
+/* 769 */
 /*!****************************************!*\
   !*** ./src/blockchains/eos/bloksio.ts ***!
   \****************************************/
@@ -12958,7 +12865,7 @@ exports.loadTokensList = loadTokensList;
 
 
 /***/ }),
-/* 771 */
+/* 770 */
 /*!**********************************!*\
   !*** ./src/store/ethGasPrice.ts ***!
   \**********************************/
@@ -13009,8 +12916,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var vue_ts_1 = __importDefault(__webpack_require__(/*! src/vue-ts */ 1));
-var ethgasstation_1 = __webpack_require__(/*! src/blockchains/ethgasstation */ 772);
-var etherchain_1 = __webpack_require__(/*! src/blockchains/etherchain */ 773);
+var ethgasstation_1 = __webpack_require__(/*! src/blockchains/ethgasstation */ 771);
+var etherchain_1 = __webpack_require__(/*! src/blockchains/etherchain */ 772);
 var blockchains_1 = __webpack_require__(/*! src/blockchains */ 73);
 var eth_1 = __webpack_require__(/*! src/blockchains/eth */ 33);
 exports.options = {
@@ -13071,7 +12978,7 @@ exports.options = {
 
 
 /***/ }),
-/* 772 */
+/* 771 */
 /*!******************************************!*\
   !*** ./src/blockchains/ethgasstation.ts ***!
   \******************************************/
@@ -13129,7 +13036,7 @@ exports.loadGasPrice = loadGasPrice;
 
 
 /***/ }),
-/* 773 */
+/* 772 */
 /*!***************************************!*\
   !*** ./src/blockchains/etherchain.ts ***!
   \***************************************/
@@ -13187,7 +13094,7 @@ exports.loadGasPrice = loadGasPrice;
 
 
 /***/ }),
-/* 774 */
+/* 773 */
 /*!**************************!*\
   !*** ./src/store/btc.ts ***!
   \**************************/
@@ -13213,7 +13120,7 @@ exports.options = {
 
 
 /***/ }),
-/* 775 */
+/* 774 */
 /*!*********************************************!*\
   !*** ./src/layouts/Default.vue + 4 modules ***!
   \*********************************************/
@@ -13268,7 +13175,7 @@ component.options.__file = "Default.vue"
 /* harmony default export */ var Default = __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
-/* 776 */
+/* 775 */
 /*!******************************************!*\
   !*** ./src/layouts/Home.vue + 4 modules ***!
   \******************************************/
@@ -13362,7 +13269,7 @@ component.options.__file = "Home.vue"
 /* harmony default export */ var Home = __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
-/* 777 */
+/* 776 */
 /*!**********************************************************!*\
   !*** ./src/components/popup/GreyOverlay.vue + 2 modules ***!
   \**********************************************************/
@@ -13410,7 +13317,7 @@ component.options.__file = "GreyOverlay.vue"
 /* harmony default export */ var GreyOverlay = __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
-/* 778 */
+/* 777 */
 /*!***************************************************!*\
   !*** ./src/components/popup/BigX.vue + 2 modules ***!
   \***************************************************/
@@ -13459,4 +13366,4 @@ component.options.__file = "BigX.vue"
 
 /***/ })
 /******/ ]);
-//# sourceMappingURL=main.5f58d73f.js.map
+//# sourceMappingURL=main.bc68565c.js.map
