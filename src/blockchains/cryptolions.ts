@@ -48,6 +48,10 @@ export const jungle = {
 	loadTxList: (address: string) => loadTxList('https://history.cryptolions.io', address)
 }
 
+export const main = {
+	loadTxList: (address: string) => loadTxList('https://history.cryptolions.io', address)
+}
+
 export async function loadTxList(host: string, address: string): Promise<IEosTxHistoryItem<IEosTransferActionData>[]>
 {
 	let res = await load(host, `/v2/history/get_actions?account=${address}&limit=100&skip=0`) as IActionResponse

@@ -169,7 +169,7 @@ const CHAINS = {
 		testnet: false,
 		name: 'Mainnet',
 		url: 'https://eos.greymass.com',
-		loadTxList: cryptolions.jungle.loadTxList
+		loadTxList: cryptolions.main.loadTxList
 	},
 	'e70aaab8997e1dfce58fbfac80cbbb8fecec7b99cf982a9444273cbc64c41473': {
 		testnet: true,
