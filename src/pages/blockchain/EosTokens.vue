@@ -72,6 +72,7 @@ import Vue, { VueWithProps } from 'src/vue-ts'
 import TransferForm, { IFormInputField } from 'src/components/TransferForm.vue'
 import InputLabel from "src/components/form/InputLabel.vue"
 import { IChainId, IEosTxHeaders } from 'src/blockchains/eos'
+import { appName } from 'src/multiproj'
 
 function validateAddress(addr: string)
 {
@@ -281,7 +282,7 @@ export default Vue.extend({
 			this.tx = {
 				to: form.to,
 				amount,
-				memo: 'Ice Wallet token transfer',
+				memo: `${appName} token transfer`,
 			}
 			this.loading = false
 		},

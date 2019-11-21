@@ -23,8 +23,8 @@ export default Vue.extend({
 		return {
 			links: [
 				{ text: 'Support', href: 'https://github.com/DucaturFw/cold-crypto-web/issues' },
-				{ text: 'Privacy policy', href: 'https://duxi.io/cold/COLDCRYPTO_PRIVACY_POLICY.pdf' },
-				{ text: 'Terms of use', href: 'https://duxi.io/cold/COLDCRYPTO_TERMS_OF_USE.pdf' },
+				{ text: 'Privacy policy', href: 'https://coldcrypto.one/COLDCRYPTO_PRIVACY_POLICY.pdf' },
+				{ text: 'Terms of use', href: 'https://coldcrypto.one/COLDCRYPTO_TERMS_OF_USE.pdf' },
 			]
 		}
 	},

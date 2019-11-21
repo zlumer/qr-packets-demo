@@ -12,7 +12,7 @@
 				<router-link
 					:to="{name:'newtx', query:{ chainId: wallet.chainId }}"
 				>
-					<button class="blue-button">
+					<button class="blue-button" :class="cssident">
 						Send {{blockchain.toUpperCase()}}
 					</button>
 				</router-link>
@@ -20,7 +20,7 @@
 					v-if="blockchain == 'eth'"
 					:to="{name:'erc20', query:{ chainId: wallet.chainId }}"
 				>
-					<button class="blue-button">
+					<button class="blue-button" :class="cssident">
 						Transfer ERC20
 					</button>
 				</router-link>
@@ -28,7 +28,7 @@
 					v-if="blockchain == 'eos'"
 					:to="{name:'eostok', query:{ chainId: wallet.chainId }}"
 				>
-					<button class="blue-button">
+					<button class="blue-button" :class="cssident">
 						Send tokens
 					</button>
 				</router-link>
@@ -52,11 +52,13 @@
 import Vue from 'src/vue-ts'
 import TxListHoc from './blockchain/TxListHoc.vue'
 import OverlayPopup from 'src/components/popup/OverlayPopup.vue'
+import { cssident } from 'src/multiproj'
 
 export default Vue.extend({
 	data()
 	{
 		return {
+			cssident
 		}
 	},
 	computed: {
