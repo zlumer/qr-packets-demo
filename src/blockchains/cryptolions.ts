@@ -45,6 +45,10 @@ type IActionResponse = IResponse<{
 type IResponse<T>  = T
 
 export const jungle = {
+	loadTxList: (address: string) => loadTxList('https://junglehistory.cryptolions.io', address)
+}
+
+export const main = {
 	loadTxList: (address: string) => loadTxList('https://history.cryptolions.io', address)
 }
 
