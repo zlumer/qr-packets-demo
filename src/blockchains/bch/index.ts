@@ -7,7 +7,7 @@ export interface IBchHistoryItem
 {
 	hash: string
 	value: number
-	date: number
+	date: string
 	incoming: boolean
 }
 

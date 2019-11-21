@@ -1,6 +1,7 @@
 import { ITransactionsResponse, IUtxoResponse, INewTx } from "./bitcoincom.i"
 import { curryFirst } from "../../utils"
 import { buildTx } from "./bch-tx-builder"
+import { IAddressResponse } from "../btc/blockcypher.i"
 // https://rest.bitcoin.com/v2/address/transactions/qpkxhhyumvx07s3cluq7un367mnxzgzswy4el8tn4w
 
 export const testnet = makeNetwork("https://trest.bitcoin.com/v2")

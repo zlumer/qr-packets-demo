@@ -1,7 +1,7 @@
 import { ITransactionsResponse, IUtxoResponse, IUtxo } from "./bitcoincom.i"
 
 export function utxoSelect(utxos: IUtxo[], targetValue: number): { utxos: IUtxo[], fee: number } {
-  var result = { utxos: [], fee: 0 }
+  var result = { utxos: <IUtxo[]>[], fee: 0 }
 
   if (targetValue <= 0) {
     return result
