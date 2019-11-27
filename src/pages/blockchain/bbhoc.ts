@@ -13,6 +13,7 @@ let bb = Vue.extend({
 		eos: Function as any as () => VueConstructor<VueOrig>,
 		neo: Function as any as () => VueConstructor<VueOrig>,
 		btc: Function as any as () => VueConstructor<VueOrig>,
+		bch: Function as any as () => VueConstructor<VueOrig>,
 		pha: Function as any as () => VueConstructor<VueOrig>,
 		props: Object,
 	},

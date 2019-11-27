@@ -13,7 +13,7 @@ declare let PROJ_IDENT: string
 console.log(`PROJ_IDENT: ${PROJ_IDENT}`)
 
 export default {
-	blockchains: ["eth", "eos", "btc"],
+	blockchains: ["eth", "eos", "btc", "bch"],
 	basePath: ROOT_PATH,
 	ident: PROJ_IDENT,
 	gitVersion: GIT_VERSION,

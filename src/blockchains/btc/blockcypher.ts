@@ -1,4 +1,5 @@
 import { IAddressResponse, IAddressFullResponse, INewTxResponse, ISendTxResponse } from "./blockcypher.i"
+import { curryFirst } from "../../utils"
 
 // https://api.blockcypher.com/v1/btc/test3/addrs/mjB1mRuNzsJK8b2PmgfWawPAXHqS6M5Akb
 
@@ -17,11 +18,6 @@ function makeNetwork(host: string)
 }
 
 const TOKEN = `9aa7d51f02ba4d2fa3b18ffd93535238`
-
-function curryFirst<TFirst, TRest extends any[], TRes>(func: (first: TFirst, ...args: TRest) => TRes, firstArg: TFirst)
-{
-	return (...args: TRest) => func(firstArg, ...args)
-}
 
 export async function getAddressInfo(host: string, addr: string): Promise<IAddressResponse>
 {

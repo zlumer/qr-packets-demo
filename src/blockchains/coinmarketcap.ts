@@ -36,6 +36,7 @@ export const tickerIds: { [key in IBlockchainSymbol]: string } = {
 	pha: '3513',
 	btc: '1',
 	neo: '1376',
+	bch: '1831',
 }
 
 export async function loadTicker(id: string): Promise<CMCResponse<CMCTicker>>
