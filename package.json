@@ -34,7 +34,7 @@
     "@types/web3": "^1.0.12",
     "git-rev-sync": "^1.12.0",
     "jest": "^23.6.0",
-    "node-sass": "^4.11.0",
+    "node-sass": "^4.13.1",
     "patch-package": "^5.1.1",
     "poi": "^10.2.10",
     "postinstall-prepare": "^1.0.1",
